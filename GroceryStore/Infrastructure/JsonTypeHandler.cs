@@ -6,7 +6,6 @@ using Dapper;
 
 public class JsonTypeHandler : SqlMapper.TypeHandler<Dictionary<string, string>>
 {
-    // Как мы записываем словарь В базу
     public override void SetValue(IDbDataParameter parameter, Dictionary<string, string>? value)
     {
         parameter.Value = value == null
@@ -14,7 +13,6 @@ public class JsonTypeHandler : SqlMapper.TypeHandler<Dictionary<string, string>>
             : JsonSerializer.Serialize(value);
     }
 
-    // Как мы читаем ИЗ базы в словарь
     public override Dictionary<string, string>? Parse(object value)
     {
         if (value is string json)

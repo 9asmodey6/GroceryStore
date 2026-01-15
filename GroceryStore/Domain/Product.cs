@@ -5,11 +5,17 @@ namespace GroceryStore.Domain;
 
 public class Product : BaseEntity
 {
-    public string Name { get; private set; }
+    public string Name { get; private set; } = null!;
+
     public decimal Price { get; private set; }
+
     public Category Category { get; set; } = null!;
-    public Dictionary<string, string> Details { get; private set; }
-    private Product() { }
+
+    public Dictionary<string, string> Details { get; private set; } = new();
+
+    private Product()
+    {
+    }
 
     public Product(string name, decimal price)
     {
@@ -21,7 +27,7 @@ public class Product : BaseEntity
     {
         if (newPrice < 0)
         {
-            throw new ArgumentException("Price cannot be negative.", nameof(newPrice));
+            throw new ArgumentException("Price must be non-negative", nameof(newPrice));
         }
 
         Price = newPrice;
@@ -29,11 +35,7 @@ public class Product : BaseEntity
 
     public void SetName(string name)
     {
-        if (string.IsNullOrEmpty(name))
-        {
-            throw new ArgumentException("Enter a valid product name.", nameof(name));
-        }
-
+        ArgumentException.ThrowIfNullOrEmpty(name);
         Name = name;
     }
 
@@ -41,12 +43,9 @@ public class Product : BaseEntity
     {
         var sb = new StringBuilder();
         sb.Append($"Category: {Category.Name}\n{Name}: {Price}UAH\n");
-        if (Details != null && Details.Count > 0)
+        foreach (var pair in Details)
         {
-            foreach (var pair in Details)
-            {
-                sb.AppendLine($"{pair.Key}: {pair.Value}");
-            }
+            sb.AppendLine($"{pair.Key}: {pair.Value}");
         }
 
         return sb.ToString();

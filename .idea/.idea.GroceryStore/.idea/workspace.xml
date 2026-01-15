@@ -9,7 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a3bd185-5482-4dab-a35f-3d917e98b62a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.GroceryStore/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GroceryStore/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Product.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Infrastructure/JsonTypeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Infrastructure/JsonTypeHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Shared/BaseEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Shared/BaseEntity.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +42,7 @@
     <setting file="file://$USER_HOME$/AppData/Roaming/Microsoft/UserSecrets/5248f131-7dc2-4189-b522-91917a597b2e/secrets.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GroceryStore/Domain/Category.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GroceryStore/Domain/Product.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GroceryStore/Domain/StockBatches.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GroceryStore/Infrastructure/IDbConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GroceryStore/Infrastructure/JsonTypeHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GroceryStore/Shared/BaseEntity.cs" root0="FORCE_HIGHLIGHTING" />
@@ -112,7 +117,7 @@
       <workItem from="1768250352280" duration="1316000" />
       <workItem from="1768251701059" duration="70000" />
       <workItem from="1768251794962" duration="3580000" />
-      <workItem from="1768508972454" duration="2216000" />
+      <workItem from="1768508972454" duration="3243000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: GroceryStore Web API base structure">
       <option name="closed" value="true" />
@@ -122,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768251383726</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added some entities">
+      <option name="closed" value="true" />
+      <created>1768511240454</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1768511240454</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,7 +146,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Initial commit: GroceryStore Web API base structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit: GroceryStore Web API base structure" />
+    <MESSAGE value="Added some entities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some entities" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
