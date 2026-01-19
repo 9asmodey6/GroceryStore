@@ -6,9 +6,11 @@ public class StockBatch : BaseEntity
 {
     public int ProductId { get; private set; }
 
-    public Product Product { get; private set; }
-
     public int Quantity { get; private set; }
+
+    public int RemainingQuantity { get; set; }
+
+    public string BatchNumber { get; private set; }
 
     public decimal PurchasePrice { get; private set; }
 

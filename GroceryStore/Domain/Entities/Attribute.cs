@@ -11,7 +11,7 @@ public class Attribute : BaseEntity
 
     public string Unit { get; private set; }
 
-    public int MinValue { get; private set; }
+    public decimal? MinValue { get; private set; }
 
-    public int MaxValue { get; private set; }
+    public decimal? MaxValue { get; private set; }
 }
