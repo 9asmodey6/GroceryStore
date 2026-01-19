@@ -9,8 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a3bd185-5482-4dab-a35f-3d917e98b62a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Attribute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Attribute.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Entities/StockBatches.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Entities/StockBatches.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Category.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +116,7 @@
       <workItem from="1768251701059" duration="70000" />
       <workItem from="1768251794962" duration="3580000" />
       <workItem from="1768508972454" duration="3451000" />
-      <workItem from="1768845385795" duration="1824000" />
+      <workItem from="1768845385795" duration="2572000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: GroceryStore Web API base structure">
       <option name="closed" value="true" />
@@ -159,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768846914174</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary=".">
+      <option name="closed" value="true" />
+      <created>1768847251925</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1768847251925</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
