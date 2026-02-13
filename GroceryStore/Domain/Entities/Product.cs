@@ -9,7 +9,19 @@ public class Product : BaseEntity
 
     public decimal Price { get; private set; }
 
-    public Category Category { get; set; } = null!;
+    public int CategoryId { get; private set; } // FK
+
+    public Category Category { get; set; } = null!; // Navigation property
+
+    public string SKU { get; private set; } = null!;
+
+    public string? Description { get; private set; }
+
+    public string BaseUnit { get; private set; }
+
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
+    public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
     public Dictionary<string, string> Details { get; private set; } = new();
 
@@ -50,4 +62,4 @@ public class Product : BaseEntity
 
         return sb.ToString();
     }
-}
+ }
