@@ -1,0 +1,14 @@
+namespace GroceryStore.Domain;
+
+public class CategoryAttribute
+{
+    public int CategoryId { get; set; }
+
+    public Category Category { get; set; } = null!;
+
+    public int AttributeId { get; set; }
+
+    public Attribute Attribute { get; set; } = null!;
+
+    public bool IsRequired { get; set; }
+}
