@@ -19,6 +19,7 @@ public class JsonTypeHandler : SqlMapper.TypeHandler<Dictionary<string, string>>
         {
             return JsonSerializer.Deserialize<Dictionary<string, string>>(json);
         }
+
         return null;
     }
 }

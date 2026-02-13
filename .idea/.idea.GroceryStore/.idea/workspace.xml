@@ -9,7 +9,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a3bd185-5482-4dab-a35f-3d917e98b62a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Domain/Entities/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.GroceryStore/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.GroceryStore/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/GroceryStore.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/GroceryStore.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/Infrastructure/Data/JsonTypeHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/Infrastructure/Data/JsonTypeHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GroceryStore/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/GroceryStore/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +34,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/9asmodey6/GroceryStore.git&quot;,
-    &quot;accountId&quot;: &quot;eff1fa47-c1d4-49e8-a033-63e1b03bd206&quot;
+    &quot;accountId&quot;: &quot;29fbb255-a0f7-4327-b587-7b8ef9219ef1&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -59,15 +62,16 @@
     &quot;.NET Launch Settings Profile.GroceryStore: http.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/domain-layer-setup&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -117,6 +121,12 @@
       <workItem from="1768251794962" duration="3580000" />
       <workItem from="1768508972454" duration="3451000" />
       <workItem from="1768845385795" duration="2572000" />
+      <workItem from="1770931035758" duration="3812000" />
+      <workItem from="1770967941333" duration="1133000" />
+      <workItem from="1770969245181" duration="235000" />
+      <workItem from="1770969510682" duration="152000" />
+      <workItem from="1770970409685" duration="1939000" />
+      <workItem from="1770972431953" duration="321000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit: GroceryStore Web API base structure">
       <option name="closed" value="true" />
@@ -200,5 +210,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
