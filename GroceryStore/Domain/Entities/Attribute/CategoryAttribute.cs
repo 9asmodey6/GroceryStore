@@ -9,6 +9,6 @@ public class CategoryAttribute
     public int AttributeId { get; set; }
 
     public Attribute Attribute { get; set; } = null!;
-
+    
     public bool IsRequired { get; set; }
 }

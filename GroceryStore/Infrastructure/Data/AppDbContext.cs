@@ -1,4 +1,5 @@
 using GroceryStore.Database.Configurations.Attributes;
+using GroceryStore.Database.Extensions;
 
 namespace GroceryStore.Infrastructure;
 
@@ -20,5 +21,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new CategoryAttributeConfiguration());
+        modelBuilder.AddPostgreSqlRules();
+        modelBuilder.OnDeleteRestrictRules();
     }
 }
