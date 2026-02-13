@@ -6,7 +6,13 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UserSecretsId>5248f131-7dc2-4189-b522-91917a597b2e</UserSecretsId>
     </PropertyGroup>
-
+    
+    <ItemGroup>
+        <Content Update="@(Content)">
+            <Visible Condition="'%(NuGetItemType)' == 'Content'">false</Visible>
+        </Content>
+    </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="Dapper" Version="2.1.66" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
