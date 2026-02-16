@@ -4,7 +4,7 @@ using System.Data;
 using System.Text.Json;
 using Dapper;
 
-public class JsonTypeHandler : SqlMapper.TypeHandler<Dictionary<string, string>>
+public class JsonMetadataMapper : SqlMapper.TypeHandler<Dictionary<string, string>>
 {
     public override void SetValue(IDbDataParameter parameter, Dictionary<string, string>? value)
     {
