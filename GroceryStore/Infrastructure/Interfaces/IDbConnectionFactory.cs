@@ -7,7 +7,3 @@ public interface IDbConnectionFactory
     IDbConnection CreateConnection();
 }
 
-public class DbConnectionFactory(string connectionString) : IDbConnectionFactory
-{
-    public IDbConnection CreateConnection() => new NpgsqlConnection(connectionString);
-}
