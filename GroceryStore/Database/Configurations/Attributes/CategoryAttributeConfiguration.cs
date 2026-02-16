@@ -8,7 +8,6 @@ public class CategoryAttributeConfiguration : IEntityTypeConfiguration<CategoryA
 {
     public void Configure(EntityTypeBuilder<CategoryAttribute> builder)
     {
-        builder.ToTable("category_attributes");
 
         builder.HasKey(ca => new { ca.CategoryId, ca.AttributeId });
         builder.Property(c => c.CategoryId).IsRequired();
