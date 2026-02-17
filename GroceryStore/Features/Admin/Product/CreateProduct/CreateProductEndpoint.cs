@@ -11,7 +11,8 @@ public class CreateProductEndpoint : IEndpoint
             .WithSummary("Creates a new Product")
             .WithName("CreateProduct")
             .Produces<int>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status403Forbidden);
     }
 
     static async Task<IResult> HandleAsync(
