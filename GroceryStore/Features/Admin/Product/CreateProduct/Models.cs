@@ -13,7 +13,7 @@ public record AttributeDTO(
 
 public record AttributeValueDTO(int AttributeId, string Value);
 
-public record ProductRequestDto(
+public record CreateProductRequest(
     string Name,
     int CategoryId,
     string? Description,

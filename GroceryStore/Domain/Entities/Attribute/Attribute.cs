@@ -13,6 +13,8 @@ public class Attribute : BaseEntity
 
     public decimal? MinValue { get; private set; }
 
+    public Category Category { get; private set; }
+
     public decimal? MaxValue { get; private set; }
 
     public bool IsRequired { get; private set; }

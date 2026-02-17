@@ -21,7 +21,8 @@ public class GetMetadataEndpoint : IEndpoint
     private static async Task<IResult> HandleAsync(
         int categoryId,
         GetMetadataRepository repository,
-        IMemoryCache cache)
+        IMemoryCache cache,
+        CancellationToken ct)
     {
         const string cacheKeyPrefix = "category_metadata";
 
@@ -32,7 +33,7 @@ public class GetMetadataEndpoint : IEndpoint
             return Results.Ok(cachedMetadata);
         }
 
-        var metadata = await repository.GetAttributesResponseAsync(categoryId);
+        var metadata = await repository.GetAttributesResponseAsync(categoryId, ct);
         cache.Set(cacheKey, metadata, TimeSpan.FromMinutes(30));
         return Results.Ok(metadata);
     }
