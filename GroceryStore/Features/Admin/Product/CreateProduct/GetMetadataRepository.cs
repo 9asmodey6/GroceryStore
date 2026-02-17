@@ -17,23 +17,31 @@ public class GetMetadataRepository
     public async Task<List<AttributeDTO>> GetAttributesResponseAsync(int categoryId)
     {
         using var connection = _factory.CreateConnection();
+        string sql = @"
+WITH RECURSIVE category_tree AS (
+    SELECT id, parent_id 
+    FROM categories 
+    WHERE id = @categoryId
 
-        string sql = @"WITH RECURSIVE category_tree AS (
-        SELECT id, parent_id FROM categories WHERE  id = @categoryId
-        UNION ALL
-        SELECT c.id, c.parent_id 
-        FROM categories c
-        JOIN  category_tree ct
-        ON c.id = ct.parent_id
-        )
-            SELECT 
-                a.name AS Name, 
-                a.unit AS Unit, 
-                ca.is_required AS IsRequired
-            FROM category_tree ct
-            JOIN category_attributes ca ON ct.id = ca.category_id
-            JOIN attributes a ON ca.attribute_id = a.id";
+    UNION ALL
 
+    SELECT c.id, c.parent_id 
+    FROM categories c
+    JOIN category_tree ct ON c.id = ct.parent_id
+)
+
+SELECT DISTINCT
+    a.id              AS AttributeId,
+    a.name            AS Name,
+    a.data_type       AS DataType,
+    a.unit            AS Unit,
+    a.min_value       AS MinValue,
+    a.max_value       AS MaxValue,
+    ca.is_required    AS IsRequired
+FROM category_tree ct
+JOIN category_attributes ca ON ct.id = ca.category_id
+JOIN attributes a ON ca.attribute_id = a.id
+";
         var result = await connection.QueryAsync<AttributeDTO>(sql, new { categoryId });
         return result.ToList();
     }

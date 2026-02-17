@@ -23,7 +23,7 @@ public class Product : BaseEntity
 
     public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
-    public Dictionary<string, string> Details { get; private set; } = new();
+    public Dictionary<int, string> Details { get; private set; } = new();
 
     private Product()
     {

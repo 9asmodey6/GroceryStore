@@ -15,5 +15,5 @@ public class Attribute : BaseEntity
 
     public decimal? MaxValue { get; private set; }
 
-    public bool isRequired { get; private set; }
+    public bool IsRequired { get; private set; }
 }
