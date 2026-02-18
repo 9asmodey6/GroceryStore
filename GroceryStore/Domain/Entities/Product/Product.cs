@@ -23,7 +23,7 @@ public class Product : BaseEntity
 
     public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
-    public Dictionary<int, string> Details { get; private set; } = new();
+    public Dictionary<int, string> Metadata { get; private set; } = new();
 
     private Product()
     {
@@ -55,7 +55,7 @@ public class Product : BaseEntity
     {
         var sb = new StringBuilder();
         sb.Append($"Category: {Category.Name}\n{Name}: {Price}UAH\n");
-        foreach (var pair in Details)
+        foreach (var pair in Metadata)
         {
             sb.AppendLine($"{pair.Key}: {pair.Value}");
         }

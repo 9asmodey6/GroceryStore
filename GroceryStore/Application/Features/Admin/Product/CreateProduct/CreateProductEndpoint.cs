@@ -20,6 +20,6 @@ public class CreateProductEndpoint : IEndpoint
         AppDbContext db,
         CancellationToken ct)
     {
-     
+       return Results.Ok();
     }
 }

@@ -18,6 +18,7 @@ public class AttributeSchemaValidator
         IReadOnlyList<AttributeValueDTO> values,
         CancellationToken ct)
     {
+        return new Dictionary<int, string>();
     }
 
     public async Task<List<AttributeDTO>> GetMetadataAsync(int categoryId, CancellationToken ct)
