@@ -14,7 +14,7 @@ public class StockBatch : BaseEntity
 
     public decimal PurchasePrice { get; private set; }
 
-    public DateOnly SupplyDate { get; private set; }
+    public DateOnly SupplyDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
 
     public DateTime ExpirationDate { get; private set; }
 

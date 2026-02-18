@@ -5,8 +5,8 @@ using GroceryStore.Domain.Enums;
 public record GetMetadataResponse(
     int AttributeId,
     string Name,
-    AttributeDataType DataType,
+    string DataType,
     string? Unit,
-    bool IsRequired,
     decimal? MinValue,
-    decimal? MaxValue);
+    decimal? MaxValue,
+    bool IsRequired);

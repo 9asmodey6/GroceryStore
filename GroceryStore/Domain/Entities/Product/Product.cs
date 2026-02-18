@@ -52,15 +52,4 @@ public class Product : BaseEntity
         Name = name;
     }
 
-    public string GetFullInfo()
-    {
-        var sb = new StringBuilder();
-        sb.Append($"Category: {Category.Name}\n{Name}: {Price}UAH\n");
-        foreach (var pair in Metadata)
-        {
-            sb.AppendLine($"{pair.Key}: {pair.Value}");
-        }
-
-        return sb.ToString();
-    }
- }
+}

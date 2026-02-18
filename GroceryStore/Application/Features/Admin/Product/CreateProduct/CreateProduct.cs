@@ -23,7 +23,7 @@ public class CreateProduct : IEndpoint
         CategoryAttributeValueNormalizer normalizer,
         CancellationToken ct)
     {
-        var normalized = normalizer.ValidateAndNormalizeAsync(request.CategoryId,request.Attributes, ct);
+        var normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId,request.Attributes, ct);
         return Results.Ok(normalized);
     }
 }
