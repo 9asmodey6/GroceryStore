@@ -1,12 +1,10 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Application.Features.Admin.Product.CreateProduct;
 
 using FluentValidation;
-using Infrastructure;
-using Microsoft.Extensions.Caching.Memory;
 
-public class CreateProductValidator : AbstractValidator<CreateProductRequest>
+public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
-    public CreateProductValidator()
+    public CreateProductRequestValidator()
     {
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage("Name is required")

@@ -1,7 +1,8 @@
-using System.Text;
-using GroceryStore.Shared;
+namespace GroceryStore.Domain.Entities.Product;
 
-namespace GroceryStore.Domain;
+using System.Text;
+using GroceryStore.Domain.Entities.Category;
+using Shared;
 
 public class Product : BaseEntity
 {

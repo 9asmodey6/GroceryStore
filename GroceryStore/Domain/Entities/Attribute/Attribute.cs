@@ -1,7 +1,8 @@
-namespace GroceryStore.Domain;
+namespace GroceryStore.Domain.Entities.Attribute;
 
-using GroceryStore.Shared;
+using Category;
 using GroceryStore.Domain.Enums;
+using Shared;
 
 public class Attribute : BaseEntity
 {
@@ -9,7 +10,7 @@ public class Attribute : BaseEntity
 
     public AttributeDataType DataType { get; private set; }
 
-    public string Unit { get; private set; }
+    public string? Unit { get; private set; }
 
     public decimal? MinValue { get; private set; }
 

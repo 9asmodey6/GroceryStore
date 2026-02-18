@@ -1,5 +1,5 @@
-namespace GroceryStore.Infrastructure;
-using Npgsql;
+namespace GroceryStore.Infrastructure.Interfaces;
+
 using System.Data;
 
 public interface IDbConnectionFactory

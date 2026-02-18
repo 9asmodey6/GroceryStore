@@ -1,8 +1,10 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Application.Features.Admin.Product.CreateProduct;
 
-using Infrastructure;
+using Abstractions;
+using GroceryStore.Infrastructure;
+using Services;
 
-public class CreateProductEndpoint : IEndpoint
+public class CreateProduct : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -17,9 +19,11 @@ public class CreateProductEndpoint : IEndpoint
 
     static async Task<IResult> HandleAsync(
         CreateProductRequest request,
-        AppDbContext db,
+        CreateProductRepository repository,
+        CategoryAttributeValueNormalizer normalizer,
         CancellationToken ct)
     {
-       return Results.Ok();
+        var normalized = normalizer.ValidateAndNormalizeAsync(request.CategoryId,request.Attributes, ct);
+        return Results.Ok(normalized);
     }
 }

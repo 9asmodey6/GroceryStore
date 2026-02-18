@@ -1,9 +1,8 @@
-using Dapper;
-using Microsoft.Extensions.Caching.Memory;
-using GroceryStore.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
+namespace GroceryStore.Application.Features.Admin.Categories.GetMetadataByCategoryId;
 
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+using Abstractions;
+using GroceryStore.Infrastructure;
+using Microsoft.Extensions.Caching.Memory;
 
 public class GetMetadataEndpoint : IEndpoint
 {
@@ -13,7 +12,7 @@ public class GetMetadataEndpoint : IEndpoint
             .WithTags("AdminCategories")
             .WithSummary("Get category attributes metadata (recursive)")
             .WithName("GetCategoryMetadata")
-            .Produces<List<AttributeDTO>>(StatusCodes.Status200OK)
+            .Produces<List<GetMetadataResponse>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status400BadRequest);
     }
@@ -28,7 +27,7 @@ public class GetMetadataEndpoint : IEndpoint
 
         var cacheKey = $"{cacheKeyPrefix}_{categoryId}";
 
-        if (cache.TryGetValue(cacheKey, out List<AttributeDTO>? cachedMetadata) && cachedMetadata != null)
+        if (cache.TryGetValue(cacheKey, out List<GetMetadataResponse>? cachedMetadata) && cachedMetadata != null)
         {
             return Results.Ok(cachedMetadata);
         }

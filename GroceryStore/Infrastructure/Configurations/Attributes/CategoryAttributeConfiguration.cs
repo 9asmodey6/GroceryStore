@@ -1,8 +1,8 @@
-namespace GroceryStore.Database.Configurations.Attributes;
+namespace GroceryStore.Infrastructure.Configurations.Attributes;
 
+using GroceryStore.Domain.Entities.Attribute;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain;
 
 public class CategoryAttributeConfiguration : IEntityTypeConfiguration<CategoryAttribute>
 {

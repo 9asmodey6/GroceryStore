@@ -1,9 +1,9 @@
-using System.Data;
+namespace GroceryStore.Application.Features.Admin.Categories.GetMetadataByCategoryId;
 
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
-
-using GroceryStore.Infrastructure;
 using Dapper;
+using GroceryStore.Infrastructure;
+using Infrastructure.Interfaces;
+using Product.CreateProduct;
 
 public class GetMetadataRepository
 {
@@ -14,7 +14,7 @@ public class GetMetadataRepository
         _factory = factory;
     }
 
-    public async Task<List<AttributeDTO>> GetAttributesResponseAsync(
+    public async Task<List<GetMetadataResponse>> GetAttributesResponseAsync(
         int categoryId,
         CancellationToken ct)
     {
@@ -45,7 +45,7 @@ JOIN category_attributes ca ON ct.id = ca.category_id
 JOIN attributes a ON ca.attribute_id = a.id
 ";
         var cmd = new CommandDefinition(sql, new { categoryId }, cancellationToken: ct);
-        var result = await connection.QueryAsync<AttributeDTO>(cmd);
+        var result = await connection.QueryAsync<GetMetadataResponse>(cmd);
         return result.ToList();
     }
 }

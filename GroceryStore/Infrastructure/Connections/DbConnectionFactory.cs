@@ -1,7 +1,8 @@
-using System.Data;
-using Npgsql;
+namespace GroceryStore.Infrastructure.Connections;
 
-namespace GroceryStore.Infrastructure;
+using System.Data;
+using Interfaces;
+using Npgsql;
 
 public class DbConnectionFactory(string connectionString) : IDbConnectionFactory
 {

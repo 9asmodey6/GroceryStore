@@ -1,8 +1,8 @@
-namespace GroceryStore.Database.Configurations.Products;
+namespace GroceryStore.Infrastructure.Configurations.Products;
 
+using GroceryStore.Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {

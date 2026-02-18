@@ -1,4 +1,4 @@
-namespace GroceryStore.Infrastructure;
+namespace GroceryStore.Application.Abstractions;
 
 public interface IEndpoint
 {

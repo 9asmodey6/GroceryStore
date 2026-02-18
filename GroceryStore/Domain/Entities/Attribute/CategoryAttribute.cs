@@ -1,4 +1,6 @@
-namespace GroceryStore.Domain;
+namespace GroceryStore.Domain.Entities.Attribute;
+
+using Category;
 
 public class CategoryAttribute
 {

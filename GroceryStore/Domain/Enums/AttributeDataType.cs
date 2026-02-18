@@ -6,5 +6,5 @@ public enum AttributeDataType
     Integer = 2,
     Decimal = 3,
     DateTime = 4,
-    Boolean = 5
+    Boolean = 5,
 }

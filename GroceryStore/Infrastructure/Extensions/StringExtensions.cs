@@ -1,4 +1,4 @@
-namespace GroceryStore.Database.Extensions;
+namespace GroceryStore.Infrastructure.Extensions;
 
 using System.Runtime.CompilerServices;
 

@@ -1,8 +1,8 @@
-namespace GroceryStore.Database.Configurations.Categories;
+namespace GroceryStore.Infrastructure.Configurations.Categories;
 
+using GroceryStore.Domain.Entities.Category;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Domain;
 
 public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {

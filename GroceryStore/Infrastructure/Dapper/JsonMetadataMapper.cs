@@ -1,8 +1,8 @@
-namespace GroceryStore.Infrastructure;
+namespace GroceryStore.Infrastructure.Dapper;
 
 using System.Data;
 using System.Text.Json;
-using Dapper;
+using global::Dapper;
 
 public class JsonMetadataMapper : SqlMapper.TypeHandler<Dictionary<int, string>>
 {

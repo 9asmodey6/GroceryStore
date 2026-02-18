@@ -1,6 +1,6 @@
-using GroceryStore.Shared;
+namespace GroceryStore.Domain.Entities.Stock;
 
-namespace GroceryStore.Domain;
+using GroceryStore.Domain.Entities.Shared;
 
 public class StockBatch : BaseEntity
 {

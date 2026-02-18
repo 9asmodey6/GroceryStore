@@ -1,4 +1,4 @@
-namespace GroceryStore.Shared;
+namespace GroceryStore.Domain.Entities.Shared;
 
 public class BaseEntity
 {

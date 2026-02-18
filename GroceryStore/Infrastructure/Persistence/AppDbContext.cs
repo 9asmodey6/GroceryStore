@@ -1,10 +1,11 @@
-using GroceryStore.Database.Configurations.Attributes;
-using GroceryStore.Database.Extensions;
+namespace GroceryStore.Infrastructure.Persistence;
 
-namespace GroceryStore.Infrastructure;
-
+using GroceryStore.Domain.Entities.Attribute;
+using GroceryStore.Domain.Entities.Category;
+using GroceryStore.Domain.Entities.Product;
+using GroceryStore.Domain.Entities.Stock;
+using GroceryStore.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
-using GroceryStore.Domain;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

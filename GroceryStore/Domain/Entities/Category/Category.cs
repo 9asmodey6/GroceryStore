@@ -1,6 +1,8 @@
-using GroceryStore.Shared;
+namespace GroceryStore.Domain.Entities.Category;
 
-namespace GroceryStore.Domain;
+using GroceryStore.Domain.Entities.Attribute;
+using Product;
+using Shared;
 
 public class Category : BaseEntity
 {

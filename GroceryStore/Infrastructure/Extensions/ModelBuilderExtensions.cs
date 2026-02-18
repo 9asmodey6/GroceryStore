@@ -1,9 +1,9 @@
-namespace GroceryStore.Database.Extensions;
+namespace GroceryStore.Infrastructure.Extensions;
 
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 //using Entities.Identity;
 //using Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 public static class ModelBuilderExtensions
 {
