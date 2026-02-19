@@ -32,7 +32,17 @@ public class CreateProduct : IEndpoint
             return Results.BadRequest(validationResult.Errors);
         }
 
-        var normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+        var normalized = new Dictionary<int, string>();
+
+        try
+        {
+             normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+        }
+        catch (ArgumentException ex)
+        {
+            return Results.BadRequest(ex.Message);
+        }
+
         var sku = await skuService.CreateSku(request.CategoryId, ct);
         var product = ProductMapper.ToEntity(
             request,

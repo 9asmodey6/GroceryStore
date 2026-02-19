@@ -27,6 +27,9 @@ SqlMapper.AddTypeHandler(new JsonMetadataMapper());
 // Application services
 builder.Services.AddScoped<CategoryAttributeService>();
 builder.Services.AddScoped<CategoryAttributeValueNormalizer>();
+builder.Services.AddScoped<CreateProductRequestValidator>();
+builder.Services.AddScoped<ProductSkuGenerationService>();
+builder.Services.AddScoped<CreateProductRepository>();
 
 // Repositories (Dapper)
 builder.Services.AddScoped<GetMetadataRepository>();

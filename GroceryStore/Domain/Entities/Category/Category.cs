@@ -1,5 +1,6 @@
 namespace GroceryStore.Domain.Entities.Category;
 
+using CategoryAttribute;
 using GroceryStore.Domain.Entities.Attribute;
 using Product;
 using Shared;

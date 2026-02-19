@@ -38,7 +38,9 @@ public class CategoryAttributeValueNormalizer
 
         // 2) required present
         var provided = values.Select(v => v.AttributeId).ToHashSet();
-        var missingRequired = metadata.Where(m => m.IsRequired && !provided.Contains(m.AttributeId)).ToList();
+        var missingRequired = metadata.Where(m => m.IsRequired && !provided.Contains(m.AttributeId))
+            .Select(m => $"{m.AttributeId} ({m.Name})")
+            .ToList();
         if (missingRequired.Count > 0)
         {
             throw new ArgumentException("Missing required attributes");
