@@ -2,6 +2,7 @@ namespace GroceryStore.Application.Features.Admin.Product.CreateProduct;
 
 using Abstractions;
 using GroceryStore.Infrastructure;
+using Mappers;
 using Services;
 
 public class CreateProduct : IEndpoint
@@ -21,9 +22,23 @@ public class CreateProduct : IEndpoint
         CreateProductRequest request,
         CreateProductRepository repository,
         CategoryAttributeValueNormalizer normalizer,
+        CreateProductRequestValidator validator,
+        ProductSkuGenerationService skuService,
         CancellationToken ct)
     {
-        var normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId,request.Attributes, ct);
-        return Results.Ok(normalized);
+        var validationResult = await validator.ValidateAsync(request, ct);
+        if (!validationResult.IsValid)
+        {
+            return Results.BadRequest(validationResult.Errors);
+        }
+
+        var normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+        var sku = await skuService.CreateSku(request.CategoryId, ct);
+        var product = ProductMapper.ToEntity(
+            request,
+            sku,
+            normalized);
+        await repository.CreateAsync(product, ct);
+        return Results.Created($"/api/v1/admin/products/{product.Id}", product);
     }
 }

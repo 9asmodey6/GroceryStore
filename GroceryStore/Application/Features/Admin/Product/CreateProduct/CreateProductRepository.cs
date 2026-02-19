@@ -5,8 +5,18 @@ using Infrastructure.Persistence;
 
 public class CreateProductRepository
 {
-    public void CreateAsync(Product product, AppDbContext context)
+
+    private readonly AppDbContext _dbContext;
+
+    public CreateProductRepository(AppDbContext dbContext)
     {
-       context.AddAsync(product);
+        _dbContext = dbContext;
+    }
+
+    public async Task CreateAsync(Product product, CancellationToken ct)
+    {
+        await _dbContext.Products.AddAsync(product, ct);
+        await _dbContext.SaveChangesAsync(ct);
+
     }
 }

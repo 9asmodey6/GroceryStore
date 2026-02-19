@@ -16,7 +16,7 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
 
         RuleFor(p => p.CategoryId)
             .NotEmpty().WithMessage("CategoryId is required")
-            .GreaterThanOrEqualTo(0).WithMessage("CategoryId must be greater than 0");
+            .GreaterThan(0).WithMessage("CategoryId must be greater than 0");
 
         RuleFor(p => p.Attributes)
             .NotEmpty().WithMessage("Attributes are required")

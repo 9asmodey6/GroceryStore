@@ -6,17 +6,17 @@ using Shared;
 
 public class Attribute : BaseEntity
 {
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
-    public AttributeDataType DataType { get; private set; }
+    public AttributeDataType DataType { get; set; }
 
-    public string? Unit { get; private set; }
+    public string? Unit { get; set; }
 
-    public decimal? MinValue { get; private set; }
+    public decimal? MinValue { get; set; }
 
-    public Category Category { get; private set; }
+    public Category Category { get; set; }
 
-    public decimal? MaxValue { get; private set; }
+    public decimal? MaxValue { get; set; }
 
-    public bool IsRequired { get; private set; }
+    public bool IsRequired { get; set; }
 }
