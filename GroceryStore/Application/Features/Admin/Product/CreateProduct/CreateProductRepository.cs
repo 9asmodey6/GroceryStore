@@ -5,7 +5,6 @@ using Infrastructure.Persistence;
 
 public class CreateProductRepository
 {
-
     private readonly AppDbContext _dbContext;
 
     public CreateProductRepository(AppDbContext dbContext)
@@ -17,6 +16,5 @@ public class CreateProductRepository
     {
         await _dbContext.Products.AddAsync(product, ct);
         await _dbContext.SaveChangesAsync(ct);
-
     }
 }

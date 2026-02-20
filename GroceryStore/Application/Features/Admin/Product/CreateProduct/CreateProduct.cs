@@ -1,8 +1,9 @@
 namespace GroceryStore.Application.Features.Admin.Product.CreateProduct;
 
 using Abstractions;
-using GroceryStore.Infrastructure;
 using Mappers;
+using Microsoft.Extensions.Caching.Memory;
+using Models;
 using Services;
 
 public class CreateProduct : IEndpoint
@@ -18,7 +19,7 @@ public class CreateProduct : IEndpoint
             .Produces(StatusCodes.Status403Forbidden);
     }
 
-    static async Task<IResult> HandleAsync(
+    private static async Task<IResult> HandleAsync(
         CreateProductRequest request,
         CreateProductRepository repository,
         CategoryAttributeValueNormalizer normalizer,
@@ -32,11 +33,11 @@ public class CreateProduct : IEndpoint
             return Results.BadRequest(validationResult.Errors);
         }
 
-        var normalized = new Dictionary<int, string>();
+        Dictionary<int, string> normalized;
 
         try
         {
-             normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+            normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
         }
         catch (ArgumentException ex)
         {

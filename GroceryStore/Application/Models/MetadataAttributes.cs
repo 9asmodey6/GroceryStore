@@ -5,7 +5,7 @@ using Domain.Enums;
 public record MetadataAttributes(
     int AttributeId,
     string Name,
-    string DataType,
+    AttributeDataType DataType,
     string? Unit,
     decimal? MinValue,
     decimal? MaxValue,

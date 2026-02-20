@@ -11,9 +11,11 @@ public class Category : BaseEntity
 
     public int? ParentId { get; set; }
 
-    public Category Parent { get; set; }
+    public Category? Parent { get; set; }
 
     public ICollection<CategoryAttribute> Attributes { get; set; } = new List<CategoryAttribute>();
+
+    public ICollection<Category> Children { get; set; } = new List<Category>();
 
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }

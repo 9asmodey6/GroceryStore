@@ -33,7 +33,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Metadata)
             .HasDefaultValueSql("'{}'::jsonb");
 
-        builder.Property(p => p.IsAsctive)
+        builder.Property(p => p.IsActive)
             .HasDefaultValue(true);
 
         builder.Property(p => p.SKU)

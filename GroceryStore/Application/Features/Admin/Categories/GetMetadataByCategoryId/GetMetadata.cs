@@ -1,11 +1,8 @@
 namespace GroceryStore.Application.Features.Admin.Categories.GetMetadataByCategoryId;
 
 using Abstractions;
-using GroceryStore.Infrastructure;
 using Microsoft.Extensions.Caching.Memory;
 using Models;
-using Services;
-
 public class GetMetadataEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
@@ -14,7 +11,7 @@ public class GetMetadataEndpoint : IEndpoint
             .WithTags("AdminCategories")
             .WithSummary("Get category attributes metadata (recursive)")
             .WithName("GetCategoryMetadata")
-            .Produces<List<MetadataAttributes>>(StatusCodes.Status200OK)
+            .Produces<List<MetadataAttributes>>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status400BadRequest);
     }

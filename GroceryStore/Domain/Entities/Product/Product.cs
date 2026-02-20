@@ -1,6 +1,5 @@
 namespace GroceryStore.Domain.Entities.Product;
 
-using System.Text;
 using GroceryStore.Domain.Entities.Category;
 using Shared;
 
@@ -14,17 +13,21 @@ public class Product : BaseEntity
 
     public Category Category { get; private set; } = null!; // Navigation property
 
+
     public string SKU { get; private set; } = null!;
 
     public string? Description { get; private set; }
 
     public string BaseUnit { get; private set; } = "pcs";
 
+
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
     public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
-    public bool IsAsctive { get; private set; } = true;
+
+    public bool IsActive { get; private set; } = true;
+
 
     public Dictionary<int, string> Metadata { get; private set; } = new();
 

@@ -1,8 +1,5 @@
 namespace GroceryStore.Application.Features.Admin.Categories.GetMetadataByCategoryId;
 
-using Dapper;
-using GroceryStore.Infrastructure;
-using Infrastructure.Interfaces;
 using Models;
 using Services;
 

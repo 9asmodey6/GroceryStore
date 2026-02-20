@@ -13,6 +13,7 @@ public class ProductsAttributesConfiguration : IEntityTypeConfiguration<ProductA
         builder.Property(x => x.Name).IsRequired();
 
         builder.Property(x => x.DataType)
-            .HasConversion<string>();
+            .HasConversion<int>()
+            .IsRequired();
     }
 }
