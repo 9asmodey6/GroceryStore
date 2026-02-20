@@ -1,12 +1,10 @@
 using Scalar.AspNetCore;
 using Dapper;
+using GroceryStore.Application;
 using GroceryStore.Infrastructure.Connections;
 using GroceryStore.Infrastructure.Dapper;
-using GroceryStore.Infrastructure.Interfaces;
-using GroceryStore.Infrastructure.Persistence;
-using GroceryStore.Application.Services;
-using GroceryStore.Application.Features.Admin.Categories.GetMetadataByCategoryId;
-using GroceryStore.Application.Features.Admin.Product.CreateProduct;
+using GroceryStore.Infrastructure.Interfaces; 
+using GroceryStore.Infrastructure.Persistence; 
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,18 +22,7 @@ builder.Services.AddSingleton<IDbConnectionFactory>(_ =>
 
 SqlMapper.AddTypeHandler(new JsonMetadataMapper());
 
-// Application services
-builder.Services.AddScoped<CategoryAttributeService>();
-builder.Services.AddScoped<CategoryAttributeValueNormalizer>();
-builder.Services.AddScoped<CreateProductRequestValidator>();
-builder.Services.AddScoped<ProductSkuGenerationService>();
-builder.Services.AddScoped<CreateProductRepository>();
-
-// Repositories (Dapper)
-builder.Services.AddScoped<GetMetadataRepository>();
-
-// (пока пустой, но чтобы DI не ругался)
-builder.Services.AddScoped<CreateProductRepository>();
+builder.Services.AddFeaturesGenerated();
 
 var app = builder.Build();
 
@@ -48,8 +35,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// Временно — ручной маппинг эндпоинтов (сразу увидишь их в Scalar)
-new GetMetadataEndpoint().MapEndpoint(app);
-new CreateProduct().MapEndpoint(app);
+app.MapEndpointsGenerated();
 
 app.Run();

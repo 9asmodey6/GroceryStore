@@ -8,7 +8,7 @@ using Services;
 
 public class CreateProduct : IEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder app)
+    public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/v1/admin/products", HandleAsync)
             .WithTags("AdminProducts")

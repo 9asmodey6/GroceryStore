@@ -2,5 +2,5 @@ namespace GroceryStore.Application.Abstractions;
 
 public interface IEndpoint
 {
-    void MapEndpoint(IEndpointRouteBuilder app);
+    static abstract void MapEndpoint(IEndpointRouteBuilder app);
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Models;
 public class GetMetadataEndpoint : IEndpoint
 {
-    public void MapEndpoint(IEndpointRouteBuilder app)
+    public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("api/v1/admin/categories/{categoryId:int:min(1)}/metadata", HandleAsync)
             .WithTags("AdminCategories")

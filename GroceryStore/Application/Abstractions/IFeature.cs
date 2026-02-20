@@ -2,5 +2,5 @@ namespace GroceryStore.Application.Abstractions;
 
 public interface IFeature
 {
-    void ConfigureServices(IServiceCollection services);
+    static abstract void ConfigureServices(IServiceCollection services);
 }
