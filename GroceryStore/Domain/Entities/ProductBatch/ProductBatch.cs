@@ -1,16 +1,19 @@
-namespace GroceryStore.Domain.Entities.Stock;
+namespace GroceryStore.Domain.Entities.ProductBatch;
 
 using GroceryStore.Domain.Entities.Shared;
+using Product;
 
-public class StockBatch : BaseEntity
+public class ProductBatch : BaseEntity
 {
     public int ProductId { get; private set; }
 
-    public int Quantity { get; private set; }
+    public int QuantityArrived { get; set; }
 
-    public int RemainingQuantity { get; set; }
+    public int QuantityRemaining { get; set; }
 
     public string BatchNumber { get; private set; }
+
+    public Product Product { get; private set; }
 
     public decimal PurchasePrice { get; private set; }
 
@@ -18,7 +21,9 @@ public class StockBatch : BaseEntity
 
     public DateTime ExpirationDate { get; private set; }
 
-    private StockBatch()
+    public bool IsClosed { get; set; } = false;
+
+    private ProductBatch()
     {
     }
 }

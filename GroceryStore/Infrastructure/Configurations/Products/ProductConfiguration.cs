@@ -3,6 +3,7 @@ namespace GroceryStore.Infrastructure.Configurations.Products;
 using System.Text.Json;
 using GroceryStore.Domain.Entities.Product;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
@@ -19,12 +20,21 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasColumnType("jsonb")
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-                v => JsonSerializer.
-                    Deserialize<Dictionary<int, string>>(v, (JsonSerializerOptions?)null)
-                     ?? new());
+                v => JsonSerializer.Deserialize<Dictionary<int, string>>(v, (JsonSerializerOptions?)null)
+                     ?? new ())
+            .Metadata.SetValueComparer(
+                new ValueComparer<Dictionary<int, string>>(
+                    (d1, d2) => d1!.SequenceEqual(d2!),
+                    d => d.Aggregate(0, (a, v) =>
+                        HashCode.Combine(a, v.Key.GetHashCode(), v.Value.GetHashCode())),
+                    d => d.ToDictionary(entry => entry.Key, entry => entry.Value)
+                ));
 
         builder.Property(p => p.Metadata)
             .HasDefaultValueSql("'{}'::jsonb");
+
+        builder.Property(p => p.IsAsctive)
+            .HasDefaultValue(true);
 
         builder.Property(p => p.SKU)
             .IsRequired()
