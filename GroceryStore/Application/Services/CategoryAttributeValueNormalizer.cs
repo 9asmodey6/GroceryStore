@@ -16,7 +16,7 @@ public class CategoryAttributeValueNormalizer
 
     public async Task<Dictionary<int, string>> ValidateAndNormalizeAsync(
         int categoryId,
-        IReadOnlyList<AttributeValueDTO> values,
+        IReadOnlyList<EnumerationModel> values,
         CancellationToken ct)
     {
         var metadata = await GetMetadataAsync(categoryId, ct);
@@ -30,14 +30,14 @@ public class CategoryAttributeValueNormalizer
         // 1) unknown ids
         foreach (var v in values)
         {
-            if (!metaById.ContainsKey(v.AttributeId))
+            if (!metaById.ContainsKey(v.Id))
             {
-                throw new ArgumentException($"AttributeId={v.AttributeId} not allowed");
+                throw new ArgumentException($"AttributeId={v.Id} not allowed");
             }
         }
 
         // 2) required present
-        var provided = values.Select(v => v.AttributeId).ToHashSet();
+        var provided = values.Select(v => v.Id).ToHashSet();
         var missingRequired = metadata.Where(m => m.IsRequired && !provided.Contains(m.AttributeId))
             .Select(m => $"{m.AttributeId} ({m.Name})")
             .ToList();
@@ -49,7 +49,7 @@ public class CategoryAttributeValueNormalizer
         // 3) normalize = Trim
         return values
             .Where(v => !string.IsNullOrWhiteSpace(v.Value))
-            .ToDictionary(v => v.AttributeId, v => v.Value.Trim());
+            .ToDictionary(v => v.Id, v => v.Value.Trim());
     }
 
     public async Task<List<MetadataAttributes>> GetMetadataAsync(int categoryId, CancellationToken ct)

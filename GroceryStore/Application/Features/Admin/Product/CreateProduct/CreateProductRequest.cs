@@ -8,4 +8,4 @@ public record CreateProductRequest(
     string? Description,
     decimal Price,
     string? BaseUnit,
-    List<AttributeValueDTO> Attributes);
+    List<EnumerationModel> Attributes);

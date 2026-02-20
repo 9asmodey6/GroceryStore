@@ -23,7 +23,7 @@ public class Product : BaseEntity
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 
     public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
-    
+
     public bool IsAsctive { get; private set; } = true;
 
     public Dictionary<int, string> Metadata { get; private set; } = new();

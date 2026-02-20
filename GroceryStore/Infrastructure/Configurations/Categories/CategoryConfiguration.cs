@@ -22,7 +22,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .WithOne(p => p.Category)
             .HasForeignKey(p => p.CategoryId);
 
-        builder.HasMany(c => c.CategoryAttributes)
+        builder.HasMany(c => c.Attributes)
             .WithOne(a => a.Category)
             .HasForeignKey(a => a.CategoryId);
     }

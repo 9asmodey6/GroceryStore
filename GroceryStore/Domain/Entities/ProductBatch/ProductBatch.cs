@@ -19,7 +19,7 @@ public class ProductBatch : BaseEntity
 
     public DateOnly SupplyDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
 
-    public DateTime ExpirationDate { get; private set; }
+    public DateOnly ExpirationDate { get; private set; }
 
     public bool IsClosed { get; set; } = false;
 

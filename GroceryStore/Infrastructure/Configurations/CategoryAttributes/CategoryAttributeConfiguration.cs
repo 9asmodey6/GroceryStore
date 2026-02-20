@@ -14,7 +14,7 @@ public class CategoryAttributeConfiguration : IEntityTypeConfiguration<CategoryA
         builder.Property(c => c.AttributeId).IsRequired();
 
         builder.HasOne(ca => ca.Category)
-            .WithMany(c => c.CategoryAttributes)
+            .WithMany(c => c.Attributes)
             .HasForeignKey(ca => ca.CategoryId);
 
         builder.HasOne(ca => ca.Attribute)

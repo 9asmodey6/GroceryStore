@@ -25,12 +25,12 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
         RuleForEach(p => p.Attributes)
             .ChildRules(a =>
             {
-                a.RuleFor(x => x.AttributeId).GreaterThan(0);
+                a.RuleFor(x => x.Id).GreaterThan(0);
                 a.RuleFor(x => x.Value).NotEmpty();
             });
 
         RuleFor(p => p.Attributes)
-            .Must(a => a.Select(x => x.AttributeId).Distinct().Count() == a.Count)
+            .Must(a => a.Select(x => x.Id).Distinct().Count() == a.Count)
             .WithMessage("Duplicate attributeId in request");
     }
 }
