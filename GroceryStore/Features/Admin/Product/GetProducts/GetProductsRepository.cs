@@ -2,10 +2,6 @@
 
 using Dapper;
 using Database;
-using Database.Entities.Product;
-using Microsoft.EntityFrameworkCore;
-using Shared.Models;
-
 public class GetProductsRepository(IDbConnectionFactory factory)
 {
     public async Task<IEnumerable<GetProductsResponse>> GetProductsAsync(CancellationToken ct)
@@ -14,16 +10,16 @@ public class GetProductsRepository(IDbConnectionFactory factory)
         const string sql =
             """
                  SELECT
-                    p.id,
-                    p.name,
-                    p.price,
-                    p.category_id,
-                    p.sku,
-                    p.description,
-                    p.base_unit,
-                    a.name        AS attribute_name,
-                    a.unit        AS attribute_unit,
-                    mv.value      AS attribute_value
+                    p.id          AS Id,
+                    p.name        AS Name, 
+                    p.price       AS Price,
+                    p.category_id AS CategoryId,
+                    p.sku         AS Sku,
+                    p.description AS Description,
+                    p.base_unit   AS BaseUnit,
+                    a.name        AS AttributeName,
+                    a.unit        AS AttributeUnit,
+                    mv.value      AS AttributeValue
                         FROM products p
                     LEFT JOIN LATERAL jsonb_each_text(p.metadata) mv(key, value) ON TRUE
                     LEFT JOIN attributes a ON a.id = (mv.key)::int

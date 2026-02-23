@@ -4,6 +4,7 @@ using System.Data;
 using Dapper;
 using Database;
 using Features.Admin.Product.CreateProduct;
+using Features.Admin.Product.GetProducts;
 using Infrastructure.Dapper;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
@@ -44,6 +45,8 @@ public static partial class DependencyInjection
         services.AddScoped<CreateProductRequestValidator>();
 
         services.AddScoped<CategoryAttributeRepository>();
+
+        services.AddScoped<GetProductsRepository>();
 
         return services;
     }

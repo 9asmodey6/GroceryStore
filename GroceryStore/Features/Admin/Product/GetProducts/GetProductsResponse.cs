@@ -6,7 +6,7 @@ public record GetProductsResponse(
     decimal Price,
     int CategoryId,
     string Sku,
-    string? Description,
+    string Description,
     string BaseUnit,
     List<GetProductsMetadataResponse> Metadata);
 
@@ -24,5 +24,5 @@ public sealed record ProductRow(
     string? Description,
     string BaseUnit,
     string? AttributeName,
-    string? AttributeValue,
-    string? AttributeUnit);
+    string? AttributeUnit,
+    string? AttributeValue);
