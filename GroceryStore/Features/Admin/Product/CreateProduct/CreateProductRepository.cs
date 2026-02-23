@@ -7,7 +7,7 @@ public class CreateProductRepository(AppDbContext dbContext)
 {
     public async Task CreateAsync(Product product, CancellationToken ct)
     {
-        await dbContext.AddAsync(product, ct);
+        dbContext.Add(product);
         await dbContext.SaveChangesAsync(ct);
     }
 }

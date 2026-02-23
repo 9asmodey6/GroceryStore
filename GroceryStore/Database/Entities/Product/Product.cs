@@ -1,40 +1,10 @@
 namespace GroceryStore.Database.Entities.Product;
 
-using GroceryStore.Database.Entities.Category;
+using Category;
 using Shared;
 
 public class Product : BaseEntity
 {
-    public string Name { get; private set; } = null!;
-
-    public decimal Price { get; private set; }
-
-    public int CategoryId { get; private set; } // FK
-
-    public Category Category { get; private set; } = null!; // Navigation property
-
-
-    public string SKU { get; private set; } = null!;
-
-    public string? Description { get; private set; }
-
-    public string BaseUnit { get; private set; } = "pcs";
-
-
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-
-    public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
-
-
-    public bool IsActive { get; private set; } = true;
-
-
-    public Dictionary<int, string> Metadata { get; private set; } = new();
-
-    private Product()
-    {
-    }
-
     public Product(
         string name,
         decimal price,
@@ -53,10 +23,31 @@ public class Product : BaseEntity
         SetMetadata(metadata);
     }
 
-    private void Touch()
+    private Product()
     {
-        UpdatedAt = DateTime.UtcNow;
     }
+
+    public string Name { get; private set; } = null!;
+
+    public decimal Price { get; private set; }
+
+    public int CategoryId { get; private set; } // FK
+
+    public Category Category { get; private set; } = null!; // Navigation property
+
+    public string SKU { get; private set; } = null!;
+
+    public string? Description { get; private set; }
+
+    public string BaseUnit { get; private set; } = "pcs";
+
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+
+    public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
+
+    public bool IsActive { get; private set; } = true;
+
+    public Dictionary<int, string> Metadata { get; private set; } = new();
 
     public void UpdatePrice(decimal newPrice)
     {
@@ -110,5 +101,10 @@ public class Product : BaseEntity
     {
         ArgumentNullException.ThrowIfNull(metadata);
         Metadata = metadata;
+    }
+
+    private void Touch()
+    {
+        UpdatedAt = DateTime.UtcNow;
     }
 }

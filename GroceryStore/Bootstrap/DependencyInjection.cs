@@ -13,43 +13,41 @@ using Shared.Interfaces;
 
 public static partial class DependencyInjection
 {
-    extension(IServiceCollection services)
+    public static IServiceCollection AddBasicServices(this IServiceCollection services)
     {
-        public IServiceCollection AddBasicServices()
-        {
-            services.AddOpenApi();
-            services.AddMemoryCache();
+        services.AddOpenApi();
+        services.AddMemoryCache();
 
-            return services;
-        }
-
-        public IServiceCollection AddDatabaseServices(IConfiguration configuration)
-        {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(connectionString));
-            
-            services.AddSingleton<IDbConnectionFactory>(_ =>
-                new DbConnectionFactory(connectionString));
-            
-            SqlMapper.AddTypeHandler(new JsonMetadataMapper());
-            
-            return services;
-        }
-        
-        public IServiceCollection AddFeatureServices()
-        {
-            services.AddScoped<CreateProductRepository>();
-            services.AddScoped<CategoryAttributeValueNormalizer>();
-            services.AddScoped<ProductSkuGenerationService>();
-            services.AddScoped<CreateProductRequestValidator>();
-
-            services.AddScoped<CategoryAttributeRepository>();
-
-            return services;
-        }
+        return services;
     }
+
+    public static IServiceCollection AddDatabaseServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseNpgsql(connectionString));
+
+        services.AddSingleton<IDbConnectionFactory>(_ =>
+            new DbConnectionFactory(connectionString));
+
+        SqlMapper.AddTypeHandler(new JsonMetadataMapper());
+
+        return services;
+    }
+
+    public static IServiceCollection AddFeatureServices(this IServiceCollection services)
+    {
+        services.AddScoped<CreateProductRepository>();
+        services.AddScoped<CategoryAttributeValueNormalizer>();
+        services.AddScoped<ProductSkuGenerationService>();
+        services.AddScoped<CreateProductRequestValidator>();
+
+        services.AddScoped<CategoryAttributeRepository>();
+
+        return services;
+    }
+
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
 }
