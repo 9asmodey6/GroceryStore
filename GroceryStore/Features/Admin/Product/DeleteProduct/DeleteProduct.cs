@@ -12,17 +12,18 @@ public class DeleteProduct : IEndpoint
             .WithSummary("Performs soft removal of the product")
             .WithName("DeleteProduct")
             .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status403Forbidden);
     }
 
-    public static async Task<Results<NoContent, NotFound>> HandleAsync(
+    private static async Task<Results<NoContent, NotFound>> HandleAsync(
         int productId,
         DeleteProductRepository repository,
         CancellationToken ct)
     {
-        var deleted = await repository.DeleteProductByIdAsync(productId, ct);
+        var isDeleted = await repository.DeleteProductByIdAsync(productId, ct);
 
-        return deleted
+        return isDeleted
             ? TypedResults.NoContent()
             : TypedResults.NotFound();
     }

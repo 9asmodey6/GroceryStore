@@ -5,19 +5,8 @@ using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 
-public class ProductSkuGenerationService
+public class ProductSkuGenerationService(IMemoryCache cache, AppDbContext context)
 {
-    private readonly IMemoryCache _cache;
-    private readonly AppDbContext _context;
-
-    public ProductSkuGenerationService(
-        IMemoryCache cache,
-        AppDbContext context)
-    {
-        _cache = cache;
-        _context = context;
-    }
-
     public async Task<string> CreateSku(int categoryId, CancellationToken ct)
     {
         var categoryName = await GetCategoryNameCached(categoryId, ct);
@@ -40,10 +29,10 @@ public class ProductSkuGenerationService
     {
         var cacheKey = $"category_name_{categoryId}";
 
-        return await _cache.GetOrCreateAsync(cacheKey, async entry =>
+        return await cache.GetOrCreateAsync(cacheKey, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(3);
-            var name = await _context.Categories
+            var name = await context.Categories
                 .AsNoTracking()
                 .Where(c => c.Id == categoryId)
                 .Select(c => c.Name)
