@@ -2,6 +2,7 @@
 
 using Dapper;
 using Database;
+
 public class GetProductsRepository(IDbConnectionFactory factory)
 {
     public async Task<IEnumerable<GetProductsResponse>> GetProductsAsync(CancellationToken ct)
@@ -26,7 +27,7 @@ public class GetProductsRepository(IDbConnectionFactory factory)
                         WHERE p.is_active = true
                     ORDER BY p.id
             """;
-
+        // TODO: Filter by DataType;
         var cmd = new CommandDefinition(sql, cancellationToken: ct);
         var rows = await connection.QueryAsync<ProductRow>(cmd);
         return rows

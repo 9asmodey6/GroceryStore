@@ -4,6 +4,7 @@ using System.Data;
 using Dapper;
 using Database;
 using Features.Admin.Product.CreateProduct;
+using Features.Admin.Product.DeleteProduct;
 using Features.Admin.Product.GetProducts;
 using Infrastructure.Dapper;
 using Infrastructure.Repositories.Categories;
@@ -47,6 +48,8 @@ public static partial class DependencyInjection
         services.AddScoped<CategoryAttributeRepository>();
 
         services.AddScoped<GetProductsRepository>();
+
+        services.AddScoped<DeleteProductRepository>();
 
         return services;
     }

@@ -101,6 +101,13 @@ public class Product : BaseEntity
     {
         ArgumentNullException.ThrowIfNull(metadata);
         Metadata = metadata;
+        Touch();
+    }
+
+    public void SoftDelete()
+    {
+        IsActive = false;
+        Touch();
     }
 
     private void Touch()
