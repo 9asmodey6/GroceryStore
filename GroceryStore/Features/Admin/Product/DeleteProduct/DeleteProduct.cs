@@ -1,6 +1,5 @@
 ﻿namespace GroceryStore.Features.Admin.Product.DeleteProduct;
 
-using CreateProduct;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Interfaces;
 
@@ -8,7 +7,7 @@ public class DeleteProduct : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete("/api/v1/admin/products/{productId}", HandleAsync)
+        app.MapDelete("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Performs soft removal of the product")
             .WithName("DeleteProduct")

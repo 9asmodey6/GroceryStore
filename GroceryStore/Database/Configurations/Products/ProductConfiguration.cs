@@ -16,12 +16,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasMaxLength(50);
 
+        builder.HasQueryFilter(p => p.IsActive);  // Filter by active Products
+
         builder.Property(p => p.Metadata)
             .HasColumnType("jsonb")
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                 v => JsonSerializer.Deserialize<Dictionary<int, string>>(v, (JsonSerializerOptions?)null)
-                     ?? new ())
+                     ?? new())
             .Metadata.SetValueComparer(
                 new ValueComparer<Dictionary<int, string>>(
                     (d1, d2) => d1!.SequenceEqual(d2!),
