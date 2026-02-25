@@ -12,7 +12,7 @@ Authentication, Dockerization and inventory workflows are currently in progress.
 ## Tech Stack
 
 **Backend**
-- .NET 9 / ASP.NET Core Minimal APIs
+- .NET 10 / ASP.NET Core Minimal APIs
 - C#
 
 **Database**
