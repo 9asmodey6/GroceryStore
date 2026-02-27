@@ -1,13 +1,16 @@
 ﻿namespace GroceryStore.Shared.Models;
 
-public struct Optional<TValue>
+public readonly struct Optional<TValue>
 {
-    public Optional(TValue value)
+    internal Optional(bool hasValue, TValue value)
     {
-        HasValue = true;
+        HasValue = hasValue;
         Value = value;
     }
 
+    public static Optional<TValue> None => default;
+    public static Optional<TValue> Some(TValue? value) => new (true, value);
+
     public bool HasValue { get; }
-    public TValue Value { get; }
+    public TValue? Value { get; }
 }

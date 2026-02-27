@@ -13,6 +13,7 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using ServiceScan.SourceGenerator;
 using Shared.Interfaces;
+using Shared.Models;
 
 public static partial class DependencyInjection
 {
@@ -20,6 +21,11 @@ public static partial class DependencyInjection
     {
         services.AddOpenApi();
         services.AddMemoryCache();
+
+        services.ConfigureHttpJsonOptions(options =>
+        {
+            options.SerializerOptions.Converters.Add(new OptionalJsonConverterFactory());
+        });
 
         return services;
     }
