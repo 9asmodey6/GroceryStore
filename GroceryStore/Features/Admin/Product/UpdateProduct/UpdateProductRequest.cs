@@ -3,9 +3,8 @@
 using Shared.Models;
 
 public record UpdateProductRequest(
-    string? NewName,
-    string? NewDescription,
-    int? NewPrice,
-    int? NewCategoryId,
-    string? NewBaseUnit,
-    List<EnumerationModel>? Metadata);
+    Optional<string?> NewName,
+    Optional<string?> NewDescription,
+    Optional<decimal?> NewPrice,
+    Optional<int?> NewCategoryId,
+    Optional<string?> NewBaseUnit);

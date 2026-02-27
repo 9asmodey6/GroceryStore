@@ -39,7 +39,7 @@ public class Product : BaseEntity
 
     public string? Description { get; private set; }
 
-    public string BaseUnit { get; private set; } = "pcs";
+    public string? BaseUnit { get; private set; } = "pcs";
 
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
 

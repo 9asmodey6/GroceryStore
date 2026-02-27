@@ -1,5 +1,6 @@
 ﻿namespace GroceryStore.Features.Admin.Product.GetProducts;
 
+using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Interfaces;
 
 public class GetProducts : IEndpoint
@@ -9,15 +10,14 @@ public class GetProducts : IEndpoint
         app.MapGet("/api/v1/admin/products", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Get all active Products with attributes")
-            .WithName("GetProducts")
-            .Produces<IEnumerable<GetProductsResponse>>();
+            .WithName("GetProducts");
     }
 
-    private static async Task<IResult> HandleAsync(
+    private static async Task<Results<ForbidHttpResult, Ok<List<GetProductsResponse>>>> HandleAsync(
         GetProductsRepository repository,
         CancellationToken ct)
     {
         var result = await repository.GetProductsAsync(ct);
-        return Results.Ok(result);
+        return TypedResults.Ok(result.ToList());
     }
 }

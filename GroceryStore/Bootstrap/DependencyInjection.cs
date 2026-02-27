@@ -6,6 +6,7 @@ using Database;
 using Features.Admin.Product.CreateProduct;
 using Features.Admin.Product.DeleteProduct;
 using Features.Admin.Product.GetProducts;
+using Features.Admin.Product.UpdateProduct;
 using Infrastructure.Dapper;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
@@ -50,6 +51,10 @@ public static partial class DependencyInjection
         services.AddScoped<GetProductsRepository>();
 
         services.AddScoped<DeleteProductRepository>();
+
+        services.AddScoped<UpdateProductRepository>();
+        services.AddScoped<UpdateProductHandler>();
+        services.AddScoped<UpdateProductValidator>();
 
         return services;
     }

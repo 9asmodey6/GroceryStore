@@ -1,5 +1,8 @@
 ﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
 
+using Database;
+using Database.Entities.Product;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Interfaces;
 
 public class UpdateProduct : IEndpoint
@@ -9,16 +12,34 @@ public class UpdateProduct : IEndpoint
         app.MapPatch("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Updates the product by ID")
-            .WithName("UpdateProduct")
-            .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status403Forbidden);
+            .WithName("UpdateProduct");
     }
 
-    public async static Task HandleAsync(
+    private static async Task<Results<Created<Product>, NotFound, ValidationProblem, ForbidHttpResult>> HandleAsync(
+        int productId,
         UpdateProductRequest request,
         UpdateProductRepository repository,
+        AppDbContext dbContext,
+        UpdateProductValidator validator,
+        UpdateProductHandler handler,
         CancellationToken ct)
     {
+        var productToUpdate = await repository.GetById(productId, ct);
+        if (productToUpdate is null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        var validatedRequest = validator.Validate(request);
+        if (!validatedRequest.IsValid)
+        {
+            return TypedResults.ValidationProblem(validatedRequest.ToDictionary());
+        }
+
+        handler.Apply(productToUpdate, request);
+
+        await dbContext.SaveChangesAsync(ct);
+
+        return TypedResults.Created($"/api/v1/admin/products/{productToUpdate.Id}", productToUpdate);
     }
 }
