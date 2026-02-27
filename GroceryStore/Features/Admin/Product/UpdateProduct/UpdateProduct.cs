@@ -19,7 +19,6 @@ public class UpdateProduct : IEndpoint
         int productId,
         UpdateProductRequest request,
         UpdateProductRepository repository,
-        AppDbContext dbContext,
         UpdateProductValidator validator,
         UpdateProductHandler handler,
         CancellationToken ct)
@@ -30,7 +29,7 @@ public class UpdateProduct : IEndpoint
             return TypedResults.NotFound();
         }
 
-        var validatedRequest = validator.Validate(request);
+        var validatedRequest = await validator.ValidateAsync(request, ct);
         if (!validatedRequest.IsValid)
         {
             return TypedResults.ValidationProblem(validatedRequest.ToDictionary());
@@ -38,7 +37,7 @@ public class UpdateProduct : IEndpoint
 
         handler.Apply(productToUpdate, request);
 
-        await dbContext.SaveChangesAsync(ct);
+        await repository.SaveChangesAsync(ct);
 
         return TypedResults.Created($"/api/v1/admin/products/{productToUpdate.Id}", productToUpdate);
     }

@@ -10,4 +10,9 @@ public class UpdateProductRepository(AppDbContext context)
     {
         return await context.Products.FirstOrDefaultAsync(p => p.Id == productId, ct);
     }
+
+    public async Task SaveChangesAsync(CancellationToken ct)
+    {
+        await context.SaveChangesAsync(ct);
+    }
 }
