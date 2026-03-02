@@ -1,20 +1,12 @@
 namespace GroceryStore.Infrastructure.Services;
 
+using System.Globalization;
 using Repositories.Categories;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Models;
 
-public class CategoryAttributeValueNormalizer
+public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttributeRepository repository)
 {
-    private readonly IMemoryCache _cache;
-    private readonly CategoryAttributeRepository _repository;
-
-    public CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttributeRepository repository)
-    {
-        _cache = cache;
-        _repository = repository;
-    }
-
     public async Task<Dictionary<int, string>> ValidateAndNormalizeAsync(
         int categoryId,
         IReadOnlyList<EnumerationModel> values,
@@ -53,16 +45,16 @@ public class CategoryAttributeValueNormalizer
             .ToDictionary(v => v.Id, v => v.Value.Trim());
     }
 
-    public async Task<List<MetadataAttributes>> GetMetadataAsync(int categoryId, CancellationToken ct)
+    private async ValueTask<List<MetadataAttribute>> GetMetadataAsync(int categoryId, CancellationToken ct)
     {
         const string cacheKeyPrefix = "category_metadata";
 
         var cacheKey = $"{cacheKeyPrefix}_{categoryId}";
-        return (await _cache.GetOrCreateAsync(cacheKey, async entry =>
+        return (await cache.GetOrCreateAsync(cacheKey, async entry =>
         {
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
 
-            var metadata = await _repository.GetMetadataSchemaAsync(categoryId, ct);
+            var metadata = await repository.GetMetadataSchemaAsync(categoryId, ct);
 
             if (metadata.Count == 0)
             {
@@ -71,5 +63,123 @@ public class CategoryAttributeValueNormalizer
 
             return metadata;
         })) !;
+    }
+
+
+    private static bool ValidateAndNormalizeByType(IReadOnlyList<EnumerationModel> attributes, List<MetadataAttribute> metadata)
+    {
+        foreach (var a in attributes)
+        {
+            if()
+        }
+    }
+    
+    private static bool InRange(decimal value, MetadataAttribute attribute)
+    {
+        if (attribute.MinValue.HasValue && value < attribute.MinValue.Value)
+        {
+            return false;
+        }
+
+        if (attribute.MaxValue.HasValue && value > attribute.MaxValue.Value)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidateInt(string value, MetadataAttribute attribute)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return !attribute.IsRequired;
+        }
+
+        if (!int.TryParse(
+                value,
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var number))
+        {
+            return false;
+        }
+
+        return InRange(number, attribute);
+    }
+
+    private bool ValidateDecimal(string value, MetadataAttribute attribute)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return !attribute.IsRequired;
+        }
+
+        var clean = value.Replace(',', '.').Trim();
+
+        if (!decimal.TryParse(
+                clean,
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out var number))
+        {
+            return false;
+        }
+
+        return InRange(number, attribute);
+    }
+
+    private string? NormalizeDecimal(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
+        var clean = input.Replace(',', '.').Trim();
+
+        if (!decimal.TryParse(clean, NumberStyles.Any, CultureInfo.InvariantCulture, out var value))
+        {
+            return null;
+        }
+
+        var rounded = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+
+        return rounded.ToString(CultureInfo.InvariantCulture);
+    }
+
+    public bool ValidateBoolean(string input, MetadataAttribute attribute)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return !attribute.IsRequired;
+        }
+
+        return true;
+    }
+
+    private string NormalizeBoolean(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return null;
+        }
+
+        if (input == "1")
+        {
+            return "true";
+        }
+
+        if (input == "0")
+        {
+            return "false";
+        }
+
+        if (!bool.TryParse(input, out var result))
+        {
+            return null;
+        }
+
+        return result.ToString().ToLowerInvariant();
     }
 }

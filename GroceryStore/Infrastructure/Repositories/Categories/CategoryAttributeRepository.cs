@@ -6,7 +6,7 @@ using Shared.Models;
 
 public class CategoryAttributeRepository(IDbConnectionFactory factory)
 {
-    public async Task<List<MetadataAttributes>> GetMetadataSchemaAsync(
+    public async Task<List<MetadataAttribute>> GetMetadataSchemaAsync(
         int categoryId,
         CancellationToken ct)
     {
@@ -39,7 +39,7 @@ public class CategoryAttributeRepository(IDbConnectionFactory factory)
             """;
 
         var cmd = new CommandDefinition(sql, new { categoryId }, cancellationToken: ct);
-        var result = await connection.QueryAsync<MetadataAttributes>(cmd);
+        var result = await connection.QueryAsync<MetadataAttribute>(cmd);
         return result.ToList();
     }
 }

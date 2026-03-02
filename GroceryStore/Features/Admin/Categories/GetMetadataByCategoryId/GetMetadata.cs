@@ -14,7 +14,7 @@ public class GetMetadataEndpoint : IEndpoint
             .WithTags("AdminCategories")
             .WithSummary("Get category attributes metadata (recursive)")
             .WithName("GetCategoryMetadata")
-            .Produces<List<MetadataAttributes>>()
+            .Produces<List<MetadataAttribute>>()
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status400BadRequest);
     }
@@ -29,7 +29,7 @@ public class GetMetadataEndpoint : IEndpoint
 
         var cacheKey = $"{cacheKeyPrefix}_{categoryId}";
 
-        if (cache.TryGetValue(cacheKey, out List<MetadataAttributes>? cachedMetadata) && cachedMetadata != null)
+        if (cache.TryGetValue(cacheKey, out List<MetadataAttribute>? cachedMetadata) && cachedMetadata != null)
         {
             return Results.Ok(cachedMetadata);
         }

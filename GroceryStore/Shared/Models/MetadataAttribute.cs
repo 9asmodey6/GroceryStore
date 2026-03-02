@@ -2,7 +2,7 @@ namespace GroceryStore.Shared.Models;
 
 using GroceryStore.Database.Enums;
 
-public record MetadataAttributes(
+public record MetadataAttribute(
     int AttributeId,
     string Name,
     AttributeDataType DataType,
