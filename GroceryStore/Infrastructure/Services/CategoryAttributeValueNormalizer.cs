@@ -1,48 +1,102 @@
 namespace GroceryStore.Infrastructure.Services;
 
 using System.Globalization;
+using Database.Enums;
 using Repositories.Categories;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Enums;
 using Shared.Models;
 
 public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttributeRepository repository)
 {
-    public async Task<Dictionary<int, string>> ValidateAndNormalizeAsync(
+    public async Task<NormalizationResult<Dictionary<int, string>>> ValidateAndNormalizeAsync(
         int categoryId,
         IReadOnlyList<EnumerationModel> values,
         CancellationToken ct)
     {
+        var vr = new ValidationResult();
+
         var metadata = await GetMetadataAsync(categoryId, ct);
         if (metadata.Count == 0)
         {
-            throw new ArgumentException("No metadata for category");
+            vr.Add(
+                MetadataValidationErrorCode.NotFoundMetadata,
+                "No metadata for category",
+                field: $"categoryId={categoryId}");
+            return NormalizationResult<Dictionary<int, string>>.Fail(vr);
         }
 
         var metaById = metadata.ToDictionary(x => x.AttributeId);
 
         // 1) unknown ids
-        foreach (var v in values)
+        for (int i = 0; i < values.Count; i++)
         {
-            if (!metaById.ContainsKey(v.Id))
+            var item = values[i];
+
+            if (!metaById.ContainsKey(item.Id))
             {
-                throw new ArgumentException($"AttributeId={v.Id} not allowed");
+                vr.Add(
+                    MetadataValidationErrorCode.UnknowAttribute,
+                    $"AttributeId={item.Id} is not allowed for this category",
+                    $"attributes[{i}].id",
+                    item.Id);
             }
         }
 
         // 2) required present
         var provided = values.Select(v => v.Id).ToHashSet();
-        var missingRequired = metadata.Where(m => m.IsRequired && !provided.Contains(m.AttributeId))
-            .Select(m => $"{m.AttributeId} ({m.Name})")
-            .ToList();
-        if (missingRequired.Count > 0)
+        foreach (var m in metadata.Where(m => m.IsRequired))
         {
-            throw new ArgumentException("Missing required attributes");
+            if (!provided.Contains(m.AttributeId))
+            {
+                vr.Add(
+                    MetadataValidationErrorCode.Required,
+                    $"Required attribute is missing: {m.Name} (id = {m.AttributeId})",
+                    valueId: m.AttributeId);
+            }
         }
 
-        // 3) normalize = Trim
-        return values
-            .Where(v => !string.IsNullOrWhiteSpace(v.Value))
-            .ToDictionary(v => v.Id, v => v.Value.Trim());
+        var normalized = new Dictionary<int, string>();
+
+        // validate by type and return normalized
+        for (int i = 0; i < values.Count; i++)
+        {
+            var item = values[i];
+
+            if (!metaById.TryGetValue(item.Id, out var meta))
+            {
+                continue;
+            }
+
+            var field = $"attributes[{i}].value";
+
+            var perItem = ValidateAndNormalizeSingle(item.Value, meta, field);
+
+            vr.Merge(perItem.Validation);
+
+            if (perItem.IsSucces && perItem.Value != null)
+            {
+                normalized[item.Id] = perItem.Value;
+            }
+        }
+
+        var duplicates = values
+            .GroupBy(v => v.Id)
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+        foreach (var d in duplicates)
+        {
+            vr.Add(
+                MetadataValidationErrorCode.Required,
+                $"Duplicate attributeId = {d} in request",
+                "attributes",
+                d);
+        }
+
+        return !vr.IsValid
+            ? NormalizationResult<Dictionary<int, string>>.Fail(vr)
+            : NormalizationResult<Dictionary<int, string>>.Success(normalized);
     }
 
     private async ValueTask<List<MetadataAttribute>> GetMetadataAsync(int categoryId, CancellationToken ct)
@@ -66,14 +120,36 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
     }
 
 
-    private static bool ValidateAndNormalizeByType(IReadOnlyList<EnumerationModel> attributes, List<MetadataAttribute> metadata)
+    private NormalizationResult<string> ValidateAndNormalizeSingle(
+        string raw,
+        MetadataAttribute meta,
+        string field)
     {
-        foreach (var a in attributes)
+        var vr = new ValidationResult();
+
+        if (string.IsNullOrWhiteSpace(raw))
         {
-            if()
+            if (meta.IsRequired)
+            {
+                vr.Add(
+                    MetadataValidationErrorCode.Required,
+                    $"{meta.Name} is required,",
+                    field,
+                    meta.AttributeId);
+            }
+
+            return NormalizationResult<string>.Success(null!);
+        }
+
+        var trimed = raw.Trim();
+
+        switch (meta.DataType)
+        {
+            case AttributeDataType.Integer:
+                if (!ValidateInt(trimed, meta)))
         }
     }
-    
+
     private static bool InRange(decimal value, MetadataAttribute attribute)
     {
         if (attribute.MinValue.HasValue && value < attribute.MinValue.Value)
