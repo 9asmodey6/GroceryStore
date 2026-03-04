@@ -47,7 +47,7 @@ public class Product : BaseEntity
 
     public bool IsActive { get; private set; } = true;
 
-    public Dictionary<int, string> Metadata { get; private set; } = new();
+    public Dictionary<int, string> Metadata { get; private set; } = new ();
 
     public void UpdatePrice(decimal newPrice)
     {

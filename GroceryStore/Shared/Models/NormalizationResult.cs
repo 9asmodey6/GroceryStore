@@ -2,7 +2,7 @@
 
 public class NormalizationResult<T>
 {
-    required public bool IsSucces { get; init; }
+    required public bool IsSuccess { get; init; }
 
     public T? Value { get; init; }
 
@@ -10,11 +10,11 @@ public class NormalizationResult<T>
 
     public static NormalizationResult<T> Success(T value)
     {
-        return new () { IsSucces = true, Value = value, Validation = new ValidationResult() };
+        return new () { IsSuccess = true, Value = value, Validation = new ValidationResult() };
     }
 
     public static NormalizationResult<T> Fail(ValidationResult vr)
     {
-        return new () { IsSucces = false, Value = default(T), Validation = vr };
+        return new () { IsSuccess = false, Value = default(T), Validation = vr };
     }
 }

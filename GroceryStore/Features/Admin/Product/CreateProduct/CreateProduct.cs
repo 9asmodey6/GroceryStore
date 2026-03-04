@@ -37,7 +37,14 @@ public class CreateProduct : IEndpoint
 
         try
         {
-            normalized = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+            var norm = await normalizer.ValidateAndNormalizeAsync(request.CategoryId, request.Attributes, ct);
+
+            if (!norm.IsSuccess)
+            {
+                return Results.BadRequest(new { errors = norm.Validation.Errors });
+            }
+
+            normalized = norm.Value!;
         }
         catch (ArgumentException ex)
         {

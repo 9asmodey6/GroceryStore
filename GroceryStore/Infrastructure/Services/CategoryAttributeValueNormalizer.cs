@@ -74,7 +74,7 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
 
             vr.Merge(perItem.Validation);
 
-            if (perItem.IsSucces && perItem.Value != null)
+            if (perItem.IsSuccess && perItem.Value != null)
             {
                 normalized[item.Id] = perItem.Value;
             }
@@ -136,6 +136,7 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
                     $"{meta.Name} is required,",
                     field,
                     meta.AttributeId);
+                return NormalizationResult<string>.Fail(vr);
             }
 
             return NormalizationResult<string>.Success(null!);
@@ -146,7 +147,99 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
         switch (meta.DataType)
         {
             case AttributeDataType.Integer:
-                if (!ValidateInt(trimed, meta)))
+            {
+                if (!TryParseInt(trimed, out var number))
+                {
+                    vr.Add(
+                        MetadataValidationErrorCode.InvalidType,
+                        $"{meta.Name} must be an integer",
+                        field,
+                        meta.AttributeId);
+                    return NormalizationResult<string>.Fail(vr);
+                }
+
+                if (!InRange(number, meta))
+                {
+                    vr.Add(
+                        MetadataValidationErrorCode.OutOfRange,
+                        $"{meta.Name} is out of range",
+                        field,
+                        meta.AttributeId);
+                    return NormalizationResult<string>.Fail(vr);
+                }
+
+                return NormalizationResult<string>.Success(number.ToString(
+                    CultureInfo.InvariantCulture));
+            }
+
+            case AttributeDataType.Decimal:
+            {
+                if (!TryParseDecimal(trimed, out var number))
+                {
+                    vr.Add(
+                        MetadataValidationErrorCode.InvalidType,
+                        $"{meta.Name} must be a decimal",
+                        field,
+                        meta.AttributeId);
+                    return NormalizationResult<string>.Fail(vr);
+                }
+
+                if (!InRange(number, meta))
+                {
+                    vr.Add(
+                        MetadataValidationErrorCode.OutOfRange,
+                        $"{meta.Name} is out of range",
+                        field,
+                        meta.AttributeId);
+                    return NormalizationResult<string>.Fail(vr);
+                }
+
+                var normalized = NormalizeDecimal(number);
+
+                return NormalizationResult<string>.Success(normalized!);
+            }
+
+            case AttributeDataType.Boolean:
+            {
+                if (!TryParseBoolean(trimed, out var result))
+                {
+                    vr.Add(
+                        MetadataValidationErrorCode.InvalidType,
+                        $"{meta.Name} must contain * true / false / 1 / 0 * only",
+                        field,
+                        meta.AttributeId);
+                    return NormalizationResult<string>.Fail(vr);
+                }
+
+                var normalized = NormalizeBoolean(result);
+
+                return NormalizationResult<string>.Success(normalized);
+            }
+
+            case AttributeDataType.String:
+            {
+                return NormalizationResult<string>.Success(trimed);
+            }
+
+            case AttributeDataType.DateTime:
+            {
+                vr.Add(
+                    MetadataValidationErrorCode.InvalidType,
+                    $"{meta.Name} DateTime validation is not implemented yet",
+                    field,
+                    meta.AttributeId);
+                return NormalizationResult<string>.Fail(vr);
+            }
+
+            default:
+            {
+                vr.Add(
+                    MetadataValidationErrorCode.InvalidType,
+                    $"{meta.Name} has unsupported data type",
+                    field,
+                    meta.AttributeId);
+                return NormalizationResult<string>.Fail(vr);
+            }
         }
     }
 
@@ -165,97 +258,56 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
         return true;
     }
 
-    private bool ValidateInt(string value, MetadataAttribute attribute)
+    private static bool TryParseInt(string input, out int value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return !attribute.IsRequired;
-        }
+        value = 0;
 
-        if (!int.TryParse(
-                value,
-                NumberStyles.Integer,
-                CultureInfo.InvariantCulture,
-                out var number))
-        {
-            return false;
-        }
-
-        return InRange(number, attribute);
+        return int.TryParse(
+            input,
+            NumberStyles.Integer,
+            CultureInfo.InvariantCulture,
+            out value);
     }
 
-    private bool ValidateDecimal(string value, MetadataAttribute attribute)
+    private static bool TryParseDecimal(string input, out decimal value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return !attribute.IsRequired;
-        }
+        value = 0;
 
-        var clean = value.Replace(',', '.').Trim();
-
-        if (!decimal.TryParse(
-                clean,
-                NumberStyles.Any,
-                CultureInfo.InvariantCulture,
-                out var number))
-        {
-            return false;
-        }
-
-        return InRange(number, attribute);
+        return decimal.TryParse(
+            input.Replace(',', '.').Trim(),
+            NumberStyles.Any,
+            CultureInfo.InvariantCulture,
+            out value);
     }
 
-    private string? NormalizeDecimal(string input)
+    private static string? NormalizeDecimal(decimal input)
     {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return null;
-        }
-
-        var clean = input.Replace(',', '.').Trim();
-
-        if (!decimal.TryParse(clean, NumberStyles.Any, CultureInfo.InvariantCulture, out var value))
-        {
-            return null;
-        }
-
-        var rounded = Math.Round(value, 2, MidpointRounding.AwayFromZero);
+        var rounded = Math.Round(input, 2, MidpointRounding.AwayFromZero);
 
         return rounded.ToString(CultureInfo.InvariantCulture);
     }
 
-    public bool ValidateBoolean(string input, MetadataAttribute attribute)
+    private static bool TryParseBoolean(string input, out bool value)
     {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return !attribute.IsRequired;
-        }
-
-        return true;
-    }
-
-    private string NormalizeBoolean(string input)
-    {
-        if (string.IsNullOrWhiteSpace(input))
-        {
-            return null;
-        }
+        input = input.Trim();
 
         if (input == "1")
         {
-            return "true";
+            value = true;
+            return true;
         }
 
         if (input == "0")
         {
-            return "false";
+            value = false;
+            return false;
         }
 
-        if (!bool.TryParse(input, out var result))
-        {
-            return null;
-        }
+        return bool.TryParse(input, out value);
+    }
 
-        return result.ToString().ToLowerInvariant();
+    private static string NormalizeBoolean(bool value)
+    {
+        return value ? "true" : "false";
     }
 }

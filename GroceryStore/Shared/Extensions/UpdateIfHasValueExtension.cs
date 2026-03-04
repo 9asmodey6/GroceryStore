@@ -23,10 +23,10 @@ public static class UpdateExtensions
     public static void UpdateIfHasValue<TTarget>(
         this TTarget target,
         Optional<string?> optional,
-        Action<TTarget, string> setter)
+        Action<TTarget, string?> setter)
         where TTarget : class
     {
-        if (optional.HasValue && !string.IsNullOrWhiteSpace(optional.Value))
+        if (optional.HasValue)
         {
             setter(target, optional.Value);
         }
