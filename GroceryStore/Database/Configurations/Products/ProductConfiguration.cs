@@ -16,7 +16,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasQueryFilter(p => p.IsActive);  // Filter by active Products
+        builder.HasQueryFilter(p => p.IsActive); // Filter by active Products
 
         builder.Property(p => p.Metadata)
             .HasColumnType("jsonb")
@@ -37,6 +37,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.IsActive)
             .HasDefaultValue(true);
+
+        builder.HasOne(p => p.Brand)
+            .WithMany(b => b.Products)
+            .HasForeignKey(p => p.BrandId);
+
+        builder.HasOne(p => p.Country)
+            .WithMany()
+            .HasForeignKey(p => p.CountryId);
 
         builder.Property(p => p.SKU)
             .IsRequired()

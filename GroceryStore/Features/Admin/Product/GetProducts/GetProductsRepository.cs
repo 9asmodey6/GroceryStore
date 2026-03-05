@@ -10,22 +10,27 @@ public class GetProductsRepository(IDbConnectionFactory factory)
         using var connection = factory.CreateConnection();
         const string sql =
             """
-                 SELECT
-                    p.id          AS Id,
-                    p.name        AS Name, 
-                    p.price       AS Price,
-                    p.category_id AS CategoryId,
-                    p.sku         AS Sku,
-                    p.description AS Description,
-                    p.base_unit   AS BaseUnit,
-                    a.name        AS AttributeName,
-                    a.unit        AS AttributeUnit,
-                    mv.value      AS AttributeValue
-                        FROM products p
-                    LEFT JOIN LATERAL jsonb_each_text(p.metadata) mv(key, value) ON TRUE
-                    LEFT JOIN attributes a ON a.id = (mv.key)::int
-                        WHERE p.is_active = true
-                    ORDER BY p.id
+                SELECT
+              p.id AS Id,
+              p.name AS Name,
+              p.price AS Price,
+              p.category_id AS CategoryId,
+              p.sku AS Sku,
+              p.description AS Description,
+              p.base_unit AS BaseUnit,
+              b.name AS BrandName,
+              c.code AS CountryCode,
+              c.name AS CountryName,
+              a.name AS AttributeName,
+              a.unit AS AttributeUnit,
+              mv.value AS AttributeValue
+            FROM products p
+            JOIN brands b ON b.id = p.brand_id
+            JOIN countries c ON c.id = p.country_id
+            LEFT JOIN LATERAL jsonb_each_text(p.metadata) mv(key, value) ON TRUE
+            LEFT JOIN attributes a ON a.id = (mv.key)::int
+            WHERE p.is_active = true
+            ORDER BY p.id;
             """;
         // TODO: Filter by DataType;
         var cmd = new CommandDefinition(sql, cancellationToken: ct);
@@ -41,6 +46,8 @@ public class GetProductsRepository(IDbConnectionFactory factory)
                     first.Name,
                     first.Price,
                     first.CategoryId,
+                    first.BrandId,
+                    first.CountryId,
                     first.Sku,
                     first.Description,
                     first.BaseUnit,

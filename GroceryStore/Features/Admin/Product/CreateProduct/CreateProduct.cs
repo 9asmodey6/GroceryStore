@@ -68,6 +68,8 @@ public class CreateProduct : IEndpoint
             request.Name,
             request.Price,
             request.CategoryId,
+            request.BrandId,
+            request.CountryId,
             sku,
             request?.Description,
             request?.BaseUnit,

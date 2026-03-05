@@ -1,6 +1,8 @@
 namespace GroceryStore.Database.Entities.Product;
 
+using Brand;
 using Category;
+using Country;
 using Shared;
 
 public class Product : BaseEntity
@@ -9,6 +11,8 @@ public class Product : BaseEntity
         string name,
         decimal price,
         int categoryId,
+        int brandId,
+        int countryId,
         string sku,
         string? description,
         string? baseUnit,
@@ -17,6 +21,8 @@ public class Product : BaseEntity
         SetName(name);
         UpdatePrice(price);
         SetCategoryId(categoryId);
+        SetBrandId(brandId);
+        SetCountryId(countryId);
         UpdateSku(sku);
         UpdateDescription(description);
         SetBaseUnit(baseUnit);
@@ -32,8 +38,13 @@ public class Product : BaseEntity
     public decimal Price { get; private set; }
 
     public int CategoryId { get; private set; } // FK
-
     public Category Category { get; private set; } = null!; // Navigation property
+
+    public int BrandId { get; private set; }
+    public Brand Brand { get; private set; } = null!;
+
+    public int CountryId { get; private set; }
+    public Country Country { get; private set; } = null!;
 
     public string SKU { get; private set; } = null!;
 
@@ -42,12 +53,11 @@ public class Product : BaseEntity
     public string? BaseUnit { get; private set; } = "pcs";
 
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-
     public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
     public bool IsActive { get; private set; } = true;
 
-    public Dictionary<int, string> Metadata { get; private set; } = new ();
+    public Dictionary<int, string> Metadata { get; private set; } = new();
 
     public void UpdatePrice(decimal newPrice)
     {
@@ -75,6 +85,28 @@ public class Product : BaseEntity
         }
 
         CategoryId = categoryId;
+        Touch();
+    }
+
+    public void SetBrandId(int brandId)
+    {
+        if (brandId <= 0)
+        {
+            throw new ArgumentException("BrandId must be > 0", nameof(brandId));
+        }
+
+        BrandId = brandId;
+        Touch();
+    }
+
+    public void SetCountryId(int countryId)
+    {
+        if (countryId <= 0)
+        {
+            throw new ArgumentException("CountryId must be > 0", nameof(countryId));
+        }
+
+        CountryId = countryId;
         Touch();
     }
 
