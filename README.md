@@ -165,4 +165,11 @@ Several infrastructure concerns are automated to reduce boilerplate and runtime 
 
 5.  **Access API Documentation**:
     Open `http://localhost:5000/scalar/v1` (or your configured port) to view the interactive API docs.
-    **Note:** Currently, the database starts empty. A seeding script is planned for future updates to automatically provide a set of categories and attributes during migration.
+
+    **Note:**
+
+The database is automatically pre-seeded with a production-ready hierarchy of Categories (Dairy, Alcohol, Meat, etc.) and Product Attributes (Fat Content, Volume, Alcohol %, etc.).
+
+Metadata Schema: Each category inherits attributes from its parents. You can check the required attributes for any category via the GET `/api/v1/admin/categories/{id}/metadata` endpoint.
+
+Category IDs: To see the full list of available categories and their IDs, use the GET `/api/v1/admin/categories` endpoint.
