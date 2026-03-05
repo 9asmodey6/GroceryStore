@@ -26,10 +26,15 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                      ?? new())
             .Metadata.SetValueComparer(
                 new ValueComparer<Dictionary<int, string>>(
-                    (d1, d2) => d1!.SequenceEqual(d2!),
-                    d => d.Aggregate(0, (a, v) =>
-                        HashCode.Combine(a, v.Key.GetHashCode(), v.Value.GetHashCode())),
-                    d => d.ToDictionary(entry => entry.Key, entry => entry.Value)
+                    (d1, d2) => (d1 ?? new())
+                        .OrderBy(k => k.Key)
+                        .SequenceEqual((d2 ?? new())
+                            .OrderBy(k => k.Key)),
+                    d => (d ?? new())
+                        .OrderBy(k => k.Key)
+                        .Aggregate(0, (a, v) => HashCode.Combine(a, v.Key, v.Value)),
+                    d => (d ?? new())
+                        .ToDictionary(entry => entry.Key, entry => entry.Value)
                 ));
 
         builder.Property(p => p.Metadata)
