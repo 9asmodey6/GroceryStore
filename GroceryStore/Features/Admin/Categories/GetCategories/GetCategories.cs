@@ -1,0 +1,24 @@
+﻿namespace GroceryStore.Features.Admin.Categories.GetCategories;
+
+using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Interfaces;
+
+public class GetCategories : IEndpoint
+{
+    public static void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/api/v1/admin/categories", HandleAsync)
+            .WithTags("AdminCategories")
+            .WithSummary("Get all categories")
+            .WithName("GetCategories");
+    }
+
+    public async static Task<Results<ForbidHttpResult,
+        Ok<List<GetCategoriesResponse>>>> HandleAsync(
+        GetCategoriesRepository repository,
+        CancellationToken ct)
+    {
+        var result = await repository.GetCategoriesAsync(ct);
+        return TypedResults.Ok(result.ToList());
+    }
+}
