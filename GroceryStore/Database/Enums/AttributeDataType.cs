@@ -1,5 +1,8 @@
 namespace GroceryStore.Database.Enums;
 
+using System.Text.Json.Serialization;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum AttributeDataType
 {
     String = 1,
