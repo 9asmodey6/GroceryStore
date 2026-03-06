@@ -6,6 +6,8 @@ The project demonstrates real-world backend engineering approaches including
 Vertical Slice Architecture, hybrid data access (EF Core + Dapper),
 and dynamic product metadata validation using PostgreSQL JSONB.
 
+Check *documentation* by link: https://9asmodey6-grocerystore.mintlify.app/introduction
+
 ⚠️ Project is actively under development.
 Authentication, Dockerization and inventory workflows are currently in progress.
 
