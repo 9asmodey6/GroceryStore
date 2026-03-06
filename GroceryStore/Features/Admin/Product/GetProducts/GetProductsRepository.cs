@@ -14,17 +14,16 @@ public class GetProductsRepository(IDbConnectionFactory factory)
               p.id AS Id,
               p.name AS Name,
               p.price AS Price,
-              p.category_id AS CategoryId,
               p.sku AS Sku,
               p.description AS Description,
               p.base_unit AS BaseUnit,
               b.name AS BrandName,
               c.code AS CountryCode,
-              c.name AS CountryName,
               a.name AS AttributeName,
               a.unit AS AttributeUnit,
               mv.value AS AttributeValue
             FROM products p
+            JOIN categories cat ON cat.id = p.category_id
             JOIN brands b ON b.id = p.brand_id
             JOIN countries c ON c.id = p.country_id
             LEFT JOIN LATERAL jsonb_each_text(p.metadata) mv(key, value) ON TRUE
@@ -45,9 +44,9 @@ public class GetProductsRepository(IDbConnectionFactory factory)
                     first.Id,
                     first.Name,
                     first.Price,
-                    first.CategoryId,
-                    first.BrandId,
-                    first.CountryId,
+                    first.CategoryName,
+                    first.BrandName,
+                    first.CountryCode,
                     first.Sku,
                     first.Description,
                     first.BaseUnit,
