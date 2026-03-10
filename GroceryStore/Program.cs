@@ -3,6 +3,8 @@ using Scalar.AspNetCore;
 
 namespace GroceryStore;
 
+using Database;
+
 public static class Program
 {
     public static void Main(string[] args)
@@ -17,6 +19,7 @@ public static class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.ApplyMigrations();
             app.MapScalarApiReference(o =>
                 o.WithTheme(ScalarTheme.DeepSpace)
                     .WithTitle("Grocery Store"));

@@ -19,8 +19,6 @@ public sealed class OptionalJsonConverterFactory : JsonConverterFactory
     {
         public override Optional<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            // ВАЖНО: если поле присутствует, конвертер вызовется.
-            // Если поле отсутствует — конвертер не вызовется, и останется default => HasValue=false (то, что нам нужно).
             if (reader.TokenType == JsonTokenType.Null)
             {
                 return Optional<T>.Some(default!);
@@ -34,7 +32,6 @@ public sealed class OptionalJsonConverterFactory : JsonConverterFactory
         {
             if (!value.HasValue)
             {
-                // обычно не сериализуют None вообще, но на всякий случай:
                 writer.WriteNullValue();
                 return;
             }

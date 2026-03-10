@@ -213,7 +213,7 @@ namespace GroceryStore.Migrations
                     { 5, "Bakery & Pastry", null },
                     { 6, "Grocery", null },
                     { 7, "Vegetables & Fruit", null },
-                    { 8, "Beverages", null },
+                    { 8, $"Beverages", null },
                     { 9, "Alcohol", null },
                     { 10, "Household Chemicals", null },
                     { 11, "Personal Care & Hygiene", null }
