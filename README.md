@@ -6,7 +6,7 @@ The project demonstrates real-world backend engineering approaches including
 Vertical Slice Architecture, hybrid data access (EF Core + Dapper),
 and dynamic product metadata validation using PostgreSQL JSONB.
 
-Check *documentation* by link: https://9asmodey6-grocerystore.mintlify.app/introduction
+Full documentation available here: https://9asmodey6-grocerystore.mintlify.app/introduction
 
 ⚠️ Project is actively under development.
 Authentication, Dockerization and inventory workflows are currently in progress.
@@ -142,36 +142,54 @@ Several infrastructure concerns are automated to reduce boilerplate and runtime 
 - Batch lifecycle management
 
 ### DevOps
-- Docker support
+- Docker support ✔
 - Logging (Serilog)
 - Integration tests
 
 
-### Getting Started
+## Getting Started
 
-1.  **Clone the repository**:
-    `git clone [https://github.com/9asmodey6/GroceryStore.git](https://github.com/9asmodey6/GroceryStore.git)
-    cd GroceryStore`
+### 1. Clone the repository
+  
+  ```bash
+   git clone https://github.com/9asmodey6/GroceryStore.git
+   cd GroceryStore
+  ```
 
-2.  **Configure the database**:
-    Update the `ConnectionStrings` in `appsettings.json` or user_secrets with your PostgreSQL credentials:
-    `"ConnectionStrings": {
-      "DefaultConnection": "Host=localhost;Database=grocery_db;Username=postgres;Password=YourPassword"
-    }`
+### 2. Run the application with Docker
+   
+   Make sure you have *Docker* and *Docker Compose* installed.
+   Then simply run:
+   ```bash
+   docker compose up --build
+   ```
+This command will automatically:
+- Build the API container
+- Start the PostgreSQL database
+- Apply all EF Core migrations
+- Seed the database with initial data
 
-3.  **Apply Migrations**:
-    `dotnet ef database update`
+No manual database setup or migration commands are required.
 
-4.  **Run the application**:
-    `dotnet run --project GroceryStore` 
+### 3. Access API documentation
 
-5.  **Access API Documentation**:
-    Open `http://localhost:5000/scalar/v1` (or your configured port) to view the interactive API docs.
+Once the containers are running, open: `http://localhost:8080/scalar/v1`
+to explore the interactive API documentation.
 
-    **Note:**
+**Notes**
+# Database Seeding
 
-The database is automatically pre-seeded with a production-ready hierarchy of Categories (Dairy, Alcohol, Meat, etc.) and Product Attributes (Fat Content, Volume, Alcohol %, etc.).
+The database is automatically seeded with a production-ready hierarchy of:
+  -  Categories (Dairy, Alcohol, Meat, etc.),
+  -  Product Attributes (Fat Content, Volume, Alcohol %, etc.)
 
-Metadata Schema: Each category inherits attributes from its parents. You can check the required attributes for any category via the GET `/api/v1/admin/categories/{categoryId}/metadata` endpoint.
+# Metadata Schema
 
-Category IDs: To see the full list of available categories and their IDs, use the GET `/api/v1/admin/categories` endpoint.
+Each category inherits attributes from its parent categories.
+You can inspect the required attributes for a category via:
+`GET /api/v1/admin/categories/{categoryId}/metadata`
+
+# Category IDs
+
+To retrieve the full list of categories and their IDs, use:
+`GET /api/v1/admin/categories`
