@@ -18,6 +18,6 @@ public class GetBrands : IEndpoint
         GetBrandsRepository repository)
     {
         var brands = await repository.GetBrandsAsync(ct);
-        return TypedResults.Ok(brands.ToList());
+        return TypedResults.Ok(brands);
     }
 }

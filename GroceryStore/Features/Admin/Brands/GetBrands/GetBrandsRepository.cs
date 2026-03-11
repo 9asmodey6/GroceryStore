@@ -7,7 +7,7 @@ using Shared.Models;
 
 public class GetBrandsRepository(AppDbContext dbContext)
 {
-    public async Task<IEnumerable<GetBrandsResponse>> GetBrandsAsync(CancellationToken ct)
+    public async Task<List<GetBrandsResponse>> GetBrandsAsync(CancellationToken ct)
     {
         var brands = await dbContext.Brands
             .AsNoTracking()

@@ -6,6 +6,7 @@ using Database;
 using Features.Admin.Brands.AddBrand;
 using Features.Admin.Brands.GetBrands;
 using Features.Admin.Categories.GetCategories;
+using Features.Admin.Countries.GetCountries;
 using Features.Admin.Products.CreateProduct;
 using Features.Admin.Products.DeleteProduct;
 using Features.Admin.Products.GetProductById;
@@ -75,6 +76,8 @@ public static partial class DependencyInjection
 
         services.AddScoped<AddBrandRepository>();
         services.AddScoped<AddBrandValidator>();
+
+        services.AddScoped<GetCountriesRepository>();
 
         return services;
     }
