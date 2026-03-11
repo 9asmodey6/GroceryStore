@@ -9,7 +9,7 @@ and dynamic product metadata validation using PostgreSQL JSONB.
 Full documentation available here: https://9asmodey6-grocerystore.mintlify.app/introduction
 
 ⚠️ Project is actively under development.
-Authentication, Dockerization and inventory workflows are currently in progress.
+Authentication and inventory workflows are currently in progress.
 
 ## Tech Stack
 
