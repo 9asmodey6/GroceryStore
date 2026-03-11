@@ -20,6 +20,7 @@ Thumbs.db
 
 # Docker
 docker-compose.override.yml
+Dockerfile
 
 # Rider caches
 *.sln.iml

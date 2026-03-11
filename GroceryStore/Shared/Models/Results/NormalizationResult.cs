@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Shared.Models;
+﻿namespace GroceryStore.Shared.Models.Results;
 
 public class NormalizationResult<T>
 {

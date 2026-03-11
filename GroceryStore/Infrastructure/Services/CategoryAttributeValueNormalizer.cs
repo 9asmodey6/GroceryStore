@@ -6,6 +6,7 @@ using Repositories.Categories;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Enums;
 using Shared.Models;
+using Shared.Models.Results;
 
 public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttributeRepository repository)
 {

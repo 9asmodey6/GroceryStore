@@ -2,6 +2,7 @@
 
 using Dapper;
 using Database;
+using Shared.Models;
 
 public class GetProductsRepository(IDbConnectionFactory factory)
 {
@@ -56,8 +57,7 @@ public class GetProductsRepository(IDbConnectionFactory factory)
                             x.AttributeName,
                             x.AttributeValue,
                             x.AttributeUnit))
-                        .ToList()
-                );
+                        .ToList());
             });
     }
 }

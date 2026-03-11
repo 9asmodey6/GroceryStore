@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Shared.Models;
+﻿namespace GroceryStore.Shared.Models.Results;
 
-using Enums;
-using Extensions;
+using GroceryStore.Shared.Enums;
+using GroceryStore.Shared.Extensions;
 
 public sealed class ValidationError
 {

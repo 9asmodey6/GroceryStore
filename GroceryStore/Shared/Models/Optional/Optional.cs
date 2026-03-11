@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Shared.Models;
+﻿namespace GroceryStore.Shared.Models.Optional;
 
 public readonly struct Optional<TValue>
 {

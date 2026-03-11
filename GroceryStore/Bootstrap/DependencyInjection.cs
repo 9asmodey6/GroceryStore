@@ -6,6 +6,7 @@ using Database;
 using Features.Admin.Categories.GetCategories;
 using Features.Admin.Product.CreateProduct;
 using Features.Admin.Product.DeleteProduct;
+using Features.Admin.Product.GetProductById;
 using Features.Admin.Product.GetProducts;
 using Features.Admin.Product.UpdateProduct;
 using Infrastructure.Dapper;
@@ -15,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using ServiceScan.SourceGenerator;
 using Shared.Interfaces;
 using Shared.Models;
+using Shared.Models.Optional;
 
 public static partial class DependencyInjection
 {
@@ -64,6 +66,8 @@ public static partial class DependencyInjection
         services.AddScoped<UpdateProductValidator>();
 
         services.AddScoped<GetCategoriesRepository>();
+
+        services.AddScoped<GetProductByIdRepository>();
 
         return services;
     }

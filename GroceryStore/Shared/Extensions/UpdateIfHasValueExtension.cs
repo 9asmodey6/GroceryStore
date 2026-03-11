@@ -2,6 +2,7 @@
 
 using Features.Admin.Product.UpdateProduct;
 using Models;
+using Models.Optional;
 
 public static class UpdateExtensions
 {
