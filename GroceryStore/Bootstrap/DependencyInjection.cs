@@ -3,6 +3,7 @@ namespace GroceryStore.Bootstrap;
 using System.Data;
 using Dapper;
 using Database;
+using Features.Admin.Brands.AddBrand;
 using Features.Admin.Brands.GetBrands;
 using Features.Admin.Categories.GetCategories;
 using Features.Admin.Products.CreateProduct;
@@ -71,7 +72,10 @@ public static partial class DependencyInjection
         services.AddScoped<GetProductByIdRepository>();
 
         services.AddScoped<GetBrandsRepository>();
-        
+
+        services.AddScoped<AddBrandRepository>();
+        services.AddScoped<AddBrandValidator>();
+
         return services;
     }
 

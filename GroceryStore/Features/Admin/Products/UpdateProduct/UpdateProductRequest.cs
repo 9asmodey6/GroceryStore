@@ -7,4 +7,6 @@ public record UpdateProductRequest(
     Optional<string?> NewDescription,
     Optional<decimal?> NewPrice,
     Optional<int?> NewCategoryId,
+    Optional<int?> NewBrandId,
+    Optional<int> NewCountryId,
     Optional<string?> NewBaseUnit);

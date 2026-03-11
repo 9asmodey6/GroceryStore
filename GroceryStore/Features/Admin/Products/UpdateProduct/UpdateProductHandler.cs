@@ -11,6 +11,8 @@ public class UpdateProductHandler
         product.UpdateIfHasValue(request.NewPrice, (p, v) => p.UpdatePrice(v));
         product.UpdateIfHasValue(request.NewDescription, (p, v) => p.UpdateDescription(v));
         product.UpdateIfHasValue(request.NewCategoryId, (p, v) => p.SetCategoryId(v));
+        product.UpdateIfHasValue(request.NewBrandId, (p, v) => p.SetBrandId(v));
+        product.UpdateIfHasValue(request.NewCountryId, (p, v) => p.SetCountryId(v));
         product.UpdateIfHasValue(request.NewBaseUnit, (p, v) => p.SetBaseUnit(v));
     }
 }
