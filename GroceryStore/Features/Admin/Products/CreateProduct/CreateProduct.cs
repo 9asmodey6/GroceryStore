@@ -1,10 +1,8 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
-using Database.Entities.Product;
-using Infrastructure.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using Shared.Interfaces;
+using GroceryStore.Database.Entities.Product;
+using GroceryStore.Infrastructure.Services;
+using GroceryStore.Shared.Interfaces;
 
 public class CreateProduct : IEndpoint
 {

@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Features.Admin.Product.DeleteProduct;
+﻿namespace GroceryStore.Features.Admin.Products.DeleteProduct;
 
+using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Shared.Interfaces;
 
 public class DeleteProduct : IEndpoint
 {

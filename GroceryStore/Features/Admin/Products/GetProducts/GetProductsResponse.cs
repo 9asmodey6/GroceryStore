@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Features.Admin.Product.GetProducts;
+﻿namespace GroceryStore.Features.Admin.Products.GetProducts;
 
 public record GetProductsResponse(
     int Id,

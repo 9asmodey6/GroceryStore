@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
+﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
-using Database;
-using Database.Entities.Product;
+using GroceryStore.Database;
+using GroceryStore.Database.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 
 public class UpdateProductRepository(AppDbContext context)

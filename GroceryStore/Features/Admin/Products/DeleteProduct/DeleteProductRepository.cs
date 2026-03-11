@@ -1,6 +1,6 @@
-﻿namespace GroceryStore.Features.Admin.Product.DeleteProduct;
+﻿namespace GroceryStore.Features.Admin.Products.DeleteProduct;
 
-using Database;
+using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 
 public class DeleteProductRepository(AppDbContext dbContext)

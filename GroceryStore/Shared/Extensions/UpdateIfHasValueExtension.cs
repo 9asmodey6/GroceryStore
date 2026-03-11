@@ -1,6 +1,5 @@
 ﻿namespace GroceryStore.Shared.Extensions;
 
-using Features.Admin.Product.UpdateProduct;
 using Models;
 using Models.Optional;
 

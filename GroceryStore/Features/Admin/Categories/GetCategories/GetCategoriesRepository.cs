@@ -2,7 +2,6 @@
 
 using Dapper;
 using Database;
-using Product.GetProducts;
 
 public class GetCategoriesRepository(IDbConnectionFactory factory)
 {

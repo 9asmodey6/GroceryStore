@@ -1,9 +1,8 @@
-﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
+﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
-using Database;
-using Database.Entities.Product;
+using GroceryStore.Database.Entities.Product;
+using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Shared.Interfaces;
 
 public class UpdateProduct : IEndpoint
 {

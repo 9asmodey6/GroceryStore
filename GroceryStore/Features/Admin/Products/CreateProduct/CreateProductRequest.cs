@@ -1,6 +1,6 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
-using Shared.Models;
+using GroceryStore.Shared.Models;
 
 public record CreateProductRequest(
     string Name,

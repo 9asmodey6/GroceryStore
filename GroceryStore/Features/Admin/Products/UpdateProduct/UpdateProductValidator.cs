@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
+﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
 using FluentValidation;
 

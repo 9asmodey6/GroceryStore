@@ -1,6 +1,4 @@
-﻿namespace GroceryStore.Features.Admin.Product.GetProductById;
-
-using Database.Entities.Product;
+﻿namespace GroceryStore.Features.Admin.Products.GetProductById;
 
 public record GetProductByIdResponse(
     int Id,

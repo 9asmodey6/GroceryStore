@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Features.Admin.Product.GetProducts;
+﻿namespace GroceryStore.Features.Admin.Products.GetProducts;
 
+using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Shared.Interfaces;
 
 public class GetProducts : IEndpoint
 {

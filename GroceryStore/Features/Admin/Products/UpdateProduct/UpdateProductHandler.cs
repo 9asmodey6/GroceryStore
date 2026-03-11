@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
+﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
-using Database.Entities.Product;
-using Shared.Extensions;
+using GroceryStore.Database.Entities.Product;
+using GroceryStore.Shared.Extensions;
 
 public class UpdateProductHandler
 {

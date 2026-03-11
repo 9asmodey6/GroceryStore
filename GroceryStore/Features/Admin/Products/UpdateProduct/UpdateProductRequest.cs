@@ -1,7 +1,6 @@
-﻿namespace GroceryStore.Features.Admin.Product.UpdateProduct;
+﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
-using Shared.Models;
-using Shared.Models.Optional;
+using GroceryStore.Shared.Models.Optional;
 
 public record UpdateProductRequest(
     Optional<string?> NewName,

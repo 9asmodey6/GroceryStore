@@ -1,7 +1,7 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
-using Database.Entities.Product;
-using Database;
+using GroceryStore.Database;
+using GroceryStore.Database.Entities.Product;
 
 public class CreateProductRepository(AppDbContext dbContext)
 {

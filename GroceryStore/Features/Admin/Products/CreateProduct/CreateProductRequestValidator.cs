@@ -1,4 +1,4 @@
-namespace GroceryStore.Features.Admin.Product.CreateProduct;
+namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
 using FluentValidation;
 

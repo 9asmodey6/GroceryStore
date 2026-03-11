@@ -1,7 +1,7 @@
-﻿namespace GroceryStore.Features.Admin.Product.GetProductById;
+﻿namespace GroceryStore.Features.Admin.Products.GetProductById;
 
+using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Shared.Interfaces;
 
 public class GetProductById : IEndpoint
 {

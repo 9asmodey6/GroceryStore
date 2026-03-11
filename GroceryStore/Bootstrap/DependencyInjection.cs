@@ -3,12 +3,13 @@ namespace GroceryStore.Bootstrap;
 using System.Data;
 using Dapper;
 using Database;
+using Features.Admin.Brands.GetBrands;
 using Features.Admin.Categories.GetCategories;
-using Features.Admin.Product.CreateProduct;
-using Features.Admin.Product.DeleteProduct;
-using Features.Admin.Product.GetProductById;
-using Features.Admin.Product.GetProducts;
-using Features.Admin.Product.UpdateProduct;
+using Features.Admin.Products.CreateProduct;
+using Features.Admin.Products.DeleteProduct;
+using Features.Admin.Products.GetProductById;
+using Features.Admin.Products.GetProducts;
+using Features.Admin.Products.UpdateProduct;
 using Infrastructure.Dapper;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
@@ -69,6 +70,8 @@ public static partial class DependencyInjection
 
         services.AddScoped<GetProductByIdRepository>();
 
+        services.AddScoped<GetBrandsRepository>();
+        
         return services;
     }
 

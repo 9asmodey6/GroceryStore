@@ -1,8 +1,8 @@
-﻿namespace GroceryStore.Features.Admin.Product.GetProductById;
+﻿namespace GroceryStore.Features.Admin.Products.GetProductById;
 
 using Dapper;
-using Database;
-using Shared.Models;
+using GroceryStore.Database;
+using GroceryStore.Shared.Models;
 
 public class GetProductByIdRepository(IDbConnectionFactory factory)
 {
