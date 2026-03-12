@@ -4,6 +4,8 @@ using System.Security.Claims;
 using Database.Entities.Brand;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Extensions.Caching.Memory;
+using Shared.Consts;
 using Shared.Interfaces;
 
 public class AddBrand : IEndpoint
@@ -16,10 +18,11 @@ public class AddBrand : IEndpoint
             .WithName("AddBrand");
     }
 
-    public static async Task<Results<Created<Brand>, ValidationProblem, ForbidHttpResult>> HandleAsync(
+    public static async Task<Results<Created<Brand>, ValidationProblem>> HandleAsync(
         CancellationToken ct,
         AddBrandRequest request,
         AddBrandRepository repository,
+        IMemoryCache cache,
         AddBrandValidator validator)
     {
         var validationResult = await validator.ValidateAsync(request, ct);
@@ -31,6 +34,8 @@ public class AddBrand : IEndpoint
         var brand = ToEntity(request);
 
         await repository.AddBrandAsync(brand, ct);
+
+        cache.Remove(LookupCacheKeys.Brands);
 
         return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}", brand);
     }
