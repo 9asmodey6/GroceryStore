@@ -13,7 +13,7 @@ public class GetBrands : IEndpoint
             .WithName("GetBrands");
     }
 
-    public static async Task<Results<Ok<List<GetBrandsResponse>>, ForbidHttpResult>> HandleAsync(
+    private static async Task<Results<Ok<List<GetBrandsResponse>>, ForbidHttpResult>> HandleAsync(
         CancellationToken ct,
         GetBrandsRepository repository)
     {

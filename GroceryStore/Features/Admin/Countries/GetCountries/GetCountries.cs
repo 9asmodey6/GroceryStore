@@ -14,7 +14,7 @@ public class GetCountries : IEndpoint
             .WithName("GetCountries");
     }
 
-    public static async Task<Results<Ok<List<GetCountriesResponse>>, ForbidHttpResult>> HandleAsync(
+    private static async Task<Results<Ok<List<GetCountriesResponse>>, ForbidHttpResult>> HandleAsync(
         CancellationToken ct,
         GetCountriesRepository repository)
     {

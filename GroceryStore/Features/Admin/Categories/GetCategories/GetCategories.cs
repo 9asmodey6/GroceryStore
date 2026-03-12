@@ -13,7 +13,7 @@ public class GetCategories : IEndpoint
             .WithName("GetCategories");
     }
 
-    public async static Task<Results<ForbidHttpResult,
+    private static async Task<Results<ForbidHttpResult,
         Ok<List<GetCategoriesResponse>>>> HandleAsync(
         GetCategoriesRepository repository,
         CancellationToken ct)

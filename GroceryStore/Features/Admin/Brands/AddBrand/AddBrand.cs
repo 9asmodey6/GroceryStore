@@ -18,7 +18,7 @@ public class AddBrand : IEndpoint
             .WithName("AddBrand");
     }
 
-    public static async Task<Results<Created<Brand>, ValidationProblem>> HandleAsync(
+    private static async Task<Results<Created<Brand>, ValidationProblem>> HandleAsync(
         CancellationToken ct,
         AddBrandRequest request,
         AddBrandRepository repository,

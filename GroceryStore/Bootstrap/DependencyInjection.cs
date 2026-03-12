@@ -4,6 +4,7 @@ using System.Data;
 using Dapper;
 using Database;
 using Features.Admin.Brands.AddBrand;
+using Features.Admin.Brands.DeleteBrand;
 using Features.Admin.Brands.GetBrands;
 using Features.Admin.Categories.GetCategories;
 using Features.Admin.Countries.GetCountries;
@@ -78,6 +79,8 @@ public static partial class DependencyInjection
         services.AddScoped<AddBrandValidator>();
 
         services.AddScoped<GetCountriesRepository>();
+
+        services.AddScoped<DeleteBrandRepository>();
 
         return services;
     }
