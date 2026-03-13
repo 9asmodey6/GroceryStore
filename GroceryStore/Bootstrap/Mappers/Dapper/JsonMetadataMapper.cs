@@ -1,4 +1,4 @@
-namespace GroceryStore.Infrastructure.Dapper;
+namespace GroceryStore.Bootstrap.Mappers.Dapper;
 
 using System.Data;
 using System.Text.Json;

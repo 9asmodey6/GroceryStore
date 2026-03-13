@@ -1,6 +1,6 @@
-namespace GroceryStore.Database.Configurations.ProductBatches;
+namespace GroceryStore.Database.Configurations.Products;
 
-using Entities.ProductBatch;
+using GroceryStore.Database.Entities.ProductBatch;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

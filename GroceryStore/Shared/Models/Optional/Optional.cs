@@ -8,9 +8,9 @@ public readonly struct Optional<TValue>
         Value = value;
     }
 
-    public static Optional<TValue> None => default;
-    public static Optional<TValue> Some(TValue? value) => new (true, value);
-
     public bool HasValue { get; }
     public TValue? Value { get; }
+
+    public static Optional<TValue> None => default;
+    public static Optional<TValue> Some(TValue? value) => new (true, value);
 }

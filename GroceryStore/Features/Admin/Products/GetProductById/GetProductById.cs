@@ -10,13 +10,13 @@ public class GetProductById : IEndpoint
         app.MapGet("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Get Product by Id")
-            .WithName("GetProductById");
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<Ok<GetProductByIdResponse>, NotFound, ForbidHttpResult>> HandleAsync(
-        CancellationToken ct,
         GetProductByIdRepository repository,
-        int productId)
+        int productId,
+        CancellationToken ct)
     {
         var response = await repository.GetProductByIdAsync(productId, ct);
 

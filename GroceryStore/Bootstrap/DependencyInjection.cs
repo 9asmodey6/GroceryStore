@@ -13,9 +13,9 @@ using Features.Admin.Products.DeleteProduct;
 using Features.Admin.Products.GetProductById;
 using Features.Admin.Products.GetProducts;
 using Features.Admin.Products.UpdateProduct;
-using Infrastructure.Dapper;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
+using Mappers.Dapper;
 using Microsoft.EntityFrameworkCore;
 using ServiceScan.SourceGenerator;
 using Shared.Interfaces;
@@ -26,7 +26,13 @@ public static partial class DependencyInjection
 {
     public static IServiceCollection AddBasicServices(this IServiceCollection services)
     {
-        services.AddOpenApi();
+        services.AddOpenApi("admin", options =>
+        {
+            options
+            .ShouldInclude = desc => desc
+            .GroupName == "admin";
+        });
+
         services.AddMemoryCache();
 
         services.ConfigureHttpJsonOptions(options =>
@@ -87,4 +93,7 @@ public static partial class DependencyInjection
 
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
+
+    [GenerateServiceRegistrations(AssignableTo = typeof(IValidator), Lifetime = ServiceLifetime.Singleton)]
+    public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 }

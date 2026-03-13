@@ -13,10 +13,7 @@ public class GetMetadataEndpoint : IEndpoint
         app.MapGet("api/v1/admin/categories/{categoryId:int:min(1)}/metadata", HandleAsync)
             .WithTags("AdminCategories")
             .WithSummary("Get category attributes metadata (recursive)")
-            .WithName("GetCategoryMetadata")
-            .Produces<List<MetadataAttribute>>()
-            .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status400BadRequest);
+            .WithGroupName("admin");
     }
 
     private static async Task<IResult> HandleAsync(

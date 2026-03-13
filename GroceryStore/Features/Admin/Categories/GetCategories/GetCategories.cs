@@ -10,15 +10,14 @@ public class GetCategories : IEndpoint
         app.MapGet("/api/v1/admin/categories", HandleAsync)
             .WithTags("AdminCategories")
             .WithSummary("Get all categories")
-            .WithName("GetCategories");
+            .WithGroupName("admin");
     }
 
-    private static async Task<Results<ForbidHttpResult,
-        Ok<List<GetCategoriesResponse>>>> HandleAsync(
+    private static async Task<Ok<GetCategoriesResponse>> HandleAsync(
         GetCategoriesRepository repository,
         CancellationToken ct)
     {
         var result = await repository.GetCategoriesAsync(ct);
-        return TypedResults.Ok(result.ToList());
+        return TypedResults.Ok(result);
     }
 }

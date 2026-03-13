@@ -5,7 +5,7 @@ using Database;
 
 public class GetCategoriesRepository(IDbConnectionFactory factory)
 {
-    public async Task<IEnumerable<GetCategoriesResponse>> GetCategoriesAsync(CancellationToken ct)
+    public async Task<GetCategoriesResponse> GetCategoriesAsync(CancellationToken ct)
     {
         using var connection = factory.CreateConnection();
         const string sql =
@@ -42,7 +42,7 @@ public class GetCategoriesRepository(IDbConnectionFactory factory)
             """;
 
         var cmd = new CommandDefinition(sql, cancellationToken: ct);
-        var categories = await connection.QueryAsync<GetCategoriesResponse>(cmd);
-        return categories;
+        var items = await connection.QueryAsync<GetCategoriesResponseItem>(cmd);
+        return new GetCategoriesResponse(items.ToArray());
     }
 }

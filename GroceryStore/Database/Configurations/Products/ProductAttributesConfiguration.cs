@@ -1,7 +1,7 @@
-namespace GroceryStore.Database.Configurations.ProductAttributes;
+namespace GroceryStore.Database.Configurations.Products;
 
-using Entities.Attribute;
-using Enums;
+using GroceryStore.Database.Entities.Attribute;
+using GroceryStore.Database.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

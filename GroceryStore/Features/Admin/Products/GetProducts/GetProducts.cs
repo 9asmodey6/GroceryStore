@@ -10,7 +10,7 @@ public class GetProducts : IEndpoint
         app.MapGet("/api/v1/admin/products", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Get all active Products with attributes")
-            .WithName("GetProducts");
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<ForbidHttpResult, Ok<List<GetProductsResponse>>>> HandleAsync(

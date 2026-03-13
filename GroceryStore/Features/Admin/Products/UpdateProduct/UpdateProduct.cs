@@ -11,7 +11,7 @@ public class UpdateProduct : IEndpoint
         app.MapPatch("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Updates the product by ID")
-            .WithName("UpdateProduct");
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<Created<Product>, NotFound, ValidationProblem, ForbidHttpResult>> HandleAsync(

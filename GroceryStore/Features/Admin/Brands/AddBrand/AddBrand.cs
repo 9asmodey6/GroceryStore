@@ -1,8 +1,6 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.AddBrand;
 
-using System.Security.Claims;
 using Database.Entities.Brand;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
@@ -12,18 +10,18 @@ public class AddBrand : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost($"/api/v1/admin/brands", HandleAsync)
+        app.MapPost("/api/v1/admin/brands", HandleAsync)
             .WithTags("AdminBrands")
-            .WithSummary("Add New Brand")
-            .WithName("AddBrand");
+            .WithSummary("Add new Brand")
+            .WithGroupName("admin");
     }
 
-    private static async Task<Results<Created<Brand>, ValidationProblem>> HandleAsync(
-        CancellationToken ct,
+    private static async Task<Results<Created<AddBrandResponse>, ValidationProblem>> HandleAsync(
         AddBrandRequest request,
         AddBrandRepository repository,
         IMemoryCache cache,
-        AddBrandValidator validator)
+        AddBrandValidator validator,
+        CancellationToken ct)
     {
         var validationResult = await validator.ValidateAsync(request, ct);
         if (!validationResult.IsValid)
@@ -37,7 +35,7 @@ public class AddBrand : IEndpoint
 
         cache.Remove(LookupCacheKeys.Brands);
 
-        return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}", brand);
+        return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}",  new AddBrandResponse(brand.Name));
     }
 
     public static Brand ToEntity(AddBrandRequest request)

@@ -11,15 +11,15 @@ public class DeleteBrand : IEndpoint
     {
         app.MapDelete("/api/v1/admin/brands/{brandId:int:min(1)}", HandleAsync)
             .WithTags("AdminBrands")
-            .WithSummary("Delete Brand By ID")
-            .WithName("DeleteBrand");
+            .WithSummary("Delete Brand by ID")
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<NoContent, NotFound>> HandleAsync(
-        CancellationToken ct,
         DeleteBrandRepository repository,
         IMemoryCache cache,
-        int brandId)
+        int brandId,
+        CancellationToken ct)
     {
         var isDeleted = await repository.DeleteBrandAsync(brandId, ct);
 

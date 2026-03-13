@@ -11,10 +11,7 @@ public class CreateProduct : IEndpoint
         app.MapPost("/api/v1/admin/products", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Creates a new Product")
-            .WithName("CreateProduct")
-            .Produces<int>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status403Forbidden);
+            .WithGroupName("admin");
     }
 
     private static async Task<IResult> HandleAsync(

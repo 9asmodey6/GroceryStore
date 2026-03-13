@@ -10,7 +10,7 @@ public class DeleteProduct : IEndpoint
         app.MapDelete("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Performs soft removal of the product")
-            .WithName("DeleteProduct");
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<NoContent, NotFound, ForbidHttpResult>> HandleAsync(

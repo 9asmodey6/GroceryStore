@@ -10,12 +10,12 @@ public class GetBrands : IEndpoint
         app.MapGet("/api/v1/admin/brands", HandleAsync)
             .WithTags("AdminBrands")
             .WithSummary("Get All Brands")
-            .WithName("GetBrands");
+            .WithGroupName("admin");
     }
 
-    private static async Task<Results<Ok<List<GetBrandsResponse>>, ForbidHttpResult>> HandleAsync(
-        CancellationToken ct,
-        GetBrandsRepository repository)
+    private static async Task<Ok<GetBrandsResponse>> HandleAsync(
+        GetBrandsRepository repository,
+        CancellationToken ct)
     {
         var brands = await repository.GetBrandsAsync(ct);
         return TypedResults.Ok(brands);

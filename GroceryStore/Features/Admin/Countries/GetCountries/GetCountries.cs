@@ -11,12 +11,12 @@ public class GetCountries : IEndpoint
         app.MapGet("/api/v1/admin/countries", HandleAsync)
             .WithTags("AdminCountries")
             .WithSummary("Get All Countries")
-            .WithName("GetCountries");
+            .WithGroupName("admin");
     }
 
     private static async Task<Results<Ok<List<GetCountriesResponse>>, ForbidHttpResult>> HandleAsync(
-        CancellationToken ct,
-        GetCountriesRepository repository)
+        GetCountriesRepository repository,
+        CancellationToken ct)
     {
         var countries = await repository.GetCountriesAsync(ct);
         return TypedResults.Ok(countries);
