@@ -3,12 +3,14 @@
 using FluentValidation;
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Extensions;
 
 public class UpdateProduct : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPatch("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
+            .WithValidation<UpdateProductRequest>()
             .WithTags("AdminProducts")
             .WithSummary("Updates the product by ID")
             .WithGroupName("admin");
@@ -18,16 +20,9 @@ public class UpdateProduct : IEndpoint
         int productId,
         UpdateProductRequest request,
         UpdateProductRepository repository,
-        IValidator<UpdateProductRequest> validator,
         UpdateProductHandler handler,
         CancellationToken ct)
     {
-        var validatedRequest = await validator.ValidateAsync(request, ct);
-        if (!validatedRequest.IsValid)
-        {
-            return TypedResults.ValidationProblem(validatedRequest.ToDictionary());
-        }
-
         var productToUpdate = await repository.GetById(productId, ct);
         if (productToUpdate is null)
         {

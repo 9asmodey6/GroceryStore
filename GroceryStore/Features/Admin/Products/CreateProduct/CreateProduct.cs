@@ -5,12 +5,14 @@ using FluentValidation;
 using Infrastructure.Services;
 using Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Extensions;
 
 public class CreateProduct : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/v1/admin/products", HandleAsync)
+            .WithValidation<CreateProductRequest>()
             .WithTags("AdminProducts")
             .WithSummary("Creates a new Product")
             .WithGroupName("admin");
@@ -20,16 +22,9 @@ public class CreateProduct : IEndpoint
         CreateProductRequest request,
         CreateProductRepository repository,
         CategoryAttributeValueNormalizer normalizer,
-        IValidator<CreateProductRequest> validator,
         ProductSkuGenerationService skuService,
         CancellationToken ct)
     {
-        var validationResult = await validator.ValidateAsync(request, ct);
-        if (!validationResult.IsValid)
-        {
-            return TypedResults.ValidationProblem(validationResult.ToDictionary());
-        }
-
         Dictionary<int, string> normalized;
 
         try
