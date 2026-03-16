@@ -1,5 +1,6 @@
 ﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
+using FluentValidation;
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -17,7 +18,7 @@ public class UpdateProduct : IEndpoint
         int productId,
         UpdateProductRequest request,
         UpdateProductRepository repository,
-        FluentValidation.IValidator<UpdateProductRequest> validator,
+        IValidator<UpdateProductRequest> validator,
         UpdateProductHandler handler,
         CancellationToken ct)
     {

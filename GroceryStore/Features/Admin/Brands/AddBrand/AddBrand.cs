@@ -21,7 +21,7 @@ public class AddBrand : IEndpoint
         AddBrandRequest request,
         AddBrandRepository repository,
         IMemoryCache cache,
-        AbstractValidator<AddBrandRequest> validator,
+        IValidator<AddBrandRequest> validator,
         CancellationToken ct)
     {
         var validationResult = await validator.ValidateAsync(request, ct);
