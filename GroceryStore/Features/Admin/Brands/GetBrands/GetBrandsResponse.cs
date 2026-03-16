@@ -1,7 +1,7 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.GetBrands;
 
 public record GetBrandsResponse(
-    GetBrandsResponseItem[] Entities);
+    GetBrandsResponseItem[] Items);
 
 public record GetBrandsResponseItem(
    int Id,

@@ -39,7 +39,7 @@ public class AddBrand : IEndpoint
         return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}",  new AddBrandResponse(brand.Name));
     }
 
-    public static Brand ToEntity(AddBrandRequest request)
+    private static Brand ToEntity(AddBrandRequest request)
     {
         return new Brand(
             request.Name);

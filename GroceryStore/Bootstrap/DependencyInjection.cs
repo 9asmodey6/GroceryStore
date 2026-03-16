@@ -5,6 +5,7 @@ using Dapper;
 using Database;
 using Features.Admin.Brands.AddBrand;
 using Features.Admin.Brands.DeleteBrand;
+using Features.Admin.Brands.GetBrandById;
 using Features.Admin.Brands.GetBrands;
 using Features.Admin.Categories.GetCategories;
 using Features.Admin.Countries.GetCountries;
@@ -13,6 +14,7 @@ using Features.Admin.Products.DeleteProduct;
 using Features.Admin.Products.GetProductById;
 using Features.Admin.Products.GetProducts;
 using Features.Admin.Products.UpdateProduct;
+using FluentValidation;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
 using Mappers.Dapper;
@@ -111,12 +113,14 @@ public static partial class DependencyInjection
 
         services.AddScoped<DeleteBrandRepository>();
 
+        services.AddScoped<GetBrandByIdRepository>();
+
         return services;
     }
 
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
 
-    [GenerateServiceRegistrations(AssignableTo = typeof(FluentValidation.IValidator<>), Lifetime = ServiceLifetime.Scoped)]
+    [GenerateServiceRegistrations(AssignableTo = typeof(IValidator<>), Lifetime = ServiceLifetime.Scoped)]
     public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 }
