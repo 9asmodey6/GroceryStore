@@ -20,7 +20,7 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductRequest>
         RuleFor(p => p.NewBrandId.Value)
             .NotEmpty().WithMessage("Brand is required")
             .GreaterThan(0).WithMessage("Brand Id must be greater than 0")
-            .When(p => p.NewCountryId.HasValue);
+            .When(p => p.NewBrandId.HasValue);
 
         RuleFor(p => p.NewCountryId.Value)
             .NotEmpty().WithMessage("Country is required")

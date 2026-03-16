@@ -17,6 +17,7 @@ using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
 using Mappers.Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using ServiceScan.SourceGenerator;
 using Shared.Interfaces;
 using Shared.Models;
@@ -28,9 +29,34 @@ public static partial class DependencyInjection
     {
         services.AddOpenApi("admin", options =>
         {
-            options
-            .ShouldInclude = desc => desc
-            .GroupName == "admin";
+            options.ShouldInclude = desc => desc.GroupName == "admin";
+
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new OpenApiInfo
+                {
+                    Title = "GroceryStore Admin API",
+                    Version = "v1",
+                };
+
+                return Task.CompletedTask;
+            });
+        });
+
+        services.AddOpenApi("user", options =>
+        {
+            options.ShouldInclude = desc => desc.GroupName == "user";
+
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new OpenApiInfo
+                {
+                    Title = "GroceryStore User API",
+                    Version = "v1",
+                };
+
+                return Task.CompletedTask;
+            });
         });
 
         services.AddMemoryCache();
@@ -93,7 +119,4 @@ public static partial class DependencyInjection
 
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
-
-    [GenerateServiceRegistrations(AssignableTo = typeof(IValidator), Lifetime = ServiceLifetime.Singleton)]
-    public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 }

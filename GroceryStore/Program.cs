@@ -16,13 +16,16 @@ public static class Program
 
         var app = builder.Build();
 
+
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
             app.ApplyMigrations();
             app.MapScalarApiReference(o =>
                 o.WithTheme(ScalarTheme.DeepSpace)
-                    .WithTitle("Grocery Store"));
+                    .WithTitle("Grocery Store")
+                    .AddDocument("admin")
+                    .AddDocument("user"));
         }
 
         app.UseHttpsRedirection();
