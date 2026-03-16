@@ -13,7 +13,7 @@ public class DeleteProduct : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<Results<NoContent, NotFound, ForbidHttpResult>> HandleAsync(
+    private static async Task<Results<NoContent, NotFound>> HandleAsync(
         int productId,
         DeleteProductRepository repository,
         CancellationToken ct)

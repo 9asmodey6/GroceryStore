@@ -89,7 +89,6 @@ public static partial class DependencyInjection
         services.AddScoped<CreateProductRepository>();
         services.AddScoped<CategoryAttributeValueNormalizer>();
         services.AddScoped<ProductSkuGenerationService>();
-        services.AddScoped<CreateProductRequestValidator>();
 
         services.AddScoped<CategoryAttributeRepository>();
 
@@ -99,7 +98,6 @@ public static partial class DependencyInjection
 
         services.AddScoped<UpdateProductRepository>();
         services.AddScoped<UpdateProductHandler>();
-        services.AddScoped<UpdateProductValidator>();
 
         services.AddScoped<GetCategoriesRepository>();
 
@@ -108,7 +106,6 @@ public static partial class DependencyInjection
         services.AddScoped<GetBrandsRepository>();
 
         services.AddScoped<AddBrandRepository>();
-        services.AddScoped<AddBrandValidator>();
 
         services.AddScoped<GetCountriesRepository>();
 
@@ -119,4 +116,7 @@ public static partial class DependencyInjection
 
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
+
+    [GenerateServiceRegistrations(AssignableTo = typeof(FluentValidation.AbstractValidator<>), Lifetime = ServiceLifetime.Scoped)]
+    public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 }

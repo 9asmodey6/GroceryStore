@@ -4,6 +4,7 @@ using Infrastructure.Repositories.Categories;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Interfaces;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Models;
 
 public class GetMetadataEndpoint : IEndpoint
@@ -16,7 +17,7 @@ public class GetMetadataEndpoint : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<IResult> HandleAsync(
+    private static async Task<Ok<List<MetadataAttribute>>> HandleAsync(
         int categoryId,
         CategoryAttributeRepository repository,
         IMemoryCache cache,
@@ -28,11 +29,11 @@ public class GetMetadataEndpoint : IEndpoint
 
         if (cache.TryGetValue(cacheKey, out List<MetadataAttribute>? cachedMetadata) && cachedMetadata != null)
         {
-            return Results.Ok(cachedMetadata);
+            return TypedResults.Ok(cachedMetadata);
         }
 
         var metadata = await repository.GetMetadataSchemaAsync(categoryId, ct);
         cache.Set(cacheKey, metadata, TimeSpan.FromMinutes(30));
-        return Results.Ok(metadata);
+        return TypedResults.Ok(metadata);
     }
 }

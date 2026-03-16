@@ -12,7 +12,8 @@ public static class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddBasicServices()
             .AddDatabaseServices(builder.Configuration)
-            .AddFeatureServices();
+            .AddFeatureServices()
+            .RegisterValidators();
 
         var app = builder.Build();
 

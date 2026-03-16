@@ -1,8 +1,10 @@
 namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
+using FluentValidation;
 using GroceryStore.Database.Entities.Product;
 using GroceryStore.Infrastructure.Services;
 using GroceryStore.Shared.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 public class CreateProduct : IEndpoint
 {
@@ -14,18 +16,18 @@ public class CreateProduct : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<IResult> HandleAsync(
+    private static async Task<Results<Created<CreateProductResponse>, ValidationProblem, BadRequest<string>>> HandleAsync(
         CreateProductRequest request,
         CreateProductRepository repository,
         CategoryAttributeValueNormalizer normalizer,
-        CreateProductRequestValidator validator,
+        AbstractValidator<CreateProductRequest> validator,
         ProductSkuGenerationService skuService,
         CancellationToken ct)
     {
         var validationResult = await validator.ValidateAsync(request, ct);
         if (!validationResult.IsValid)
         {
-            return Results.BadRequest(validationResult.Errors);
+            return TypedResults.ValidationProblem(validationResult.ToDictionary());
         }
 
         Dictionary<int, string> normalized;
@@ -36,22 +38,35 @@ public class CreateProduct : IEndpoint
 
             if (!norm.IsSuccess)
             {
-                return Results.BadRequest(new { errors = norm.Validation.Errors });
+                var errors = norm.Validation.Errors
+                    .GroupBy(e => e.Field ?? "attributes")
+                    .ToDictionary(g => g.Key, g => g
+                        .Select(x => x.Message)
+                        .ToArray());
+
+                return TypedResults.ValidationProblem(errors);
             }
 
             normalized = norm.Value!;
         }
         catch (ArgumentException ex)
         {
-            return Results.BadRequest(ex.Message);
+            return TypedResults.BadRequest(ex.Message);
         }
 
         var sku = await skuService.CreateSku(request.CategoryId, ct);
         var product = ToEntity(request, sku, normalized);
 
         await repository.CreateAsync(product, ct);
+        var response = new CreateProductResponse(
+            product.Id,
+            product.Name,
+            product.Price,
+            product.SKU,
+            product.Description,
+            product.BaseUnit);
 
-        return Results.Created($"/api/v1/admin/products/{product.Id}", product);
+        return TypedResults.Created($"/api/v1/admin/products/{product.Id}", response);
     }
 
     private static Product ToEntity(

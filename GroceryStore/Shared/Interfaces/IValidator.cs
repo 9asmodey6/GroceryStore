@@ -1,6 +1,5 @@
 ﻿namespace GroceryStore.Shared.Interfaces;
 
-public class IValidator
+public interface IValidator<T>
 {
-    
 }

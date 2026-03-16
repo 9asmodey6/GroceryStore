@@ -1,6 +1,7 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.AddBrand;
 
 using Database.Entities.Brand;
+using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
@@ -20,7 +21,7 @@ public class AddBrand : IEndpoint
         AddBrandRequest request,
         AddBrandRepository repository,
         IMemoryCache cache,
-        AddBrandValidator validator,
+        AbstractValidator<AddBrandRequest> validator,
         CancellationToken ct)
     {
         var validationResult = await validator.ValidateAsync(request, ct);

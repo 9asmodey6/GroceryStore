@@ -9,23 +9,24 @@ public class GetCountriesRepository(AppDbContext dbContext, IMemoryCache cache)
 {
     private const string CacheKey = LookupCacheKeys.Countries;
 
-    public async ValueTask<List<GetCountriesResponse>> GetCountriesAsync(CancellationToken ct)
+    public async ValueTask<GetCountriesResponse> GetCountriesAsync(CancellationToken ct)
     {
-        var countries = await cache.GetOrCreateAsync(
+        var items = await cache.GetOrCreateAsync(
             CacheKey,
             async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);
+
                 return await dbContext.Countries
                     .AsNoTracking()
                     .OrderBy(c => c.Id)
-                    .Select(c => new GetCountriesResponse(
+                    .Select(c => new GetCountriesResponseItem(
                         c.Id,
                         c.Name,
                         c.Code))
-                    .ToListAsync(ct);
-            }) ?? [];
-
-        return countries;
+                    .ToArrayAsync(ct);
+            });
+        
+        return new GetCountriesResponse(items ?? Array.Empty<GetCountriesResponseItem>());
     }
 }

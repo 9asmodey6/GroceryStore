@@ -2,6 +2,7 @@ namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
 using GroceryStore.Database;
 using GroceryStore.Database.Entities.Product;
+using Microsoft.EntityFrameworkCore;
 
 public class CreateProductRepository(AppDbContext dbContext)
 {

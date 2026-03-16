@@ -1,5 +1,6 @@
 ﻿namespace GroceryStore.Features.Admin.Products.UpdateProduct;
 
+using FluentValidation;
 using GroceryStore.Database.Entities.Product;
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -14,11 +15,11 @@ public class UpdateProduct : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<Results<Created<Product>, NotFound, ValidationProblem, ForbidHttpResult>> HandleAsync(
+    private static async Task<Results<Created<Product>, NotFound, ValidationProblem>> HandleAsync(
         int productId,
         UpdateProductRequest request,
         UpdateProductRepository repository,
-        UpdateProductValidator validator,
+        AbstractValidator<UpdateProductRequest> validator,
         UpdateProductHandler handler,
         CancellationToken ct)
     {

@@ -13,7 +13,7 @@ public class GetProductById : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<Results<Ok<GetProductByIdResponse>, NotFound, ForbidHttpResult>> HandleAsync(
+    private static async Task<Results<Ok<GetProductByIdResponse>, NotFound>> HandleAsync(
         GetProductByIdRepository repository,
         int productId,
         CancellationToken ct)
