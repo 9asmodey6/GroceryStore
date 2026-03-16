@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Consts;
 
 public class ProductSkuGenerationService(IMemoryCache cache, AppDbContext context)
 {
@@ -27,7 +28,9 @@ public class ProductSkuGenerationService(IMemoryCache cache, AppDbContext contex
 
     private async Task<string?> GetCategoryNameCached(int categoryId, CancellationToken ct)
     {
-        var cacheKey = $"category_name_{categoryId}";
+        var cachePrefix = CategoryCacheKeys.CategoryName;
+        
+        var cacheKey = $"{cachePrefix}_{categoryId}";
 
         return await cache.GetOrCreateAsync(cacheKey, async entry =>
         {
