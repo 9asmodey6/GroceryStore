@@ -5,6 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Shared.Interfaces;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Models;
 
 public class GetMetadataEndpoint : IEndpoint
@@ -23,9 +24,9 @@ public class GetMetadataEndpoint : IEndpoint
         IMemoryCache cache,
         CancellationToken ct)
     {
-        const string cacheKeyPrefix = "category_metadata";
-
-        var cacheKey = $"{cacheKeyPrefix}_{categoryId}";
+        var cachePrefix = CategoryCacheKeys.CategoryMetadata;
+        
+        string cacheKey = $"{cachePrefix}_{categoryId}";
 
         if (cache.TryGetValue(cacheKey, out List<MetadataAttribute>? cachedMetadata) && cachedMetadata != null)
         {

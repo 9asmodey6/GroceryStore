@@ -6,7 +6,7 @@ using GroceryStore.Shared.Models;
 
 public class GetProductsRepository(IDbConnectionFactory factory)
 {
-    public async Task<IEnumerable<GetProductsResponse>> GetProductsAsync(CancellationToken ct)
+    public async Task<GetProductsResponse> GetProductsAsync(CancellationToken ct)
     {
         using var connection = factory.CreateConnection();
         const string sql =
@@ -35,14 +35,15 @@ public class GetProductsRepository(IDbConnectionFactory factory)
             """;
         // TODO: Filter by DataType;
         var cmd = new CommandDefinition(sql, cancellationToken: ct);
+
         var rows = await connection.QueryAsync<ProductRow>(cmd);
-        return rows
+
+        var items = rows
             .GroupBy(r => r.Id)
             .Select(g =>
             {
                 var first = g.First();
-
-                return new GetProductsResponse(
+                return new GetProductsResponseItem(
                     first.Id,
                     first.Name,
                     first.Price,
@@ -53,11 +54,12 @@ public class GetProductsRepository(IDbConnectionFactory factory)
                     first.Description,
                     first.BaseUnit,
                     g.Where(x => x.AttributeName != null)
-                        .Select(x => new GetProductsMetadataResponse(
-                            x.AttributeName,
-                            x.AttributeValue,
-                            x.AttributeUnit))
+                        .Select(x =>
+                            new GetProductsMetadataResponse(x.AttributeName, x.AttributeValue, x.AttributeUnit))
                         .ToList());
-            });
+            })
+            .ToArray();
+
+        return new GetProductsResponse(items);
     }
 }

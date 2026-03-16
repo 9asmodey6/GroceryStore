@@ -8,12 +8,10 @@ using Shared.Consts;
 
 public class GetBrandsRepository(AppDbContext dbContext, IMemoryCache cache)
 {
-    private const string CacheKey = LookupCacheKeys.Brands;
-
     public async ValueTask<GetBrandsResponse> GetBrandsAsync(CancellationToken ct)
     {
         var items = await cache.GetOrCreateAsync(
-            CacheKey,
+            LookupCacheKeys.Brands,
             async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);

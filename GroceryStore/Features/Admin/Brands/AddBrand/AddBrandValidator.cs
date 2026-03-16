@@ -4,7 +4,7 @@ using Database.Entities.Brand;
 using FluentValidation;
 using GetBrands;
 
-public class AddBrandValidator : AbstractValidator<AddBrandRequest>, IValidator<AddBrandRequest>
+public class AddBrandValidator : AbstractValidator<AddBrandRequest>
 {
     public AddBrandValidator()
     {

@@ -1,6 +1,9 @@
 ﻿namespace GroceryStore.Features.Admin.Products.GetProducts;
 
 public record GetProductsResponse(
+    GetProductsResponseItem[] Items);
+
+public record GetProductsResponseItem(
     int Id,
     string Name,
     decimal Price,

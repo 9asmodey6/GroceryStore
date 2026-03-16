@@ -1,9 +1,8 @@
 namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
-using FluentValidation;
-using GroceryStore.Database.Entities.Product;
-using GroceryStore.Infrastructure.Services;
-using GroceryStore.Shared.Interfaces;
+using Database.Entities.Product;
+using Infrastructure.Services;
+using Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 public class CreateProduct : IEndpoint
@@ -20,7 +19,7 @@ public class CreateProduct : IEndpoint
         CreateProductRequest request,
         CreateProductRepository repository,
         CategoryAttributeValueNormalizer normalizer,
-        AbstractValidator<CreateProductRequest> validator,
+        FluentValidation.IValidator<CreateProductRequest> validator,
         ProductSkuGenerationService skuService,
         CancellationToken ct)
     {

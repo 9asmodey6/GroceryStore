@@ -13,11 +13,11 @@ public class GetProducts : IEndpoint
             .WithGroupName("admin");
     }
 
-    private static async Task<Results<ForbidHttpResult, Ok<List<GetProductsResponse>>>> HandleAsync(
+    private static async Task<Ok<GetProductsResponse>> HandleAsync(
         GetProductsRepository repository,
         CancellationToken ct)
     {
         var result = await repository.GetProductsAsync(ct);
-        return TypedResults.Ok(result.ToList());
+        return TypedResults.Ok(result);
     }
 }

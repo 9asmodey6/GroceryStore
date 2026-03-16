@@ -7,12 +7,10 @@ using Shared.Consts;
 
 public class GetCountriesRepository(AppDbContext dbContext, IMemoryCache cache)
 {
-    private const string CacheKey = LookupCacheKeys.Countries;
-
     public async ValueTask<GetCountriesResponse> GetCountriesAsync(CancellationToken ct)
     {
         var items = await cache.GetOrCreateAsync(
-            CacheKey,
+            LookupCacheKeys.Countries,
             async entry =>
             {
                 entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1);

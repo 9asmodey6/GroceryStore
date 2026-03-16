@@ -117,6 +117,6 @@ public static partial class DependencyInjection
     [GenerateServiceRegistrations(AssignableTo = typeof(IEndpoint), CustomHandler = "MapEndpoint")]
     public static partial IEndpointRouteBuilder MapEndpointsGenerated(this IEndpointRouteBuilder endpoints);
 
-    [GenerateServiceRegistrations(AssignableTo = typeof(FluentValidation.AbstractValidator<>), Lifetime = ServiceLifetime.Scoped)]
+    [GenerateServiceRegistrations(AssignableTo = typeof(FluentValidation.IValidator<>), Lifetime = ServiceLifetime.Scoped)]
     public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 }

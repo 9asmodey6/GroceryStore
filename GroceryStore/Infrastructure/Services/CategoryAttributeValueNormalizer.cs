@@ -4,6 +4,7 @@ using System.Globalization;
 using Database.Enums;
 using Repositories.Categories;
 using Microsoft.Extensions.Caching.Memory;
+using Shared.Consts;
 using Shared.Enums;
 using Shared.Models;
 using Shared.Models.Results;
@@ -102,7 +103,7 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
 
     private async ValueTask<List<MetadataAttribute>> GetMetadataAsync(int categoryId, CancellationToken ct)
     {
-        const string cacheKeyPrefix = "category_metadata";
+        const string cacheKeyPrefix = CategoryCacheKeys.CategoryMetadata;
 
         var cacheKey = $"{cacheKeyPrefix}_{categoryId}";
         return (await cache.GetOrCreateAsync(cacheKey, async entry =>
