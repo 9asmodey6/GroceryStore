@@ -156,7 +156,19 @@ Several infrastructure concerns are automated to reduce boilerplate and runtime 
    cd GroceryStore
   ```
 
-### 2. Run the application with Docker
+### 2. Configure Environment Variables
+The application requires a .env file to handle secrets and connection strings. 
+A template is provided in .env.example.
+
+Create your .env file:
+
+_Linux/macOS_: cp .env.example .env
+
+_Windows (PowerShell)_: cp .env.example .env
+
+Note: Open the .env file and ensure JWT_TOKEN_KEY is set to a secure string (at least 32 characters). The default DB_CONNECTION_STRING is already configured to work with the Docker Compose setup.
+
+### 3. Run the application with Docker
    
    Make sure you have *Docker* and *Docker Compose* installed.
    Then simply run:
@@ -171,7 +183,7 @@ This command will automatically:
 
 No manual database setup or migration commands are required.
 
-### 3. Access API documentation
+### 4. Access API documentation
 
 Once the containers are running, open: `http://localhost:8080/scalar/v1`
 to explore the interactive API documentation.
