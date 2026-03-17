@@ -129,6 +129,7 @@ public static partial class DependencyInjection
         services.AddScoped<CreateProductRepository>();
         services.AddScoped<CategoryAttributeValueNormalizer>();
         services.AddScoped<ProductSkuGenerationService>();
+        services.AddScoped<TokenService>();
 
         services.AddScoped<CategoryAttributeRepository>();
 
@@ -161,4 +162,7 @@ public static partial class DependencyInjection
 
     [GenerateServiceRegistrations(AssignableTo = typeof(IValidator<>), Lifetime = ServiceLifetime.Scoped)]
     public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
+
+    [GenerateServiceRegistrations(AssignableTo = typeof(IRepository), Lifetime = ServiceLifetime.Scoped)]
+    public static partial IServiceCollection RegisterRepositories(this IServiceCollection services);
 }
