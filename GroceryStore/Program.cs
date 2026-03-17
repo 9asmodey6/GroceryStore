@@ -13,6 +13,7 @@ public static class Program
         builder.Services.AddBasicServices()
             .AddDatabaseServices(builder.Configuration)
             .AddFeatureServices()
+            .AddAuthSevices(builder.Configuration)
             .RegisterValidators();
 
         var app = builder.Build();
@@ -30,6 +31,11 @@ public static class Program
         }
 
         app.UseHttpsRedirection();
+
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         app.MapEndpointsGenerated();
 
         app.Run();

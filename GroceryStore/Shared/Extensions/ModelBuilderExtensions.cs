@@ -3,22 +3,8 @@ namespace GroceryStore.Shared.Extensions;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-//using Entities.Identity;
-//using Infrastructure.Extensions;
-
 public static class ModelBuilderExtensions
 {
-    /*public void AddIdentityTableNames()
-    {
-        modelBuilder.Entity<User>(i => { i.ToTable("Users"); });
-        modelBuilder.Entity<Role>(i => { i.ToTable("Roles"); });
-        modelBuilder.Entity<UserRole>(i => { i.ToTable("UserRoles"); });
-        modelBuilder.Entity<UserLogin>(i => { i.ToTable("UserLogins"); });
-        modelBuilder.Entity<RoleClaim>(i => { i.ToTable("RoleClaims"); });
-        modelBuilder.Entity<UserClaim>(i => { i.ToTable("UserClaims"); });
-        modelBuilder.Entity<UserToken>(i => { i.ToTable("UserTokens"); });
-    }*/
-
     public static void AddPostgreSqlRules(this ModelBuilder modelBuilder)
     {
         foreach (var entity in modelBuilder.Model.GetEntityTypes())

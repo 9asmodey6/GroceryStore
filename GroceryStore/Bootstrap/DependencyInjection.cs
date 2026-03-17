@@ -1,8 +1,10 @@
 namespace GroceryStore.Bootstrap;
 
 using System.Data;
+using System.Text;
 using Dapper;
 using Database;
+using Database.Entities.User;
 using Features.Admin.Brands.AddBrand;
 using Features.Admin.Brands.DeleteBrand;
 using Features.Admin.Brands.GetBrandById;
@@ -18,7 +20,10 @@ using FluentValidation;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
 using Mappers.Dapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ServiceScan.SourceGenerator;
 using Shared.Interfaces;
@@ -67,6 +72,39 @@ public static partial class DependencyInjection
         {
             options.SerializerOptions.Converters.Add(new OptionalJsonConverterFactory());
         });
+
+        return services;
+    }
+
+
+    public static IServiceCollection AddAuthSevices(this IServiceCollection services, IConfiguration configuration)
+    {
+        // Identity
+        services.AddIdentity<AppUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+        // JWT
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = "GroceryStore",
+                    ValidAudience = "GroceryStore",
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["JWT_TOKEN_KEY"]
+                                               ??
+                                               throw new InvalidOperationException())),
+                };
+            });
+
+        services.AddAuthorization();
 
         return services;
     }
