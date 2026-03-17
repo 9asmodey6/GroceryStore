@@ -16,6 +16,7 @@ using Features.Admin.Products.DeleteProduct;
 using Features.Admin.Products.GetProductById;
 using Features.Admin.Products.GetProducts;
 using Features.Admin.Products.UpdateProduct;
+using Features.Auth.Login;
 using FluentValidation;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
@@ -34,6 +35,22 @@ public static partial class DependencyInjection
 {
     public static IServiceCollection AddBasicServices(this IServiceCollection services)
     {
+        services.AddOpenApi("auth", options =>
+        {
+            options.ShouldInclude = desc => desc.GroupName == "auth";
+
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
+            {
+                document.Info = new OpenApiInfo
+                {
+                    Title = "GroceryStore Auth API",
+                    Version = "v1",
+                };
+
+                return Task.CompletedTask;
+            });
+        });
+
         services.AddOpenApi("admin", options =>
         {
             options.ShouldInclude = desc => desc.GroupName == "admin";
@@ -154,6 +171,8 @@ public static partial class DependencyInjection
 
         services.AddScoped<GetBrandByIdRepository>();
 
+        services.AddScoped<LoginHandler>();
+
         return services;
     }
 
@@ -163,6 +182,6 @@ public static partial class DependencyInjection
     [GenerateServiceRegistrations(AssignableTo = typeof(IValidator<>), Lifetime = ServiceLifetime.Scoped)]
     public static partial IServiceCollection RegisterValidators(this IServiceCollection services);
 
-    [GenerateServiceRegistrations(AssignableTo = typeof(IRepository), Lifetime = ServiceLifetime.Scoped)]
+    [GenerateServiceRegistrations(AssignableTo = typeof(IRepository), AsSelf = true, Lifetime = ServiceLifetime.Scoped)]
     public static partial IServiceCollection RegisterRepositories(this IServiceCollection services);
 }

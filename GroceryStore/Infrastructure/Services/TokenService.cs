@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 
 public class TokenService(IConfiguration configuration)
 {
-    public string GenerateAccesToken(AppUser user, List<string> roles)
+    public string GenerateAccesToken(AppUser user, IList<string> roles)
     {
         var claims = new List<Claim>
         {

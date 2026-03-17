@@ -27,7 +27,8 @@ public static class Program
                 o.WithTheme(ScalarTheme.DeepSpace)
                     .WithTitle("Grocery Store")
                     .AddDocument("admin")
-                    .AddDocument("user"));
+                    .AddDocument("user")
+                    .AddDocument("auth"));
         }
 
         app.UseHttpsRedirection();
