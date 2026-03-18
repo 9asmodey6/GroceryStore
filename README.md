@@ -167,7 +167,7 @@ _Linux/macOS_: cp `.env.example .env`
 _Windows (PowerShell)_: `cp .env.example .env`
 
 Note: Open the .env file and ensure `JWT_TOKEN_KEY` is set to a secure string (at least 32 characters). 
-The default `DB_CONNECTION_STRING` is already configured to work with the Docker Compose setup.
+The default `DB_CONNECTION_STRING` and basic JWT token settings is already configured to work with the Docker Compose setup.
 
 ### 3. Run the application with Docker
    
@@ -186,7 +186,7 @@ No manual database setup or migration commands are required.
 
 ### 4. Access API documentation
 
-Once the containers are running, open: `http://localhost:8080/scalar/v1`
+Once the containers are running, open: `http://localhost:8080/scalar/`
 to explore the interactive API documentation.
 
 **Notes**
