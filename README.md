@@ -186,7 +186,7 @@ No manual database setup or migration commands are required.
 
 ### 4. Access API documentation
 
-Once the containers are running, open: `http://localhost:8080/scalar/v1`
+Once the containers are running, open: `http://localhost:8080/scalar/`
 to explore the interactive API documentation.
 
 **Notes**
