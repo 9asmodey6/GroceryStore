@@ -1,6 +1,7 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.GetBrandById;
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Interfaces;
 
 public class GetBrandById : IEndpoint
@@ -10,7 +11,7 @@ public class GetBrandById : IEndpoint
         app.MapGet("/api/v1/admin/brands/{brandId:int:min(1)}", HandleAsync)
             .WithTags("AdminBrands")
             .WithSummary("Get Brand by ID")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<Ok<GetBrandByIdResponse>, NotFound>> HandleAsync(

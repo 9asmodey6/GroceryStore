@@ -2,6 +2,7 @@
 
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 
 public class GetProductById : IEndpoint
 {
@@ -10,7 +11,7 @@ public class GetProductById : IEndpoint
         app.MapGet("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Get Product by Id")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<Ok<GetProductByIdResponse>, NotFound>> HandleAsync(

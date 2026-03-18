@@ -21,7 +21,7 @@ public class LoginHandler(UserManager<AppUser> userManager, SignInManager<AppUse
     {
         var roles = await userManager.GetRolesAsync(user);
 
-        var token = service.GenerateAccesToken(user, roles);
+        var token = service.GenerateAccessToken(user, roles);
 
         return new LoginResponse(
             Token: token,

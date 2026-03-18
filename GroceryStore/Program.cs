@@ -4,6 +4,8 @@ using Scalar.AspNetCore;
 namespace GroceryStore;
 
 using Database;
+using Shared.Consts;
+using Shared.Extensions;
 
 public static class Program
 {
@@ -23,13 +25,17 @@ public static class Program
         {
             app.MapOpenApi();
             app.ApplyMigrations();
+
+
             app.MapScalarApiReference(o =>
                 o.WithTheme(ScalarTheme.DeepSpace)
                     .WithTitle("Grocery Store")
-                    .AddDocument("admin")
-                    .AddDocument("user")
-                    .AddDocument("auth"));
+                    .AddDocument(EndpointGroups.Auth)
+                    .AddDocument(EndpointGroups.Admin)
+                    .AddDocument(EndpointGroups.User));
         }
+
+        app.LogEndpoints();
 
         app.UseHttpsRedirection();
 

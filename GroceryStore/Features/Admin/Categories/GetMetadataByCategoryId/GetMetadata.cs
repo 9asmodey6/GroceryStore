@@ -15,7 +15,7 @@ public class GetMetadataEndpoint : IEndpoint
         app.MapGet("api/v1/admin/categories/{categoryId:int:min(1)}/metadata", HandleAsync)
             .WithTags("AdminCategories")
             .WithSummary("Get category attributes metadata (recursive)")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Ok<List<MetadataAttribute>>> HandleAsync(

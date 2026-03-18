@@ -4,11 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Database.Entities.User;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Shared.Options;
 
-public class TokenService(IConfiguration configuration)
+public class TokenService(IOptions<JwtOptions> options)
 {
-    public string GenerateAccesToken(AppUser user, IList<string> roles)
+    public string GenerateAccessToken(AppUser user, IList<string> roles)
     {
         var claims = new List<Claim>
         {
@@ -21,17 +23,14 @@ public class TokenService(IConfiguration configuration)
 
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-        var keyString = configuration["JWT_TOKEN_KEY"]
-                        ?? throw new InvalidOperationException("JWT Key is missing!");
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(keyString));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.SecretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "GroceryStore",
-            audience: "GroceryStore",
+            issuer: options.Value.Issuer,
+            audience: options.Value.Audience,
             claims: claims,
-            expires: DateTime.Now.AddHours(6),
+            expires: DateTime.Now.AddHours(options.Value.ExpirationHours),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);

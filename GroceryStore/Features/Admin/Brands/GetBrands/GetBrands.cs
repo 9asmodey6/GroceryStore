@@ -1,6 +1,7 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.GetBrands;
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Interfaces;
 
 public class GetBrands : IEndpoint
@@ -10,7 +11,7 @@ public class GetBrands : IEndpoint
         app.MapGet("/api/v1/admin/brands", HandleAsync)
             .WithTags("AdminBrands")
             .WithSummary("Get All Brands")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Ok<GetBrandsResponse>> HandleAsync(

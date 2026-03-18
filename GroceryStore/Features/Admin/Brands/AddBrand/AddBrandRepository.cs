@@ -2,8 +2,9 @@
 
 using Database;
 using Database.Entities.Brand;
+using Shared.Interfaces;
 
-public class AddBrandRepository(AppDbContext dbContext)
+public class AddBrandRepository(AppDbContext dbContext) : IRepository
 {
     public async Task AddBrandAsync(Brand brand, CancellationToken ct)
     {

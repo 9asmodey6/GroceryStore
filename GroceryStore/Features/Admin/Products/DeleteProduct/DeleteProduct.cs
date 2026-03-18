@@ -2,6 +2,7 @@
 
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 
 public class DeleteProduct : IEndpoint
 {
@@ -10,7 +11,7 @@ public class DeleteProduct : IEndpoint
         app.MapDelete("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithTags("AdminProducts")
             .WithSummary("Performs soft removal of the product")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<NoContent, NotFound>> HandleAsync(

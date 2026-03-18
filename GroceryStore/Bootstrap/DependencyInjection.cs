@@ -1,6 +1,5 @@
 namespace GroceryStore.Bootstrap;
 
-using System.Data;
 using System.Text;
 using Dapper;
 using Database;
@@ -21,23 +20,23 @@ using FluentValidation;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
 using Mappers.Dapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ServiceScan.SourceGenerator;
+using Shared.Consts;
 using Shared.Interfaces;
-using Shared.Models;
 using Shared.Models.Optional;
+using Shared.Options;
 
 public static partial class DependencyInjection
 {
     public static IServiceCollection AddBasicServices(this IServiceCollection services)
     {
-        services.AddOpenApi("auth", options =>
+        services.AddOpenApi(EndpointGroups.Auth, options =>
         {
-            options.ShouldInclude = desc => desc.GroupName == "auth";
+            options.ShouldInclude = desc => desc.GroupName == EndpointGroups.Auth;
 
             options.AddDocumentTransformer((document, context, cancellationToken) =>
             {
@@ -51,9 +50,9 @@ public static partial class DependencyInjection
             });
         });
 
-        services.AddOpenApi("admin", options =>
+        services.AddOpenApi(EndpointGroups.Admin, options =>
         {
-            options.ShouldInclude = desc => desc.GroupName == "admin";
+            options.ShouldInclude = desc => desc.GroupName == EndpointGroups.Admin;
 
             options.AddDocumentTransformer((document, context, cancellationToken) =>
             {
@@ -67,9 +66,9 @@ public static partial class DependencyInjection
             });
         });
 
-        services.AddOpenApi("user", options =>
+        services.AddOpenApi(EndpointGroups.User, options =>
         {
-            options.ShouldInclude = desc => desc.GroupName == "user";
+            options.ShouldInclude = desc => desc.GroupName == EndpointGroups.User;
 
             options.AddDocumentTransformer((document, context, cancellationToken) =>
             {
@@ -96,10 +95,17 @@ public static partial class DependencyInjection
 
     public static IServiceCollection AddAuthSevices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<JwtOptions>(
+            configuration.GetSection(JwtOptions.SectionName));
+
+        var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+                         ?? throw new InvalidOperationException("JWT settings not found");
+
         // Identity
         services.AddIdentity<AppUser, IdentityRole>()
             .AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
+
 
         // JWT
         services.AddAuthentication("Bearer")
@@ -112,12 +118,10 @@ public static partial class DependencyInjection
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = "GroceryStore",
-                    ValidAudience = "GroceryStore",
+                    ValidIssuer = jwtOptions.Issuer,
+                    ValidAudience = jwtOptions.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration["JWT_TOKEN_KEY"]
-                                               ??
-                                               throw new InvalidOperationException())),
+                        Encoding.UTF8.GetBytes(jwtOptions.SecretKey)),
                 };
             });
 

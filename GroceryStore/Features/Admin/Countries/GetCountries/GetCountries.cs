@@ -2,6 +2,7 @@
 
 using Brands.GetBrands;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Interfaces;
 
 public class GetCountries : IEndpoint
@@ -11,7 +12,7 @@ public class GetCountries : IEndpoint
         app.MapGet("/api/v1/admin/countries", HandleAsync)
             .WithTags("AdminCountries")
             .WithSummary("Get All Countries")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Ok<GetCountriesResponse>> HandleAsync(

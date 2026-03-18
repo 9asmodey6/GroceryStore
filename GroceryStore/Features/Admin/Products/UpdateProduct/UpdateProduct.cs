@@ -3,6 +3,7 @@
 using FluentValidation;
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Extensions;
 
 public class UpdateProduct : IEndpoint
@@ -13,7 +14,7 @@ public class UpdateProduct : IEndpoint
             .WithValidation<UpdateProductRequest>()
             .WithTags("AdminProducts")
             .WithSummary("Updates the product by ID")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<Ok<UpdateProductResponse>, NotFound, ValidationProblem>> HandleAsync(

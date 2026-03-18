@@ -5,6 +5,7 @@ using FluentValidation;
 using Infrastructure.Services;
 using Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Extensions;
 
 public class CreateProduct : IEndpoint
@@ -15,7 +16,7 @@ public class CreateProduct : IEndpoint
             .WithValidation<CreateProductRequest>()
             .WithTags("AdminProducts")
             .WithSummary("Creates a new Product")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<Created<CreateProductResponse>, ValidationProblem, BadRequest<string>>> HandleAsync(

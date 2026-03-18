@@ -1,6 +1,7 @@
 ﻿namespace GroceryStore.Features.Admin.Categories.GetCategories;
 
 using Microsoft.AspNetCore.Http.HttpResults;
+using Shared.Consts;
 using Shared.Interfaces;
 
 public class GetCategories : IEndpoint
@@ -10,7 +11,7 @@ public class GetCategories : IEndpoint
         app.MapGet("/api/v1/admin/categories", HandleAsync)
             .WithTags("AdminCategories")
             .WithSummary("Get all categories")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Ok<GetCategoriesResponse>> HandleAsync(

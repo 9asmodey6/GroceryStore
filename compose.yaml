@@ -28,7 +28,10 @@
   environment:
     - ASPNETCORE_ENVIRONMENT=Development
     - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
-    - JWT_TOKEN_KEY=${JWT_TOKEN_KEY}
+    - JwtSettings__SecretKey=${JWT_TOKEN_KEY}
+    - JwtSettings__Issuer=${JWT_ISSUER}
+    - JwtSettings__Audience=${JWT_AUDIENCE}
+    - JwtSettings__ExpirationHours=${JWT_EXPIRATION_HOURS}
   ports:
     - "8080:8080"
 

@@ -12,7 +12,7 @@ public class DeleteBrand : IEndpoint
         app.MapDelete("/api/v1/admin/brands/{brandId:int:min(1)}", HandleAsync)
             .WithTags("AdminBrands")
             .WithSummary("Delete Brand by ID")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<NoContent, NotFound>> HandleAsync(

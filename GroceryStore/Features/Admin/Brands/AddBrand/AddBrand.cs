@@ -1,7 +1,6 @@
 ﻿namespace GroceryStore.Features.Admin.Brands.AddBrand;
 
 using Database.Entities.Brand;
-using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
@@ -16,7 +15,7 @@ public class AddBrand : IEndpoint
             .WithValidation<AddBrandRequest>()
             .WithTags("AdminBrands")
             .WithSummary("Add new Brand")
-            .WithGroupName("admin");
+            .WithGroupName(EndpointGroups.Admin);
     }
 
     private static async Task<Results<Created<AddBrandResponse>, ValidationProblem>> HandleAsync(
@@ -31,7 +30,7 @@ public class AddBrand : IEndpoint
 
         cache.Remove(LookupCacheKeys.Brands);
 
-        return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}",  new AddBrandResponse(brand.Name));
+        return TypedResults.Created($"/api/v1/admin/brands/{brand.Id}", new AddBrandResponse(brand.Name));
     }
 
     private static Brand ToEntity(AddBrandRequest request)
