@@ -25,7 +25,7 @@ public class GetMetadataEndpoint : IEndpoint
         CancellationToken ct)
     {
         var cachePrefix = CategoryCacheKeys.CategoryMetadata;
-        
+
         string cacheKey = $"{cachePrefix}_{categoryId}";
 
         if (cache.TryGetValue(cacheKey, out List<MetadataAttribute>? cachedMetadata) && cachedMetadata != null)

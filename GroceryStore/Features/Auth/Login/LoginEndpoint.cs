@@ -9,29 +9,29 @@ public class LoginEndpoint : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/v1/login",  HandleAsync)
-            .WithTags("Login")
-            .WithSummary("Login to Grocery Store")
+            .WithTags("Auth")
+            .WithSummary("Sign In")
             .WithGroupName(EndpointGroups.Auth);
     }
 
-    private static async Task<Results<Ok<LoginResponse>, Microsoft.AspNetCore.Http.HttpResults.UnauthorizedHttpResult>> HandleAsync(
+    private static async Task<Results<Ok<LoginResponse>, UnauthorizedHttpResult>> HandleAsync(
         LoginRequest request,
         LoginHandler handler,
         CancellationToken ct)
     {
-        var user = await handler.GetUserAsync(request, ct);
+        var user = await handler.GetUserAsync(request);
         if (user == null)
         {
             return TypedResults.Unauthorized();
         }
 
-        var isPasswordValid = await handler.CheckPasswordAsync(user, request, ct);
+        var isPasswordValid = await handler.CheckPasswordAsync(user, request);
         if (!isPasswordValid)
         {
             return TypedResults.Unauthorized();
         }
 
-        var token = await handler.GetTokenAsync(user, ct);
+        var token = await handler.GetTokenAsync(user);
         return TypedResults.Ok(token);
     }
 }

@@ -5,8 +5,9 @@ using Database.Entities.Brand;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Interfaces;
 
-public class GetBrandsRepository(AppDbContext dbContext, IMemoryCache cache)
+public class GetBrandsRepository(AppDbContext dbContext, IMemoryCache cache) : IRepository
 {
     public async ValueTask<GetBrandsResponse> GetBrandsAsync(CancellationToken ct)
     {

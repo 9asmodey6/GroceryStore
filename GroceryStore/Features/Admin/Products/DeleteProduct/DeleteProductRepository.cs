@@ -2,8 +2,9 @@
 
 using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
+using Shared.Interfaces;
 
-public class DeleteProductRepository(AppDbContext dbContext)
+public class DeleteProductRepository(AppDbContext dbContext) : IRepository
 {
     public async Task<bool> DeleteProductByIdAsync(int productId,  CancellationToken ct)
     {

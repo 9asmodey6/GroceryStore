@@ -4,6 +4,8 @@ using Scalar.AspNetCore;
 namespace GroceryStore;
 
 using Database;
+using Database.Entities.User;
+using Microsoft.AspNetCore.Identity;
 using Shared.Consts;
 using Shared.Extensions;
 
@@ -16,7 +18,8 @@ public static class Program
             .AddDatabaseServices(builder.Configuration)
             .AddFeatureServices()
             .AddAuthSevices(builder.Configuration)
-            .RegisterValidators();
+            .RegisterValidators()
+            .RegisterRepositories();
 
         var app = builder.Build();
 
@@ -35,7 +38,7 @@ public static class Program
                     .AddDocument(EndpointGroups.User));
         }
 
-        app.LogEndpoints();
+        app.LogDocumentationLink();
 
         app.UseHttpsRedirection();
 

@@ -3,8 +3,9 @@
 using Dapper;
 using GroceryStore.Database;
 using GroceryStore.Shared.Models;
+using Shared.Interfaces;
 
-public class GetProductByIdRepository(IDbConnectionFactory factory)
+public class GetProductByIdRepository(IDbConnectionFactory factory) : IRepository
 {
     public async Task<GetProductByIdResponse?> GetProductByIdAsync(int productId, CancellationToken ct)
     {

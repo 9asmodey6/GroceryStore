@@ -52,8 +52,8 @@ public class Product : BaseEntity
 
     public string? BaseUnit { get; private set; } = "pcs";
 
-    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; private set; }
+    public DateTime UpdatedAt { get; private set; }
 
     public bool IsActive { get; private set; } = true;
 

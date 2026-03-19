@@ -2,8 +2,9 @@
 
 using Dapper;
 using Database;
+using Shared.Interfaces;
 
-public class GetCategoriesRepository(IDbConnectionFactory factory)
+public class GetCategoriesRepository(IDbConnectionFactory factory) : IRepository
 {
     public async Task<GetCategoriesResponse> GetCategoriesAsync(CancellationToken ct)
     {

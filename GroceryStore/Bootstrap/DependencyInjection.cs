@@ -16,6 +16,7 @@ using Features.Admin.Products.GetProductById;
 using Features.Admin.Products.GetProducts;
 using Features.Admin.Products.UpdateProduct;
 using Features.Auth.Login;
+using Features.Auth.Register;
 using FluentValidation;
 using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
@@ -147,35 +148,15 @@ public static partial class DependencyInjection
 
     public static IServiceCollection AddFeatureServices(this IServiceCollection services)
     {
-        services.AddScoped<CreateProductRepository>();
         services.AddScoped<CategoryAttributeValueNormalizer>();
         services.AddScoped<ProductSkuGenerationService>();
         services.AddScoped<TokenService>();
 
-        services.AddScoped<CategoryAttributeRepository>();
-
-        services.AddScoped<GetProductsRepository>();
-
-        services.AddScoped<DeleteProductRepository>();
-
-        services.AddScoped<UpdateProductRepository>();
         services.AddScoped<UpdateProductHandler>();
 
-        services.AddScoped<GetCategoriesRepository>();
-
-        services.AddScoped<GetProductByIdRepository>();
-
-        services.AddScoped<GetBrandsRepository>();
-
-        services.AddScoped<AddBrandRepository>();
-
-        services.AddScoped<GetCountriesRepository>();
-
-        services.AddScoped<DeleteBrandRepository>();
-
-        services.AddScoped<GetBrandByIdRepository>();
-
         services.AddScoped<LoginHandler>();
+
+        services.AddScoped<RegisterHandler>();
 
         return services;
     }

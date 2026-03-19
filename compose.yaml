@@ -27,7 +27,7 @@
        condition: service_healthy
   environment:
     - ASPNETCORE_ENVIRONMENT=Development
-    - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+    - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=grocerydb;Username=postgres;Password=postgres
     - JwtSettings__SecretKey=${JWT_TOKEN_KEY}
     - JwtSettings__Issuer=${JWT_ISSUER}
     - JwtSettings__Audience=${JWT_AUDIENCE}

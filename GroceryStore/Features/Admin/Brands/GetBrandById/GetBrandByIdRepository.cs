@@ -2,8 +2,9 @@
 
 using Database;
 using Microsoft.EntityFrameworkCore;
+using Shared.Interfaces;
 
-public class GetBrandByIdRepository(AppDbContext dbContext)
+public class GetBrandByIdRepository(AppDbContext dbContext) : IRepository
 {
     public async Task<GetBrandByIdResponse?> GetAsync(int id, CancellationToken ct)
     {

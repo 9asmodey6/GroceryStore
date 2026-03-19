@@ -2,9 +2,10 @@ namespace GroceryStore.Infrastructure.Repositories.Categories;
 
 using global::Dapper;
 using Database;
+using Shared.Interfaces;
 using Shared.Models;
 
-public class CategoryAttributeRepository(IDbConnectionFactory factory)
+public class CategoryAttributeRepository(IDbConnectionFactory factory) : IRepository
 {
     public async Task<List<MetadataAttribute>> GetMetadataSchemaAsync(
         int categoryId,

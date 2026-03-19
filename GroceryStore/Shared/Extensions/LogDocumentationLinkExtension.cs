@@ -1,8 +1,8 @@
 ﻿namespace GroceryStore.Shared.Extensions;
 
-public static class LogEndpointsExtension
+public static class LogDocumentationLinkExtension
 {
-    public static IApplicationBuilder LogEndpoints(this WebApplication app)
+    public static IApplicationBuilder LogDocumentationLink(this WebApplication app)
     {
         app.Lifetime.ApplicationStarted.Register(() =>
         {

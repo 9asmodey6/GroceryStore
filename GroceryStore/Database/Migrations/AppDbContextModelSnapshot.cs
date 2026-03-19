@@ -55,7 +55,7 @@ namespace GroceryStore.Migrations
                     b.HasKey("Id")
                         .HasName("p_k_attributes");
 
-                    b.ToTable("attributes");
+                    b.ToTable("attributes", (string)null);
 
                     b.HasData(
                         new
@@ -181,7 +181,7 @@ namespace GroceryStore.Migrations
                         .IsUnique()
                         .HasDatabaseName("i_x_brands_name");
 
-                    b.ToTable("brands");
+                    b.ToTable("brands", (string)null);
 
                     b.HasData(
                         new
@@ -226,7 +226,7 @@ namespace GroceryStore.Migrations
                     b.HasIndex("ParentId")
                         .HasDatabaseName("i_x_categories_parent_id");
 
-                    b.ToTable("categories");
+                    b.ToTable("categories", (string)null);
 
                     b.HasData(
                         new
@@ -438,7 +438,7 @@ namespace GroceryStore.Migrations
                     b.HasIndex("AttributeId")
                         .HasDatabaseName("i_x_category_attributes_attribute_id");
 
-                    b.ToTable("category_attributes");
+                    b.ToTable("category_attributes", (string)null);
 
                     b.HasData(
                         new
@@ -645,7 +645,7 @@ namespace GroceryStore.Migrations
                         .IsUnique()
                         .HasDatabaseName("i_x_countries_code");
 
-                    b.ToTable("countries");
+                    b.ToTable("countries", (string)null);
 
                     b.HasData(
                         new
@@ -753,7 +753,7 @@ namespace GroceryStore.Migrations
                         .IsUnique()
                         .HasDatabaseName("i_x_products_sku");
 
-                    b.ToTable("products");
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("GroceryStore.Database.Entities.ProductBatch.ProductBatch", b =>
@@ -808,7 +808,7 @@ namespace GroceryStore.Migrations
                     b.HasIndex("ProductId", "ExpirationDate", "SupplyDate")
                         .HasDatabaseName("i_x_product_batches_product_id_expiration_date_supply_date");
 
-                    b.ToTable("product_batches");
+                    b.ToTable("product_batches", (string)null);
                 });
 
             modelBuilder.Entity("GroceryStore.Database.Entities.User.AppUser", b =>
