@@ -23,7 +23,7 @@ public class ProductBatch : BaseEntity
 
     public decimal PurchasePrice { get; private set; }
 
-    public DateOnly SupplyDate { get; private set; }
+    public DateOnly SupplyDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
 
     public DateOnly ExpirationDate { get; private set; }
 
