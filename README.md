@@ -188,8 +188,11 @@ No manual database setup or migration commands are required.
 🔑 Default Credentials
 
 The database is automatically seeded with a default Administrator account so you can test protected endpoints: 
+
 Role : _Admin_
+
 Email : _admin@store.com_
+
 Password : _Admin123!_
 
 Use the POST `/api/v1/login` endpoint to receive your JWT token.
