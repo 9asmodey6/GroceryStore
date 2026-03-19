@@ -1,10 +1,9 @@
-﻿namespace GroceryStore.Database.Configurations.Users;
+﻿namespace GroceryStore.Database.Configurations.Identity;
 
-using Entities.User;
-using Microsoft.AspNetCore.Identity;
+using GroceryStore.Database.Entities.User;
+using GroceryStore.Shared.Consts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shared.Consts;
 
 public class UserConfiguration : IEntityTypeConfiguration<AppUser>
 {

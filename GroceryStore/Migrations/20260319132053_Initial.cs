@@ -9,11 +9,53 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GroceryStore.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "asp_net_roles",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    concurrency_stamp = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_roles", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_users",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "text", nullable: false),
+                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    last_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    normalized_email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
+                    email_confirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    password_hash = table.Column<string>(type: "text", nullable: true),
+                    security_stamp = table.Column<string>(type: "text", nullable: true),
+                    concurrency_stamp = table.Column<string>(type: "text", nullable: true),
+                    phone_number = table.Column<string>(type: "text", nullable: true),
+                    phone_number_confirmed = table.Column<bool>(type: "boolean", nullable: false),
+                    two_factor_enabled = table.Column<bool>(type: "boolean", nullable: false),
+                    lockout_end = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    lockout_enabled = table.Column<bool>(type: "boolean", nullable: false),
+                    access_failed_count = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_users", x => x.id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "attributes",
                 columns: table => new
@@ -76,6 +118,112 @@ namespace GroceryStore.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("p_k_countries", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_role_claims",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    role_id = table.Column<string>(type: "text", nullable: false),
+                    claim_type = table.Column<string>(type: "text", nullable: true),
+                    claim_value = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_role_claims", x => x.id);
+                    table.ForeignKey(
+                        name: "f_k_asp_net_role_claims_asp_net_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "asp_net_roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_user_claims",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    user_id = table.Column<string>(type: "text", nullable: false),
+                    claim_type = table.Column<string>(type: "text", nullable: true),
+                    claim_value = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_user_claims", x => x.id);
+                    table.ForeignKey(
+                        name: "f_k_asp_net_user_claims_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_user_logins",
+                columns: table => new
+                {
+                    login_provider = table.Column<string>(type: "text", nullable: false),
+                    provider_key = table.Column<string>(type: "text", nullable: false),
+                    provider_display_name = table.Column<string>(type: "text", nullable: true),
+                    user_id = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_user_logins", x => new { x.login_provider, x.provider_key });
+                    table.ForeignKey(
+                        name: "f_k_asp_net_user_logins_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_user_roles",
+                columns: table => new
+                {
+                    user_id = table.Column<string>(type: "text", nullable: false),
+                    role_id = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_user_roles", x => new { x.user_id, x.role_id });
+                    table.ForeignKey(
+                        name: "f_k_asp_net_user_roles_asp_net_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "asp_net_roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "f_k_asp_net_user_roles_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "asp_net_user_tokens",
+                columns: table => new
+                {
+                    user_id = table.Column<string>(type: "text", nullable: false),
+                    login_provider = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    value = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("p_k_asp_net_user_tokens", x => new { x.user_id, x.login_provider, x.name });
+                    table.ForeignKey(
+                        name: "f_k_asp_net_user_tokens_asp_net_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +320,20 @@ namespace GroceryStore.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "asp_net_roles",
+                columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
+                values: new object[,]
+                {
+                    { "2c5e174e-3b0e-446f-86af-483d56fd7210", "b7a5a87b-4024-46c5-8422-92182065842c", "Admin", "ADMIN" },
+                    { "3d5e174e-3b0e-446f-86af-483d56fd7211", "c8b6b98c-5135-47d6-9533-03293176953d", "User", "USER" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "asp_net_users",
+                columns: new[] { "id", "access_failed_count", "concurrency_stamp", "created_at", "email", "email_confirmed", "first_name", "last_name", "lockout_enabled", "lockout_end", "normalized_email", "normalized_user_name", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "two_factor_enabled", "user_name" },
+                values: new object[] { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "b7a5a87b-4024-46c5-8422-92182065842c", new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "admin@store.com", true, "Admin", "System", true, null, "ADMIN@STORE.COM", "ADMIN@STORE.COM", "AQAAAAIAAYagAAAAEGMNZBXRiyiRbWqWDC6BZpBazgpNB5dAYizy/o2VwSgudvnw/5sqpGVlsFAp9P57WA==", null, false, "9ca06830-67d7-4632-9c32-f288924b893f", false, "admin@store.com" });
+
+            migrationBuilder.InsertData(
                 table: "attributes",
                 columns: new[] { "id", "data_type", "max_value", "min_value", "name", "unit" },
                 values: new object[,]
@@ -213,7 +375,7 @@ namespace GroceryStore.Migrations
                     { 5, "Bakery & Pastry", null },
                     { 6, "Grocery", null },
                     { 7, "Vegetables & Fruit", null },
-                    { 8, $"Beverages", null },
+                    { 8, "Beverages", null },
                     { 9, "Alcohol", null },
                     { 10, "Household Chemicals", null },
                     { 11, "Personal Care & Hygiene", null }
@@ -228,6 +390,11 @@ namespace GroceryStore.Migrations
                     { 2, "PL", "Poland" },
                     { 3, "DE", "Germany" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "asp_net_user_roles",
+                columns: new[] { "role_id", "user_id" },
+                values: new object[] { "2c5e174e-3b0e-446f-86af-483d56fd7210", "8e445865-a24d-4543-a6c6-9443d048cdb9" });
 
             migrationBuilder.InsertData(
                 table: "categories",
@@ -309,6 +476,43 @@ namespace GroceryStore.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "i_x_asp_net_role_claims_role_id",
+                table: "asp_net_role_claims",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
+                name: "role_name_index",
+                table: "asp_net_roles",
+                column: "normalized_name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "i_x_asp_net_user_claims_user_id",
+                table: "asp_net_user_claims",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "i_x_asp_net_user_logins_user_id",
+                table: "asp_net_user_logins",
+                column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "i_x_asp_net_user_roles_role_id",
+                table: "asp_net_user_roles",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
+                name: "email_index",
+                table: "asp_net_users",
+                column: "normalized_email");
+
+            migrationBuilder.CreateIndex(
+                name: "user_name_index",
+                table: "asp_net_users",
+                column: "normalized_user_name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "i_x_brands_name",
                 table: "brands",
                 column: "name",
@@ -361,10 +565,31 @@ namespace GroceryStore.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "asp_net_role_claims");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_user_claims");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_user_logins");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_user_roles");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_user_tokens");
+
+            migrationBuilder.DropTable(
                 name: "category_attributes");
 
             migrationBuilder.DropTable(
                 name: "product_batches");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_roles");
+
+            migrationBuilder.DropTable(
+                name: "asp_net_users");
 
             migrationBuilder.DropTable(
                 name: "attributes");

@@ -3,7 +3,6 @@ using System;
 using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GroceryStore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260317111254_AddIdentitySupport")]
-    partial class AddIdentitySupport
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -910,6 +907,27 @@ namespace GroceryStore.Migrations
                         .HasDatabaseName("user_name_index");
 
                     b.ToTable("asp_net_users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b7a5a87b-4024-46c5-8422-92182065842c",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Email = "admin@store.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "System",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@STORE.COM",
+                            NormalizedUserName = "ADMIN@STORE.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGMNZBXRiyiRbWqWDC6BZpBazgpNB5dAYizy/o2VwSgudvnw/5sqpGVlsFAp9P57WA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9ca06830-67d7-4632-9c32-f288924b893f",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@store.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -941,6 +959,22 @@ namespace GroceryStore.Migrations
                         .HasDatabaseName("role_name_index");
 
                     b.ToTable("asp_net_roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2c5e174e-3b0e-446f-86af-483d56fd7210",
+                            ConcurrencyStamp = "b7a5a87b-4024-46c5-8422-92182065842c",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "3d5e174e-3b0e-446f-86af-483d56fd7211",
+                            ConcurrencyStamp = "c8b6b98c-5135-47d6-9533-03293176953d",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1050,6 +1084,13 @@ namespace GroceryStore.Migrations
                         .HasDatabaseName("i_x_asp_net_user_roles_role_id");
 
                     b.ToTable("asp_net_user_roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "8e445865-a24d-4543-a6c6-9443d048cdb9",
+                            RoleId = "2c5e174e-3b0e-446f-86af-483d56fd7210"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
