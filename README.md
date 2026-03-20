@@ -184,6 +184,19 @@ This command will automatically:
 
 No manual database setup or migration commands are required.
 
+# IMPORTANT
+🔑 Default Credentials
+
+The database is automatically seeded with a default Administrator account so you can test protected endpoints: 
+
+Role : _Admin_
+
+Email : _admin@store.com_
+
+Password : _Admin123!_
+
+Use the POST `/api/v1/login` endpoint to receive your JWT token.
+
 ### 4. Access API documentation
 
 Once the containers are running, open: `http://localhost:8080/scalar/`
