@@ -3,6 +3,9 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 using Shared.Interfaces;
 
 public class DeleteBrand : IEndpoint
@@ -10,7 +13,8 @@ public class DeleteBrand : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapDelete("/api/v1/admin/brands/{brandId:int:min(1)}", HandleAsync)
-            .WithTags("AdminBrands")
+            .WithTags(EndpointTags.AdminBrands)
+            .RequireAdminRole()
             .WithSummary("Delete Brand by ID")
             .WithGroupName(EndpointGroups.Admin);
     }

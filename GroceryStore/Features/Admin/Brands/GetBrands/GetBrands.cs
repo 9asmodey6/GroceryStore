@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 using Shared.Interfaces;
 
 public class GetBrands : IEndpoint
@@ -9,8 +11,10 @@ public class GetBrands : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/v1/admin/brands", HandleAsync)
-            .WithTags("AdminBrands")
+            .WithTags(EndpointTags.AdminBrands)
+            .RequireAdminRole()
             .WithSummary("Get All Brands")
+            .RequireAdminRole()
             .WithGroupName(EndpointGroups.Admin);
     }
 

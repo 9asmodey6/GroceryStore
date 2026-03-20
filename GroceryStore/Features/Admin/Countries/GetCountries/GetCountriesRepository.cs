@@ -4,6 +4,7 @@ using Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
 using Shared.Interfaces;
 
 public class GetCountriesRepository(AppDbContext dbContext, IMemoryCache cache) : IRepository

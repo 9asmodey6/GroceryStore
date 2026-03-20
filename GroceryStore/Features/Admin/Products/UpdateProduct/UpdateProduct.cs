@@ -4,6 +4,7 @@ using FluentValidation;
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
 using Shared.Extensions;
 
 public class UpdateProduct : IEndpoint
@@ -12,7 +13,8 @@ public class UpdateProduct : IEndpoint
     {
         app.MapPatch("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
             .WithValidation<UpdateProductRequest>()
-            .WithTags("AdminProducts")
+            .RequireAdminRole()
+            .WithTags(EndpointTags.AdminProducts)
             .WithSummary("Updates the product by ID")
             .WithGroupName(EndpointGroups.Admin);
     }

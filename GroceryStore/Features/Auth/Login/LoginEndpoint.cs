@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
 using Shared.Interfaces;
 
 public class LoginEndpoint : IEndpoint
@@ -9,7 +10,8 @@ public class LoginEndpoint : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("/api/v1/login",  HandleAsync)
-            .WithTags("Auth")
+            .AllowAnonymous()
+            .WithTags(EndpointTags.Auth)
             .WithSummary("Sign In")
             .WithGroupName(EndpointGroups.Auth);
     }

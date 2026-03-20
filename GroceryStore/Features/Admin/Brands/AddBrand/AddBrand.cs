@@ -4,6 +4,8 @@ using Database.Entities.Brand;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
+using Shared.Consts.Endpoints;
 using Shared.Extensions;
 using Shared.Interfaces;
 
@@ -13,7 +15,8 @@ public class AddBrand : IEndpoint
     {
         app.MapPost("/api/v1/admin/brands", HandleAsync)
             .WithValidation<AddBrandRequest>()
-            .WithTags("AdminBrands")
+            .RequireAdminRole()
+            .WithTags(EndpointTags.AdminBrands)
             .WithSummary("Add new Brand")
             .WithGroupName(EndpointGroups.Admin);
     }

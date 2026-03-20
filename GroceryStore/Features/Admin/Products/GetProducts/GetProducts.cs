@@ -3,13 +3,16 @@
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 
 public class GetProducts : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/v1/admin/products", HandleAsync)
-            .WithTags("AdminProducts")
+            .WithTags(EndpointTags.AdminProducts)
+            .RequireAdminRole()
             .WithSummary("Get all active Products with attributes")
             .WithGroupName(EndpointGroups.Admin);
     }

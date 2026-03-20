@@ -5,6 +5,7 @@ using Database.Entities.Brand;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
 using Shared.Interfaces;
 
 public class GetBrandsRepository(AppDbContext dbContext, IMemoryCache cache) : IRepository

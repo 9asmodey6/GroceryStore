@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 using Shared.Interfaces;
 
 public class GetBrandById : IEndpoint
@@ -9,7 +11,8 @@ public class GetBrandById : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/v1/admin/brands/{brandId:int:min(1)}", HandleAsync)
-            .WithTags("AdminBrands")
+            .WithTags(EndpointTags.AdminBrands)
+            .RequireAdminRole()
             .WithSummary("Get Brand by ID")
             .WithGroupName(EndpointGroups.Admin);
     }

@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Shared.Consts;
+﻿namespace GroceryStore.Shared.Consts.CacheKeys;
 
 public static class CategoryCacheKeys
 {

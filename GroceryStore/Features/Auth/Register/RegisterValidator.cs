@@ -18,13 +18,18 @@ public class RegisterValidator : AbstractValidator<RegisterRequest>
             .NotEmpty().WithMessage("Username is required")
             .MaximumLength(50).WithMessage("First name cannot exceed 50 characters");
 
-        RuleFor(x => x.Password).NotEmpty().MinimumLength(6)
-            .WithMessage("Password must be at least 6 characters long");
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("Password is required")
+            .MinimumLength(6).WithMessage("Password must be at least 6 characters long");
+
+        RuleFor(x => x.ConfirmPassword)
+            .NotEmpty().WithMessage("Please confirm your password")
+            .Equal(x => x.Password).WithMessage("Passwords do not match");
 
         RuleFor(r => r.Email)
             .NotEmpty().WithMessage("Email is required")
             .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
             .WithMessage("Invalid email format")
-            .MustAsync(handler.IsEmailUniqueAsync);
+            .MustAsync(handler.IsEmailUniqueAsync).WithMessage("Email already exists");
     }
 }

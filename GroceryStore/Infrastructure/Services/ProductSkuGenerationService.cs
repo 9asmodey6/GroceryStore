@@ -5,6 +5,7 @@ using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
 
 public class ProductSkuGenerationService(IMemoryCache cache, AppDbContext context)
 {

@@ -1,4 +1,4 @@
-﻿namespace GroceryStore.Shared.Consts;
+﻿namespace GroceryStore.Shared.Consts.Endpoints;
 
 public class EndpointGroups
 {

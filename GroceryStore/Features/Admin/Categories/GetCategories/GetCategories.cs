@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 using Shared.Interfaces;
 
 public class GetCategories : IEndpoint
@@ -9,7 +11,8 @@ public class GetCategories : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("/api/v1/admin/categories", HandleAsync)
-            .WithTags("AdminCategories")
+            .WithTags(EndpointTags.AdminCategories)
+            .RequireAdminRole()
             .WithSummary("Get all categories")
             .WithGroupName(EndpointGroups.Admin);
     }

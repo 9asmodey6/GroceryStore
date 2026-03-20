@@ -6,6 +6,7 @@ using Infrastructure.Services;
 using Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
 using Shared.Extensions;
 
 public class CreateProduct : IEndpoint
@@ -14,7 +15,8 @@ public class CreateProduct : IEndpoint
     {
         app.MapPost("/api/v1/admin/products", HandleAsync)
             .WithValidation<CreateProductRequest>()
-            .WithTags("AdminProducts")
+            .RequireAdminRole()
+            .WithTags(EndpointTags.AdminProducts)
             .WithSummary("Creates a new Product")
             .WithGroupName(EndpointGroups.Admin);
     }

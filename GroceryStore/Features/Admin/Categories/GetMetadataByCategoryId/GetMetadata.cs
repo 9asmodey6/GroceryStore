@@ -6,6 +6,9 @@ using Shared.Interfaces;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.CacheKeys;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 using Shared.Models;
 
 public class GetMetadataEndpoint : IEndpoint
@@ -13,7 +16,8 @@ public class GetMetadataEndpoint : IEndpoint
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("api/v1/admin/categories/{categoryId:int:min(1)}/metadata", HandleAsync)
-            .WithTags("AdminCategories")
+            .WithTags(EndpointTags.AdminCategories)
+            .RequireAdminRole()
             .WithSummary("Get category attributes metadata (recursive)")
             .WithGroupName(EndpointGroups.Admin);
     }

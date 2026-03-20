@@ -7,6 +7,7 @@ using Database;
 using Database.Entities.User;
 using Microsoft.AspNetCore.Identity;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
 using Shared.Extensions;
 
 public static class Program
@@ -17,7 +18,7 @@ public static class Program
         builder.Services.AddBasicServices()
             .AddDatabaseServices(builder.Configuration)
             .AddFeatureServices()
-            .AddAuthSevices(builder.Configuration)
+            .AddAuthServices(builder.Configuration)
             .RegisterValidators()
             .RegisterRepositories();
 
@@ -33,6 +34,8 @@ public static class Program
             app.MapScalarApiReference(o =>
                 o.WithTheme(ScalarTheme.DeepSpace)
                     .WithTitle("Grocery Store")
+                    .AddPreferredSecuritySchemes(OpenApiBearerScheme.Id)
+                    .EnablePersistentAuthentication()
                     .AddDocument(EndpointGroups.Auth)
                     .AddDocument(EndpointGroups.Admin)
                     .AddDocument(EndpointGroups.User));

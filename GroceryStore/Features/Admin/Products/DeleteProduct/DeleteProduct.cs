@@ -3,13 +3,16 @@
 using GroceryStore.Shared.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts;
+using Shared.Consts.Endpoints;
+using Shared.Extensions;
 
 public class DeleteProduct : IEndpoint
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapDelete("/api/v1/admin/products/{productId:int:min(1)}", HandleAsync)
-            .WithTags("AdminProducts")
+            .WithTags(EndpointTags.AdminProducts)
+            .RequireAdminRole()
             .WithSummary("Performs soft removal of the product")
             .WithGroupName(EndpointGroups.Admin);
     }
