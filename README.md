@@ -132,9 +132,9 @@ Several infrastructure concerns are automated to reduce boilerplate and runtime 
 ## Roadmap
 
 ### Security
-- ASP.NET Identity
-- JWT Authentication
-- Role-based authorization
+- ASP.NET Identity ✔
+- JWT Authentication ✔
+- Role-based authorization 
 
 ### Inventory
 - FIFO batch processing
