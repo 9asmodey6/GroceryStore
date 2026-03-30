@@ -6,10 +6,10 @@ The project demonstrates real-world backend engineering approaches including
 Vertical Slice Architecture, hybrid data access (EF Core + Dapper),
 and dynamic product metadata validation using PostgreSQL JSONB.
 
-Full documentation available here: https://9asmodey6-grocerystore.mintlify.app/introduction
+Full documentation available here: [9asmodey6-grocerystore.mintlify.app](https://9asmodey6-grocerystore.mintlify.app/introduction)
 
 ⚠️ Project is actively under development.
-Authentication and inventory workflows are currently in progress.
+Inventory workflows and other features are currently in progress.
 
 ## Tech Stack
 
@@ -73,6 +73,19 @@ Metadata extraction implemented using:
 - Recursive CTE
 
 Allows relational querying without deserialization overhead.
+
+------------------------------------------------------------------------------
+
+### Centralized Logging & Observability (Serilog + Seq)
+The application implements a robust structured logging strategy to ensure full system transparency:
+
+- *Multi-Sink Logging:* Configured via Serilog to write logs to the Console, Rolling Files, and a centralized Seq instance.
+- *Custom Log Enrichment:* Implemented SerilogEnrichmentMiddleware to automatically inject business context into every log entry, including:
+   - `UserId` (extracted from JWT)
+   - `CorrelationId` (TraceId) for cross-service request tracking.
+   - `RequestPath` and `RequestMethod`.
+- *Standardized Error Logs:* Integrated with the Global Exception Handler to log full exception details
+(including stack traces and context) while returning RFC-compliant ProblemDetails to the client.
 
 ------------------------------------------------------------------------------
 
@@ -143,7 +156,7 @@ Several infrastructure concerns are automated to reduce boilerplate and runtime 
 
 ### DevOps
 - Docker support ✔
-- Logging (Serilog)
+- Logging (Serilog + Seq) ✔
 - Integration tests
 
 
@@ -199,8 +212,8 @@ Use the POST `/api/v1/login` endpoint to receive your JWT token.
 
 ### 4. Access API documentation
 
-Once the containers are running, open: `http://localhost:8080/scalar/`
-to explore the interactive API documentation.
+- **API Documentation (Scalar):** [http://localhost:8080/scalar/](http://localhost:8080/scalar/)
+- **Log Explorer (Seq):** [http://localhost:5341](http://localhost:5341)
 
 **Notes**
 # Database Seeding
