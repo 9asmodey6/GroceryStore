@@ -14,7 +14,7 @@ public static class LogDocumentationLinkExtension
 
             foreach (var url in addresses)
             {
-                Console.WriteLine($"🏠 Scalar: http://localhost:5256/scalar");
+                Console.WriteLine("🔗 External: http://localhost:5256/");
             }
 
             if (isDocker)
@@ -25,6 +25,7 @@ public static class LogDocumentationLinkExtension
             }
             else
             {
+                Console.WriteLine("📚 Scalar:   http://localhost:5341/scalar/");
                 Console.WriteLine("🔍 Seq UI:   http://localhost:5341");
             }
 
