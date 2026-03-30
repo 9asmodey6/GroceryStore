@@ -9,14 +9,18 @@ using Features.Admin.Products.UpdateProduct;
 using Features.Auth.Login;
 using Features.Auth.Register;
 using FluentValidation;
+using Infrastructure.Handlers;
 using Infrastructure.Services;
 using Mappers.Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using Serilog;
+using Serilog.Events;
 using ServiceScan.SourceGenerator;
 using Shared.Consts;
 using Shared.Consts.Endpoints;
@@ -28,6 +32,9 @@ public static partial class DependencyInjection
 {
     public static IServiceCollection AddBasicServices(this IServiceCollection services)
     {
+        services.AddExceptionHandler<ApplicationExceptionHandler>();
+        services.AddProblemDetails();
+
         services.AddOpenApi(options => ConfigureSecurity(options));
 
         services.AddOpenApi(EndpointGroups.Auth, options =>
@@ -88,12 +95,19 @@ public static partial class DependencyInjection
         return services;
     }
 
-
-    public static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ApplyConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtOptions>(
             configuration.GetSection(JwtOptions.SectionName));
 
+        services.Configure<SerilogOptions>(
+            configuration.GetSection(SerilogOptions.SectionName));
+
+        return services;
+    }
+
+    public static IServiceCollection AddAuthServices(this IServiceCollection services, IConfiguration configuration)
+    {
         var jwtOptions = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
                          ?? throw new InvalidOperationException("JWT settings not found");
 
@@ -138,10 +152,40 @@ public static partial class DependencyInjection
 
         services.AddAuthorization();
 
+        services.AddSingleton<IAuthorizationMiddlewareResultHandler, ProblemDetailsAuthorizationHandler>();
+
         return services;
     }
 
-    public static IServiceCollection AddDatabaseServices(this IServiceCollection services,
+    public static IServiceCollection AddSerilogLogging(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection.AddSerilog((services, loggerConfiguration) =>
+        {
+            var options = services.GetRequiredService<IOptions<SerilogOptions>>().Value;
+
+            var env = services.GetRequiredService<IHostEnvironment>();
+
+            loggerConfiguration
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("Application", "GroceryStore.API")
+                .Enrich.WithProperty("Environment", env.EnvironmentName)
+                .WriteTo.Console(
+                    outputTemplate: options.OutputTemplate)
+                .WriteTo.File(
+                    options.FilePath,
+                    rollingInterval: RollingInterval.Day,
+                    retainedFileCountLimit: 30,
+                    outputTemplate: options.OutputTemplate)
+                .WriteTo.Seq(options.SeqUrl);
+        });
+    }
+
+    public static IServiceCollection AddDatabaseServices(
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");

@@ -14,13 +14,18 @@ public static class LogDocumentationLinkExtension
 
             foreach (var url in addresses)
             {
-                Console.WriteLine($"🏠 Internal: {url}");
+                Console.WriteLine($"🏠 Scalar: http://localhost:5256/scalar");
             }
 
             if (isDocker)
             {
                 Console.WriteLine("🔗 External: http://localhost:8080");
                 Console.WriteLine("📚 Scalar:   http://localhost:8080/scalar/");
+                Console.WriteLine("🔍 Seq UI:   http://localhost:5341 (Structured Logging)");
+            }
+            else
+            {
+                Console.WriteLine("🔍 Seq UI:   http://localhost:5341");
             }
 
             Console.WriteLine(new string('=', 60) + "\n");

@@ -1,9 +1,6 @@
 ﻿namespace GroceryStore.Database;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 
 public static class MigrationsExtension
 {
