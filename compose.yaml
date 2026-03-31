@@ -25,6 +25,8 @@
     depends_on:
       postgres:
         condition: service_healthy
+      seq:
+        condition: service_started
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASP_ENVIRONMENT}
       - ConnectionStrings__DefaultConnection=${DB_CONNECTION}
