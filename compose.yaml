@@ -35,6 +35,8 @@
       - JwtSettings__Audience=${JWT_AUDIENCE}
       - JwtSettings__ExpirationHours=${JWT_EXPIRATION_HOURS}
       - SerilogSettings__SeqUrl=${SEQ_URL}
+      - SerilogSettings__FilePath=${FILE_PATH}
+      - SerilogSettings__OutputTemplate=${OUTPUT_TEMPLATE}
     ports:
       - "8080:8080"
     healthcheck:

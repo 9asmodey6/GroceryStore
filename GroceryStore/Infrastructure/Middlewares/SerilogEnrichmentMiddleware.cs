@@ -1,12 +1,15 @@
 ﻿namespace GroceryStore.Infrastructure.Middlewares;
 
+using System.Security.Claims;
 using Serilog.Context;
 
 public class SerilogEnrichmentMiddleware(RequestDelegate next)
 {
     public async Task InvokeAsync(HttpContext context)
     {
-        var userId = context.User?.FindFirst("sub")?.Value ?? "anonymous";
+        var userId = context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value
+                     ?? context.User?.FindFirst("sub")?.Value
+                     ?? "anonymous";
         var correlationId = context.TraceIdentifier;
 
         using (LogContext.PushProperty("UserId", userId))

@@ -3,6 +3,8 @@ using GroceryStore.Bootstrap;
 namespace GroceryStore;
 
 using Database;
+using Serilog;
+using Shared.Consts;
 using Shared.Extensions;
 using Shared.Extensions.Logging;
 
@@ -24,6 +26,8 @@ public static class Program
 
         var app = builder.Build();
 
+        app.UseExceptionHandler(_ => { });
+
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -38,7 +42,10 @@ public static class Program
         app.MapHealthChecks("/health");
         app.UseAuthentication();
         app.UseSerilogEnrichment();
-        app.UseExceptionHandler(_ => { });
+        app.UseSerilogRequestLogging(options =>
+        {
+            options.MessageTemplate = SerilogConsts.MessageTemplate;
+        });
         app.UseAuthorization();
 
         app.MapEndpointsGenerated();

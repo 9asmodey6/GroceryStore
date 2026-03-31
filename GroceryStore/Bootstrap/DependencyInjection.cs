@@ -1,5 +1,6 @@
 namespace GroceryStore.Bootstrap;
 
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Dapper;
@@ -22,6 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 using ServiceScan.SourceGenerator;
 using Shared.Consts;
 using Shared.Consts.Endpoints;
@@ -177,7 +179,8 @@ public static partial class DependencyInjection
                 .Enrich.WithProperty("Application", "GroceryStore.API")
                 .Enrich.WithProperty("Environment", env.EnvironmentName)
                 .WriteTo.Console(
-                    outputTemplate: options.OutputTemplate)
+                    outputTemplate: options.OutputTemplate,
+                    theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(
                     options.FilePath,
                     rollingInterval: RollingInterval.Day,
