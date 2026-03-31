@@ -219,7 +219,8 @@ public static partial class DependencyInjection
         return services;
     }
 
-    public static IHealthChecksBuilder AddAppHealthChecks(this IServiceCollection services,
+    public static IHealthChecksBuilder AddAppHealthChecks(
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection")

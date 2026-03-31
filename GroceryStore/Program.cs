@@ -20,6 +20,8 @@ public static class Program
             .RegisterValidators()
             .RegisterRepositories();
 
+        builder.Services.AddAppHealthChecks(builder.Configuration);
+
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
