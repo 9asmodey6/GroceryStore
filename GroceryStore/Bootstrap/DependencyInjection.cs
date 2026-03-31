@@ -10,6 +10,7 @@ using Features.Auth.Login;
 using Features.Auth.Register;
 using FluentValidation;
 using Infrastructure.Handlers;
+using Infrastructure.HealthChecks;
 using Infrastructure.Services;
 using Mappers.Dapper;
 using Microsoft.AspNetCore.Authorization;
@@ -91,6 +92,8 @@ public static partial class DependencyInjection
         {
             options.SerializerOptions.Converters.Add(new OptionalJsonConverterFactory());
         });
+
+        services.AddHealthChecks();
 
         return services;
     }
@@ -216,6 +219,23 @@ public static partial class DependencyInjection
         return services;
     }
 
+    public static IHealthChecksBuilder AddAppHealthChecks(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
+                               ?? throw new InvalidOperationException(
+                                   "Connection string 'DefaultConnection' not found.");
+
+        return services.AddHealthChecks()
+            .AddNpgSql(
+                connectionString: connectionString,
+                name: "PostgreSQL",
+                tags: ["db", "sql", "postgres"])
+            .AddCheck<SeqHealthCheck>(
+                name: "Seq",
+                tags: ["logging", "seq"]);
+    }
+
     private static void ConfigureSecurity(OpenApiOptions options)
     {
         options.AddDocumentTransformer((document, context, cancellationToken) =>
@@ -235,7 +255,6 @@ public static partial class DependencyInjection
 
             return Task.CompletedTask;
         });
-
 
         options.AddOperationTransformer((operation, context, cancellationToken) =>
         {
