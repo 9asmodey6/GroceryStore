@@ -8,6 +8,7 @@ using Database;
 using Database.Entities.User;
 using Features.Admin.Products.UpdateProduct;
 using Features.Auth.Login;
+using Features.Auth.Refresh;
 using Features.Auth.Register;
 using FluentValidation;
 using Infrastructure.Handlers;
@@ -218,6 +219,8 @@ public static partial class DependencyInjection
         services.AddScoped<LoginHandler>();
 
         services.AddScoped<RegisterHandler>();
+
+        services.AddScoped<RefreshTokenHandler>();
 
         return services;
     }

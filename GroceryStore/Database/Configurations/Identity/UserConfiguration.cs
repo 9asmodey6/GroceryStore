@@ -31,6 +31,8 @@ public class UserConfiguration : IEntityTypeConfiguration<AppUser>
             FirstName = "Admin",
             LastName = "System",
             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+            RefreshToken = (string?)null,
+            RefreshTokenExpiryTime = (DateTime?)null,
             SecurityStamp = "9ca06830-67d7-4632-9c32-f288924b893f",
             ConcurrencyStamp = "b7a5a87b-4024-46c5-8422-92182065842c",
             PasswordHash = "AQAAAAIAAYagAAAAEGMNZBXRiyiRbWqWDC6BZpBazgpNB5dAYizy/o2VwSgudvnw/5sqpGVlsFAp9P57WA==",

@@ -1,6 +1,6 @@
-﻿namespace GroceryStore.Features.Auth.Login;
+﻿namespace GroceryStore.Features.Auth.Refresh;
 
-public record LoginResponse(
+public record RefreshTokenResponse(
     string Token,
     string RefreshToken,
     string Email,

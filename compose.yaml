@@ -33,10 +33,11 @@
       - JwtSettings__SecretKey=${JWT_TOKEN_KEY}
       - JwtSettings__Issuer=${JWT_ISSUER}
       - JwtSettings__Audience=${JWT_AUDIENCE}
-      - JwtSettings__ExpirationHours=${JWT_EXPIRATION_HOURS}
+      - JwtSettings__ExpirationMinutes=${JWT_EXPIRATION_MINUTES}
       - SerilogSettings__SeqUrl=${SEQ_URL}
       - SerilogSettings__FilePath=${FILE_PATH}
       - SerilogSettings__OutputTemplate=${OUTPUT_TEMPLATE}
+      - JwtSettings__RefreshTokenExpirationDays=${REFRESH_EXPIRATION_DAYS}
     ports:
       - "8080:8080"
     healthcheck:
