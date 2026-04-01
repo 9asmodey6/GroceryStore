@@ -1,9 +1,9 @@
 ﻿namespace GroceryStore.Infrastructure.Handlers;
 
-using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Shared.Consts.Endpoints;
+using Microsoft.IdentityModel.Tokens;
 using Shared.Exceptions;
 
 public class ApplicationExceptionHandler(
@@ -14,6 +14,10 @@ public class ApplicationExceptionHandler(
         Exception exception,
         CancellationToken ct = default)
     {
+        var userIdentifier = context.User.Identity?.IsAuthenticated == true
+            ? context.User.FindFirstValue(ClaimTypes.Email) ?? context.User.Identity.Name
+            : "anonymous";
+
         var (details, logLevel) = exception switch
         {
             UnauthorizedAccessException ex =>
@@ -22,14 +26,19 @@ public class ApplicationExceptionHandler(
             ForbiddenAccessException ex =>
                 (HandleForbidden(ex, context), LogLevel.Warning),
 
-            _ =>
+            SecurityTokenException ex =>
+                (HandleSecurityToken(ex, context), LogLevel.Error),
+
+            _
+                =>
                 (HandleUnknownError(exception, context), LogLevel.Error)
         };
 
         logger.Log(
             logLevel,
             exception,
-            "Exception occurred: {ExceptionType} - {Message}",
+            "Exception occurred for user {UserIdentifier}: {ExceptionType} - {Message}",
+            userIdentifier,
             exception.GetType().Name,
             exception.Message);
 
@@ -94,6 +103,24 @@ public class ApplicationExceptionHandler(
             Title = "Internal Server Error",
             Status = StatusCodes.Status500InternalServerError,
             Detail = "An unexpected error occurred while processing your request.",
+            Instance = httpContext.Request.Path,
+        };
+
+        result.Extensions.Add("traceId", httpContext.TraceIdentifier);
+
+        return result;
+    }
+
+    private ProblemDetails HandleSecurityToken(
+        Exception ex,
+        HttpContext httpContext)
+    {
+        var result = new ProblemDetails
+        {
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
+            Title = "Invalid Token",
+            Status = StatusCodes.Status401Unauthorized,
+            Detail = ex.Message,
             Instance = httpContext.Request.Path,
         };
 

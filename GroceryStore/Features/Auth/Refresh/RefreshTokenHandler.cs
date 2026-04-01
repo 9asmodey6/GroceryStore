@@ -12,9 +12,11 @@ public class RefreshTokenHandler(
     TokenService service,
     ILogger<RefreshTokenHandler> logger)
 {
-    public async Task<RefreshTokenResponse> HandleAsync(RefreshTokenRequest request)
+    public async Task<RefreshTokenResponse> HandleAsync(RefreshTokenRequest request, HttpContext httpContext)
     {
         var principal = service.GetPrincipalFromExpiredToken(request.AccessToken);
+
+        httpContext.User = principal;
 
         var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -57,7 +59,8 @@ public class RefreshTokenHandler(
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            logger.LogError("Refresh failed: Could not update user {Email} in DB. Errors: {Errors}", user.Email, errors);
+            logger.LogError("Refresh failed: Could not update user {Email} in DB. Errors: {Errors}", user.Email,
+                errors);
             throw new Exception("Error updating user session");
         }
 
