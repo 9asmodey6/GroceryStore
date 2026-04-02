@@ -27,6 +27,9 @@ Inventory workflows and other features are currently in progress.
 **Testing**
 -  xUnit, Moq, FluentAssertions
 
+**DevOps** 
+- Docker & Docker Compose (multi-container environments)
+
 **API Documentation**
 - Scalar
 
