@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Shared.Consts.Endpoints;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class LoginEndpoint : IEndpoint
 {

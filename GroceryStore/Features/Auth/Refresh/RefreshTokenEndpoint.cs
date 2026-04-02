@@ -2,6 +2,7 @@
 
 using Shared.Consts.Endpoints;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class RefreshTokenEndpoint : IEndpoint
 {

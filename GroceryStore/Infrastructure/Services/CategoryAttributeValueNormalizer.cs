@@ -7,10 +7,11 @@ using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
 using Shared.Consts.CacheKeys;
 using Shared.Enums;
+using Shared.Interfaces.Repositories;
 using Shared.Models;
 using Shared.Models.Results;
 
-public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttributeRepository repository)
+public class CategoryAttributeValueNormalizer(IMemoryCache cache, ICategoryAttributeRepository repository)
 {
     public async Task<NormalizationResult<Dictionary<int, string>>> ValidateAndNormalizeAsync(
         int categoryId,
@@ -303,7 +304,7 @@ public class CategoryAttributeValueNormalizer(IMemoryCache cache, CategoryAttrib
         if (input == "0")
         {
             value = false;
-            return false;
+            return true;
         }
 
         return bool.TryParse(input, out value);

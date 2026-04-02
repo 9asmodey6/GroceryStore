@@ -8,6 +8,7 @@ using Shared.Consts.CacheKeys;
 using Shared.Consts.Endpoints;
 using Shared.Extensions;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class AddBrand : IEndpoint
 {

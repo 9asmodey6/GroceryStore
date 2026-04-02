@@ -29,6 +29,7 @@ using ServiceScan.SourceGenerator;
 using Shared.Consts;
 using Shared.Consts.Endpoints;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 using Shared.Models.Optional;
 using Shared.Options;
 

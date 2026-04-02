@@ -9,6 +9,7 @@ using Shared.Consts;
 using Shared.Consts.CacheKeys;
 using Shared.Consts.Endpoints;
 using Shared.Extensions;
+using Shared.Interfaces.Repositories;
 using Shared.Models;
 
 public class GetMetadataEndpoint : IEndpoint

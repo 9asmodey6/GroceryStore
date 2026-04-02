@@ -5,6 +5,7 @@ using Shared.Consts;
 using Shared.Consts.Endpoints;
 using Shared.Extensions;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class GetBrandById : IEndpoint
 {
