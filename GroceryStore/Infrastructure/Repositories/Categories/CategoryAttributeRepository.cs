@@ -6,7 +6,7 @@ using Shared.Interfaces;
 using Shared.Interfaces.Repositories;
 using Shared.Models;
 
-public class CategoryAttributeRepository(IDbConnectionFactory factory) : IRepository, ICategoryAttributeRepository
+public class CategoryAttributeRepository(IDbConnectionFactory factory) : ICategoryAttributeRepository
 {
     public async Task<List<MetadataAttribute>> GetMetadataSchemaAsync(
         int categoryId,

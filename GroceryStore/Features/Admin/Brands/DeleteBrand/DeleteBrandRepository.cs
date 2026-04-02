@@ -3,6 +3,7 @@
 using Database;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class DeleteBrandRepository(AppDbContext dbContext) : IRepository
 {

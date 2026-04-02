@@ -12,11 +12,6 @@ public static class LogDocumentationLinkExtension
             Console.WriteLine("\n" + new string('=', 60));
             Console.WriteLine("🚀 GROCERY STORE API IS ONLINE");
 
-            foreach (var url in addresses)
-            {
-                Console.WriteLine("🔗 External: http://localhost:5256/");
-            }
-
             if (isDocker)
             {
                 Console.WriteLine("🔗 External: http://localhost:8080");
@@ -25,7 +20,12 @@ public static class LogDocumentationLinkExtension
             }
             else
             {
-                Console.WriteLine("📚 Scalar:   http://localhost:5341/scalar/");
+                foreach (var url in addresses)
+                {
+                    Console.WriteLine("🔗 External: http://localhost:5256/");
+                }
+
+                Console.WriteLine("📚 Scalar:   http://localhost:5256/scalar/");
                 Console.WriteLine("🔍 Seq UI:   http://localhost:5341");
             }
 

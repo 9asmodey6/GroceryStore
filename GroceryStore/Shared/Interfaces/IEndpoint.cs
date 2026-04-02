@@ -1,4 +1,4 @@
-namespace GroceryStore.Shared.Interfaces.Repositories;
+namespace GroceryStore.Shared.Interfaces;
 
 public interface IEndpoint
 {

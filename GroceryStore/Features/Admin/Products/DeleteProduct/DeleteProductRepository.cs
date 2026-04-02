@@ -3,6 +3,7 @@
 using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class DeleteProductRepository(AppDbContext dbContext) : IRepository
 {

@@ -4,6 +4,7 @@ using Dapper;
 using GroceryStore.Database;
 using GroceryStore.Shared.Models;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class GetProductsRepository(IDbConnectionFactory factory) : IRepository
 {

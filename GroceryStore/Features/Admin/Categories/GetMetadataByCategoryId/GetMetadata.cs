@@ -25,7 +25,7 @@ public class GetMetadataEndpoint : IEndpoint
 
     private static async Task<Ok<List<MetadataAttribute>>> HandleAsync(
         int categoryId,
-        CategoryAttributeRepository repository,
+        ICategoryAttributeRepository repository,
         IMemoryCache cache,
         CancellationToken ct)
     {

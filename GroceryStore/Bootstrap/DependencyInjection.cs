@@ -1,6 +1,5 @@
 namespace GroceryStore.Bootstrap;
 
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Dapper;
@@ -13,6 +12,7 @@ using Features.Auth.Register;
 using FluentValidation;
 using Infrastructure.Handlers;
 using Infrastructure.HealthChecks;
+using Infrastructure.Repositories.Categories;
 using Infrastructure.Services;
 using Mappers.Dapper;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +40,7 @@ public static partial class DependencyInjection
         services.AddExceptionHandler<ApplicationExceptionHandler>();
         services.AddProblemDetails();
 
-        services.AddOpenApi(options => ConfigureSecurity(options));
+        services.AddOpenApi(ConfigureSecurity);
 
         services.AddOpenApi(EndpointGroups.Auth, options =>
         {
@@ -161,6 +161,8 @@ public static partial class DependencyInjection
 
         services.AddSingleton<IAuthorizationMiddlewareResultHandler, ProblemDetailsAuthorizationHandler>();
 
+        services.AddScoped<RefreshTokenHandler>();
+
         return services;
     }
 
@@ -221,7 +223,7 @@ public static partial class DependencyInjection
 
         services.AddScoped<RegisterHandler>();
 
-        services.AddScoped<RefreshTokenHandler>();
+        services.AddScoped<ICategoryAttributeRepository, CategoryAttributeRepository>();
 
         return services;
     }

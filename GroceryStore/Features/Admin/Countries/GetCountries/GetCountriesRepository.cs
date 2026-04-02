@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
 using Shared.Consts.CacheKeys;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class GetCountriesRepository(AppDbContext dbContext, IMemoryCache cache) : IRepository
 {

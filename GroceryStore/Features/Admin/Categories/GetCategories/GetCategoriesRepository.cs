@@ -3,6 +3,7 @@
 using Dapper;
 using Database;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class GetCategoriesRepository(IDbConnectionFactory factory) : IRepository
 {

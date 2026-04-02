@@ -3,6 +3,7 @@
 using Database;
 using Database.Entities.Brand;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class AddBrandRepository(AppDbContext dbContext) : IRepository
 {

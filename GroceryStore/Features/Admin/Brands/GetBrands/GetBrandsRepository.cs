@@ -7,6 +7,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Shared.Consts;
 using Shared.Consts.CacheKeys;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class GetBrandsRepository(AppDbContext dbContext, IMemoryCache cache) : IRepository
 {

@@ -4,6 +4,7 @@ using GroceryStore.Database;
 using GroceryStore.Database.Entities.Product;
 using Microsoft.EntityFrameworkCore;
 using Shared.Interfaces;
+using Shared.Interfaces.Repositories;
 
 public class UpdateProductRepository(AppDbContext context) : IRepository
 {
