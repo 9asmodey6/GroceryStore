@@ -24,14 +24,22 @@ Inventory workflows and other features are currently in progress.
 - Entity Framework Core (Write operations)
 - Dapper (Optimized Read queries)
 
+**Testing**
+-  xUnit, Moq, FluentAssertions
+
+**DevOps** 
+- Docker & Docker Compose (multi-container environments)
+
 **API Documentation**
 - Scalar
 
 ## Key Libraries
 
-- FluentValidation — request validation
-- ServiceScan.SourceGenerator — compile-time dependency registration
-- IMemoryCache — caching rarely changing category schemas
+- **FluentValidation** — request validation
+- **ServiceScan.SourceGenerator** — compile-time dependency registration
+- **Moq** — mocking framework for isolating business logic during unit testing.
+- **FluentAssertions** — a set of extension methods that allow you to more naturally specify the expected outcome of unit tests.
+- **IMemoryCache** — caching rarely changing category schemas
 
 
 ## Key Features
@@ -124,6 +132,21 @@ Incoming values are automatically normalized to a standard format
 - **Extensible Service Design**
 Encapsulated logic allows adding new attributes or complex
 validation types without modifying the core business services.
+
+------------------------------------------------------------------------------
+
+### Reliable Logic & Testing Suite
+
+The project maintains high code quality through isolated logic validation and has clear plans for infrastructure-level testing.
+
+- **Unit Testing Layer**: Core business services are covered by unit tests to ensure logical correctness.
+    - **xUnit**: Primary test runner for modern and fast execution.
+    - **Moq**: Used to isolate services by mocking dependencies like repositories and cache.
+    - **FluentAssertions**: Implemented for highly readable and descriptive test assertions, making tests serve as living documentation.
+- **Future Roadmap: Integration Testing**: While unit tests validate logic in isolation, the next step is the integration of **Integration Tests**. This will allow the system to:
+    - Verify real-world database interactions.
+    - Validate database-specific constraints (Uniqueness, Foreign Keys, etc.) that mocks cannot replicate.
+    - Ensure the entire request-to-database pipeline works as expected without losing the context of the storage layer.
 
 ------------------------------------------------------------------------------
 
