@@ -7,5 +7,6 @@ public class EndpointTags
     public const string AdminCountries = "AdminBCountries";
     public const string AdminBrands = "AdminBrands";
     public const string Auth = "Auth";
+    public const string AdminRoles = "AdminRoles";
 
 }
