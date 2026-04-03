@@ -179,6 +179,19 @@ public static partial class DependencyInjection
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                 .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .Filter.ByExcluding(logEvent =>
+                {
+                    if (logEvent.Properties.TryGetValue("RequestPath", out var pathValue))
+                    {
+                        var path = pathValue.ToString().ToLower();
+                        return path.Contains("/scalar") ||
+                               path.Contains("/favicon") ||
+                               path.EndsWith(".js\"") ||
+                               path.EndsWith(".css\"");
+                    }
+
+                    return false;
+                })
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", "GroceryStore.API")
                 .Enrich.WithProperty("Environment", env.EnvironmentName)
