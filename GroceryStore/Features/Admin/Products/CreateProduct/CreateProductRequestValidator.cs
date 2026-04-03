@@ -1,18 +1,18 @@
 namespace GroceryStore.Features.Admin.Products.CreateProduct;
 
 using FluentValidation;
+using Shared.Consts.ValidationMessages;
 
 public class CreateProductRequestValidator : AbstractValidator<CreateProductRequest>
 {
     public CreateProductRequestValidator()
     {
-        RuleFor(p => p.Name)
-            .NotEmpty().WithMessage("Name is required")
-            .NotNull().WithMessage("Name is required")
+        RuleFor(x => x.Name)
+            .NotEmpty().WithMessage(ProductValidationMessages.NameRequired)
             .MaximumLength(50).WithMessage("Maximum length of Name is 50");
 
         RuleFor(p => p.Price)
-            .GreaterThanOrEqualTo(0).WithMessage("Price must be greater than or equal to 0");
+            .GreaterThanOrEqualTo(0).WithMessage(ProductValidationMessages.PriceNegative);
 
         RuleFor(p => p.CategoryId)
             .NotEmpty().WithMessage("CategoryId is required")
@@ -22,8 +22,8 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
         RuleFor(p => p.CountryId).GreaterThan(0);
 
         RuleFor(p => p.Attributes)
-            .NotEmpty().WithMessage("Attributes are required")
-            .NotNull().WithMessage("Attributes are required");
+            .NotEmpty().WithMessage(ProductValidationMessages.AttributesRequired)
+            .NotNull().WithMessage(ProductValidationMessages.AttributesRequired);
 
         RuleForEach(p => p.Attributes)
             .ChildRules(a =>
@@ -34,6 +34,6 @@ public class CreateProductRequestValidator : AbstractValidator<CreateProductRequ
 
         RuleFor(p => p.Attributes)
             .Must(a => a.Select(x => x.Id).Distinct().Count() == a.Count)
-            .WithMessage("Duplicate attributeId in request");
+            .WithMessage(ProductValidationMessages.AttributeDuplicates);
     }
 }
