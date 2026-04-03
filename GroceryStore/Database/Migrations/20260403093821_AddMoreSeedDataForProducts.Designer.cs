@@ -3,6 +3,7 @@ using System;
 using GroceryStore.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GroceryStore.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260403093821_AddMoreSeedDataForProducts")]
+    partial class AddMoreSeedDataForProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,37 +148,11 @@ namespace GroceryStore.Migrations
                         },
                         new
                         {
-                            Id = 12,
-                            DataType = 3,
-                            MaxValue = 1000m,
-                            MinValue = 0m,
-                            Name = "Energy Value",
-                            Unit = "kcal/100g"
-                        },
-                        new
-                        {
                             Id = 13,
                             DataType = 5,
                             MaxValue = 1m,
                             MinValue = 0m,
                             Name = "Organic"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            DataType = 5,
-                            MaxValue = 1m,
-                            MinValue = 0m,
-                            Name = "Is Vegan"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            DataType = 2,
-                            MaxValue = 100m,
-                            MinValue = 1m,
-                            Name = "Pieces per Pack",
-                            Unit = "pcs"
                         },
                         new
                         {
@@ -741,7 +718,7 @@ namespace GroceryStore.Migrations
                         new
                         {
                             CategoryId = 12,
-                            AttributeId = 3,
+                            AttributeId = 2,
                             IsRequired = true
                         },
                         new
@@ -759,7 +736,7 @@ namespace GroceryStore.Migrations
                         new
                         {
                             CategoryId = 13,
-                            AttributeId = 3,
+                            AttributeId = 2,
                             IsRequired = true
                         },
                         new
@@ -777,7 +754,7 @@ namespace GroceryStore.Migrations
                         new
                         {
                             CategoryId = 14,
-                            AttributeId = 2,
+                            AttributeId = 3,
                             IsRequired = true
                         },
                         new
@@ -801,13 +778,13 @@ namespace GroceryStore.Migrations
                         new
                         {
                             CategoryId = 16,
-                            AttributeId = 2,
+                            AttributeId = 3,
                             IsRequired = true
                         },
                         new
                         {
                             CategoryId = 15,
-                            AttributeId = 2,
+                            AttributeId = 3,
                             IsRequired = true
                         },
                         new
@@ -1073,6 +1050,30 @@ namespace GroceryStore.Migrations
                             CategoryId = 26,
                             AttributeId = 6,
                             IsRequired = false
+                        },
+                        new
+                        {
+                            CategoryId = 28,
+                            AttributeId = 11,
+                            IsRequired = true
+                        },
+                        new
+                        {
+                            CategoryId = 28,
+                            AttributeId = 3,
+                            IsRequired = true
+                        },
+                        new
+                        {
+                            CategoryId = 29,
+                            AttributeId = 11,
+                            IsRequired = true
+                        },
+                        new
+                        {
+                            CategoryId = 30,
+                            AttributeId = 11,
+                            IsRequired = true
                         },
                         new
                         {
